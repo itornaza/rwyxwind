@@ -36,17 +36,17 @@ class Weather: NSManagedObject {
     
     // MARK: - Constructors
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
         // Get the entity from the core data model
-        let entity = NSEntityDescription.entityForName("Weather", inManagedObjectContext: context)!
+        let entity = NSEntityDescription.entity(forEntityName: "Weather", in: context)!
         
         // Insert the new Weather into the Core Data Stack
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        super.init(entity: entity, insertInto: context)
         
         // Initialize the Photo's properties from a dictionary
         speed = dictionary[Keys.Speed] as! Double

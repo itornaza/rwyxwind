@@ -292,13 +292,16 @@
 					7258AE171BB06C4900A48DCF = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = AW5Q5AJB4L;
+						LastSwiftMigration = 0800;
 					};
 					7258AE2E1BB06C4900A48DCF = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 7258AE171BB06C4900A48DCF;
 					};
 					7258AE391BB06C4900A48DCF = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 7258AE171BB06C4900A48DCF;
 					};
 				};
@@ -541,6 +544,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = gr.polarbear.RwyXwind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -555,6 +559,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = gr.polarbear.RwyXwind;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -566,6 +571,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = gr.polarbear.RwyXwindTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RwyXwind.app/RwyXwind";
 			};
 			name = Debug;
@@ -578,6 +584,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = gr.polarbear.RwyXwindTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RwyXwind.app/RwyXwind";
 			};
 			name = Release;
@@ -589,6 +596,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = gr.polarbear.RwyXwindUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = RwyXwind;
 				USES_XCTRUNNER = YES;
 			};
@@ -601,6 +609,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = gr.polarbear.RwyXwindUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = RwyXwind;
 				USES_XCTRUNNER = YES;
 			};

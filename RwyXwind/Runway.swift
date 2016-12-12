@@ -37,17 +37,17 @@ class Runway: NSManagedObject {
     
     // MARK: - Constructors
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String: AnyObject], context: NSManagedObjectContext) {
         
         // Get the entity from the Virtual_Tourist.xcdatamodeld
-        let entity = NSEntityDescription.entityForName("Runway", inManagedObjectContext: context)!
+        let entity = NSEntityDescription.entity(forEntityName: "Runway", in: context)!
         
         // Insert the new Pin into the Core Data Stack
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        super.init(entity: entity, insertInto: context)
         
         // Initialize the properties from a dictionary
         iataCode = dictionary[Keys.IATACode] as! String

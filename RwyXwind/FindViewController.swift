@@ -28,8 +28,8 @@ class FindViewController:   UIViewController,
     let numberOfRotors: Int = 3
     var heading = Double(360.0)
     
-    enum ValidationError: ErrorType {
-        case InvalidRunwayHeading
+    enum ValidationError: Error {
+        case invalidRunwayHeading
     }
     
     // MARK: - Outlets
@@ -64,14 +64,14 @@ class FindViewController:   UIViewController,
         self.initializeWindLimits()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.configureUI()
     }
     
     // MARK: - Actions
     
-    @IBAction func calculateXwind(sender: AnyObject) {
+    @IBAction func calculateXwind(_ sender: AnyObject) {
         
         // IATA code is required
         if (self.iataCode.text! == "") {
@@ -109,7 +109,7 @@ class FindViewController:   UIViewController,
     /**
         Font color
     */
-    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let titleData = pickerData[component][row]
         let myTitle = NSAttributedString(
             string: titleData,
@@ -123,31 +123,31 @@ class FindViewController:   UIViewController,
     /**
         The number of columns of data
     */
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return self.numberOfRotors
     }
     
     /**
         The number of rows of data
     */
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerData[component].count
     }
     
     /**
         The data to return for the row and component (column) that's being passed in
     */
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[component][row]
     }
     
     /**
         didSelectRow
     */
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let rotor1 = Int(pickerData[0][picker.selectedRowInComponent(0)])
-        let rotor2 = Int(pickerData[1][picker.selectedRowInComponent(1)])
-        let rotor3 = Int(pickerData[2][picker.selectedRowInComponent(2)])
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let rotor1 = Int(pickerData[0][picker.selectedRow(inComponent: 0)])
+        let rotor2 = Int(pickerData[1][picker.selectedRow(inComponent: 1)])
+        let rotor3 = Int(pickerData[2][picker.selectedRow(inComponent: 2)])
         var runwayHeading = (rotor1! * 100) + (rotor2! * 10) + rotor3!
         do {
             try self.validateRunwayHeading(runwayHeading)
@@ -171,20 +171,20 @@ class FindViewController:   UIViewController,
     /**
         Validate the iataCode text field to allow only up to letters
     */
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         var lettersOnly: Bool = false
         var properLength: Bool = false
 
         // Create an `NSCharacterSet` set which includes everything *but* the letters
-        let set = NSCharacterSet(charactersInString:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").invertedSet
+        let set = CharacterSet(charactersIn:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").inverted
         
         // At every character in this "inverseSet" contained in the string,
         // split the string up into components which exclude the characters
         // in this inverse set
-        let components = string.componentsSeparatedByCharactersInSet(set)
+        let components = string.components(separatedBy: set)
         
         // Rejoin these components
-        let filtered = components.joinWithSeparator("")
+        let filtered = components.joined(separator: "")
         
         // If the original string is equal to the filtered string, i.e. if no
         // inverse characters were present to be eliminated, the input is valid
@@ -206,14 +206,14 @@ class FindViewController:   UIViewController,
     /**
         Hide the keyboard after editing
     */
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     // MARK: - Tap recognizer callback
     
-    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+    func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
@@ -228,35 +228,35 @@ class FindViewController:   UIViewController,
     }
     
     func initializeWindLimits() {
-        if NSUserDefaults.standardUserDefaults().objectForKey(WindLimits.Keys.HeadwindLimit) == nil {
+        if UserDefaults.standard.object(forKey: WindLimits.Keys.HeadwindLimit) == nil {
             WindLimits.setUserDefaultLimits()
         }
     }
     
     func setTapRecognizer() {
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(FindViewController.handleSingleTap(_:)))
         self.view.addGestureRecognizer(tapRecognizer!)
     }
     
     /**
         Valid numbers are: 000 - 360
     */
-    func validateRunwayHeading(runwayHeading: Int) throws {
+    func validateRunwayHeading(_ runwayHeading: Int) throws {
         if !(runwayHeading <= 360 && runwayHeading >= 0) {
-            throw ValidationError.InvalidRunwayHeading
+            throw ValidationError.invalidRunwayHeading
         }
     }
     
     func startSpinner() {
-        NSOperationQueue.mainQueue().addOperationWithBlock {
-            self.spinner.hidden = false
+        OperationQueue.main.addOperation {
+            self.spinner.isHidden = false
             self.spinner.startAnimating()
         }
     }
     
     func stopSpinner() {
-        NSOperationQueue.mainQueue().addOperationWithBlock {
-            self.spinner.hidden = true
+        OperationQueue.main.addOperation {
+            self.spinner.isHidden = true
             self.spinner.stopAnimating()
         }
     }
@@ -292,7 +292,7 @@ class FindViewController:   UIViewController,
         self.picker.backgroundColor = Theme.sharedInstance().darkGray
         
         // Border
-        self.picker.layer.borderColor = UIColor.grayColor().CGColor
+        self.picker.layer.borderColor = UIColor.gray.cgColor
         self.picker.layer.borderWidth = 0.5
         self.picker.layer.cornerRadius = 15
     }
@@ -301,14 +301,14 @@ class FindViewController:   UIViewController,
         self.calculate.backgroundColor = Theme.sharedInstance().darkGray
         
         // Border
-        self.calculate.layer.borderColor = UIColor.blackColor().CGColor
+        self.calculate.layer.borderColor = UIColor.black.cgColor
         self.calculate.layer.borderWidth = 0.5
         self.calculate.layer.cornerRadius = 5
         
         // Shadow
-        self.calculate.layer.shadowOffset = CGSizeMake(2, 2)
+        self.calculate.layer.shadowOffset = CGSize(width: 2, height: 2)
         self.calculate.layer.shadowRadius = 5
-        self.calculate.layer.shadowColor = UIColor.blackColor().CGColor
+        self.calculate.layer.shadowColor = UIColor.black.cgColor
         self.calculate.layer.shadowOpacity = 1.0
     }
     
@@ -317,12 +317,12 @@ class FindViewController:   UIViewController,
     /**
         Throws an alert view to display error messages
     */
-    func alertView(title: String, message: String) {
-        NSOperationQueue.mainQueue().addOperationWithBlock {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            let dismiss = UIAlertAction(title: "OK", style: .Default, handler: nil)
+    func alertView(_ title: String, message: String) {
+        OperationQueue.main.addOperation {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(dismiss)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     
@@ -330,13 +330,13 @@ class FindViewController:   UIViewController,
         Modal segue to the wind view controller using the main thread
     */
     func segueToWindViewController() {
-        NSOperationQueue.mainQueue().addOperationWithBlock {
-            let windVC = self.storyboard!.instantiateViewControllerWithIdentifier("WindViewController") as!
+        OperationQueue.main.addOperation {
+            let windVC = self.storyboard!.instantiateViewController(withIdentifier: "WindViewController") as!
             WindViewController
             windVC.runway = self.runway
             windVC.weather = self.weather
             self.startSpinner()
-            self.presentViewController(windVC, animated: false, completion: nil)
+            self.present(windVC, animated: false, completion: nil)
         }
     }
 }
