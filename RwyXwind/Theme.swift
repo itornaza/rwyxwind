@@ -30,7 +30,7 @@ struct Theme {
     let lightGray = UIColor(red: 126.0/255.0, green: 126.0/255.0, blue: 126.0/255.0, alpha: 1.0)
     let red = UIColor(red: 222.0/255.0, green: 88.0/255.0, blue: 16.0/255.0, alpha: 1.0)
     let yellow = UIColor(red: 242.0/255.0, green: 203.0/255.0, blue: 108.0/255.0, alpha: 1.0)
-    let white = UIColor.whiteColor()
-    let green = UIColor.greenColor()
-    let black = UIColor.blackColor()
+    let white = UIColor.white
+    let green = UIColor.green
+    let black = UIColor.black
 }

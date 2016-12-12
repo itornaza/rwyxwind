@@ -21,8 +21,8 @@ class FavoritesViewController:  UIViewController,
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }
     
-    lazy var fetchedResultsController: NSFetchedResultsController = {
-        let fetchRequest = NSFetchRequest(entityName: "Runway")
+    lazy var fetchedResultsController: NSFetchedResultsController<Runway> = {
+        let fetchRequest = NSFetchRequest<Runway>(entityName: "Runway")
         fetchRequest.sortDescriptors = []
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
@@ -49,13 +49,13 @@ class FavoritesViewController:  UIViewController,
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.configureUI()
         self.tableView.reloadData()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Clear leftovers
@@ -64,21 +64,21 @@ class FavoritesViewController:  UIViewController,
     
     // Mark: UITableView delegate
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Dequeue a reusable cell from the table, using the reuse identifier
-        let cell = tableView.dequeueReusableCellWithIdentifier("RunwayCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RunwayCell")
         
         // Show the little arrow on the right hand side of the row
-        cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell!.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
         // Find the model object that corresponds to that row
-        let runway = fetchedResultsController.objectAtIndexPath(indexPath) as! Runway
+        let runway = fetchedResultsController.object(at: indexPath) 
         
         // Set the label in the cell with the data from the model object
         cell!.textLabel?.text = runway.iataCode + " rwy " + self.rwyFromHeading(runway.hdg) + ": " + runway.name
@@ -87,13 +87,13 @@ class FavoritesViewController:  UIViewController,
         return cell!
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Get the wind view controller from storyboard
-        let windVC = self.storyboard!.instantiateViewControllerWithIdentifier("WindViewController") as! WindViewController
+        let windVC = self.storyboard!.instantiateViewController(withIdentifier: "WindViewController") as! WindViewController
         
         // Get the favorite runway from core data
-        let runway = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Runway
+        let runway = self.fetchedResultsController.object(at: indexPath) 
         windVC.runway = runway
         
         // Get the weather from the weather client
@@ -104,75 +104,75 @@ class FavoritesViewController:  UIViewController,
                 windVC.weather = weather!
                 
                 // Trigger the segue on the main queue
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    self.presentViewController(windVC, animated: false, completion: nil)
+                OperationQueue.main.addOperation {
+                    self.present(windVC, animated: false, completion: nil)
                 }
             }
         }
     }
 
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
             switch (editingStyle) {
-            case .Delete:
-                let runway = fetchedResultsController.objectAtIndexPath(indexPath) as! Runway
-                sharedContext.deleteObject(runway)
+            case .delete:
+                let runway = fetchedResultsController.object(at: indexPath) 
+                sharedContext.delete(runway)
                 CoreDataStackManager.sharedInstance().saveContext()
             default:
                 break
             }
     }
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.beginUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController,
-        didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
-        atIndex sectionIndex: Int,
-        forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange sectionInfo: NSFetchedResultsSectionInfo,
+        atSectionIndex sectionIndex: Int,
+        for type: NSFetchedResultsChangeType) {
             
             switch type {
-            case .Insert:
-                self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            case .insert:
+                self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
                 
-            case .Delete:
-                self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            case .delete:
+                self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
                 
             default:
                 return
             }
     }
 
-    func controller(controller: NSFetchedResultsController,
-        didChangeObject anObject: AnyObject,
-        atIndexPath indexPath: NSIndexPath?,
-        forChangeType type: NSFetchedResultsChangeType,
-        newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?) {
             
             switch type {
-            case .Insert:
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .insert:
+                tableView.insertRows(at: [newIndexPath!], with: .fade)
                 
-            case .Delete:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            case .delete:
+                tableView.deleteRows(at: [indexPath!], with: .fade)
                 
-            case .Move:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .move:
+                tableView.deleteRows(at: [indexPath!], with: .fade)
+                tableView.insertRows(at: [newIndexPath!], with: .fade)
                 
             default:
                 return
             }
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.endUpdates()
     }
     
     /**
         Cell color theme
     */
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = Theme.sharedInstance().darkGray
         cell.textLabel?.textColor = Theme.sharedInstance().green
     }
@@ -182,7 +182,7 @@ class FavoritesViewController:  UIViewController,
     /**
         The active runway is in the form of 2 digits
     */
-    func rwyFromHeading(runwayHeading: Double) -> String {
+    func rwyFromHeading(_ runwayHeading: Double) -> String {
         let rwy = Int(round(runwayHeading/10))
         return String(format: "%02d", rwy)
     }
@@ -193,12 +193,12 @@ class FavoritesViewController:  UIViewController,
     
     // MARK: - Alerts
     
-    func alertView(title: String, message: String) {
-        NSOperationQueue.mainQueue().addOperationWithBlock {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            let dismiss = UIAlertAction(title: "OK", style: .Default, handler: nil)
+    func alertView(_ title: String, message: String) {
+        OperationQueue.main.addOperation {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(dismiss)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
 

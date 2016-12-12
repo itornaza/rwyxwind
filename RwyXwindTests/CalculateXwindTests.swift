@@ -18,8 +18,8 @@ class CalculateXwindTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        self.windVC = storyboard.instantiateViewControllerWithIdentifier("WindViewController") as! RwyXwind.WindViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        self.windVC = storyboard.instantiateViewController(withIdentifier: "WindViewController") as! RwyXwind.WindViewController
     }
     
     override func tearDown() {
@@ -31,7 +31,7 @@ class CalculateXwindTests: XCTestCase {
     
     /// Rwy 28 wind from 280 degrees 10 kts
     func testPureHeadwind() {
-        self.measureBlock{
+        self.measure{
             var crosswind: Double = 0.0
             var headwind: Double = 0.0
             (crosswind, headwind) = self.windVC.calculateXwind(10.0, windDirection: 280.0, runwayHeading: 280.0)
@@ -109,7 +109,7 @@ class CalculateXwindTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    func oneDecimal(number: Double) -> Double {
+    func oneDecimal(_ number: Double) -> Double {
         return round(10 * number) / 10
     }
     

@@ -30,18 +30,18 @@ class WeatherClient {
     var temporaryContext: NSManagedObjectContext!
     
     func setUpTemporaryContext() {
-        temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+        temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
         temporaryContext.persistentStoreCoordinator = sharedContext.persistentStoreCoordinator
     }
     
     // MARK: - Methods
     
-    func getWeatherByCoordinates(lat: Double, long: Double, completionHandler: (weather: Weather?, errorString: String?) -> Void) {
+    func getWeatherByCoordinates(_ lat: Double, long: Double, completionHandler: @escaping (_ weather: Weather?, _ errorString: String?) -> Void) {
         
         self.setUpTemporaryContext()
         
         // Create the session
-        let session = NSURLSession.sharedSession()
+        let session = URLSession.shared
         var parsedResult: NSDictionary!
         
         // Create and configure the request
@@ -52,47 +52,47 @@ class WeatherClient {
                         String(long) +
                         WeatherClient.Constants.APIKeyPrefix +
                         WeatherClient.Constants.APIKey
-        let url = NSURL(string: urlString)!
+        let url = URL(string: urlString)!
         
         // Create the request
-        let request = NSURLRequest(URL: url)
+        let request = URLRequest(url: url)
         
-        let task = session.dataTaskWithRequest(request) { data, response, downloadError in
+        let task = session.dataTask(with: request, completionHandler: { data, response, downloadError in
             
             if downloadError == nil {
                 do {
                     // Download succeded, parse the data
-                    parsedResult = try NSJSONSerialization.JSONObjectWithData(data!,
-                        options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    parsedResult = try JSONSerialization.jsonObject(with: data!,
+                        options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
                 } catch {
-                    completionHandler(weather: nil, errorString: "Could not parse downloaded data")
+                    completionHandler(nil, "Could not parse downloaded data")
                     return
                 }
                 
                 // Check for erroneous response from the API
-                if let code = parsedResult.valueForKey(JSONKeys.StatusCode) {
+                if let code = parsedResult.value(forKey: JSONKeys.StatusCode) {
                     if code as! Int != 200 {
-                        completionHandler(weather: nil, errorString: "Weather service is not available")
+                        completionHandler(nil, "Weather service is not available")
                         return
                     }
                 }
                 
                 // Check weather station has a name
-                if parsedResult.valueForKey(JSONKeys.StationName) == nil {
-                    completionHandler(weather: nil, errorString: "Weather station is not available")
+                if parsedResult.value(forKey: JSONKeys.StationName) == nil {
+                    completionHandler(nil, "Weather station is not available")
                     return
                 }
                 
                 // The response is valid, extract the weather data
-                if let dictionary = parsedResult.valueForKey(JSONKeys.Wind) as? [String:AnyObject] {
+                if let dictionary = parsedResult.value(forKey: JSONKeys.Wind) as? [String:AnyObject] {
                     
                     if dictionary[JSONKeys.WindDirection] == nil {
-                        completionHandler(weather: nil, errorString: "Wind direction is not available")
+                        completionHandler(nil, "Wind direction is not available")
                         return
                     }
                     
                     if dictionary[JSONKeys.WindSpeed] == nil {
-                        completionHandler(weather: nil, errorString: "Wind speed is not available")
+                        completionHandler(nil, "Wind speed is not available")
                         return
                     }
                     
@@ -100,25 +100,25 @@ class WeatherClient {
                     let weatherDictionary: [String : AnyObject] = [
                         Weather.Keys.Speed      : dictionary[JSONKeys.WindSpeed]!,
                         Weather.Keys.Direction  : dictionary[JSONKeys.WindDirection]!,
-                        Weather.Keys.Station    : parsedResult.valueForKey(JSONKeys.StationName) as! String
+                        Weather.Keys.Station    : parsedResult.value(forKey: JSONKeys.StationName) as! String as AnyObject
                     ]
                     
                     // Store weather to temporary context as a provision for next versions
                     let weather = Weather(dictionary: weatherDictionary, context: self.temporaryContext)
                     
                     // All succedded
-                    completionHandler(weather: weather, errorString: nil)
+                    completionHandler(weather, nil)
                     return
                     
                 } else {
-                    completionHandler(weather: nil, errorString: "Could not parse weather")
+                    completionHandler(nil, "Could not parse weather")
                     return
                 }
             } else {
-                completionHandler(weather: nil, errorString: "Could not complete the download request")
+                completionHandler(nil, "Could not complete the download request")
                 return
             }
-        }
+        }) 
         task.resume()
     }
 }

@@ -31,37 +31,37 @@ struct WindLimits {
     // Type methods
     
     static func setUserDefaultLimits() {
-        NSUserDefaults.standardUserDefaults().setInteger(
+        UserDefaults.standard.set(
             self.Defaults.HeadwindDefaultLimit,
             forKey: self.Keys.HeadwindLimit
         )
         
-        NSUserDefaults.standardUserDefaults().setInteger(
+        UserDefaults.standard.set(
             self.Defaults.TailwindDefaultLimit,
             forKey: self.Keys.TailwindLimit
         )
         
-        NSUserDefaults.standardUserDefaults().setInteger(
+        UserDefaults.standard.set(
             self.Defaults.CrosswindDefaultLimit,
             forKey: self.Keys.CrosswindLimit
         )
     }
     
-    static func saveWindLimits(headwind: Int, tailwind: Int, crosswind: Int) {
-        NSUserDefaults.standardUserDefaults().setInteger(headwind, forKey: self.Keys.HeadwindLimit)
-        NSUserDefaults.standardUserDefaults().setInteger(tailwind, forKey: self.Keys.TailwindLimit)
-        NSUserDefaults.standardUserDefaults().setInteger(crosswind, forKey: self.Keys.CrosswindLimit)
+    static func saveWindLimits(_ headwind: Int, tailwind: Int, crosswind: Int) {
+        UserDefaults.standard.set(headwind, forKey: self.Keys.HeadwindLimit)
+        UserDefaults.standard.set(tailwind, forKey: self.Keys.TailwindLimit)
+        UserDefaults.standard.set(crosswind, forKey: self.Keys.CrosswindLimit)
     }
     
     static func getHeadwindLimit() -> Int{
-        return NSUserDefaults.standardUserDefaults().integerForKey(self.Keys.HeadwindLimit)
+        return UserDefaults.standard.integer(forKey: self.Keys.HeadwindLimit)
     }
     
     static func getTailwindLimit() -> Int {
-        return NSUserDefaults.standardUserDefaults().integerForKey(self.Keys.TailwindLimit)
+        return UserDefaults.standard.integer(forKey: self.Keys.TailwindLimit)
     }
     
     static func getCrosswindLimit()-> Int {
-        return NSUserDefaults.standardUserDefaults().integerForKey(self.Keys.CrosswindLimit)
+        return UserDefaults.standard.integer(forKey: self.Keys.CrosswindLimit)
     }
 }

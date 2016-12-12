@@ -23,8 +23,8 @@ class WindViewController:   UIViewController,
     // Constants
     
     enum TabItemIndex: Int {
-        case Find = 0
-        case Favorites = 1
+        case find = 0
+        case favorites = 1
     }
     
     // Core data properties
@@ -32,8 +32,8 @@ class WindViewController:   UIViewController,
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }
     
-    lazy var fetchedResultsController: NSFetchedResultsController = {
-        let fetchRequest = NSFetchRequest(entityName: "Runway")
+    lazy var fetchedResultsController: NSFetchedResultsController<Runway> = {
+        let fetchRequest = NSFetchRequest<Runway>(entityName: "Runway")
         fetchRequest.sortDescriptors = []
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
@@ -84,7 +84,7 @@ class WindViewController:   UIViewController,
         self.displayWind(headWind, crossWind: crossWind)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Set up fetched results controller
@@ -96,15 +96,15 @@ class WindViewController:   UIViewController,
     
     // MARK: - Actions
     
-    @IBAction func FindButtonTouchUp(sender: AnyObject) {
-        segueToTabBarController(TabItemIndex.Find.rawValue)
+    @IBAction func FindButtonTouchUp(_ sender: AnyObject) {
+        segueToTabBarController(TabItemIndex.find.rawValue)
     }
     
-    @IBAction func FavoritesButtonTouchUp(sender: AnyObject) {
-        segueToTabBarController(TabItemIndex.Favorites.rawValue)
+    @IBAction func FavoritesButtonTouchUp(_ sender: AnyObject) {
+        segueToTabBarController(TabItemIndex.favorites.rawValue)
     }
     
-    @IBAction func AddButtonTouchUp(sender: AnyObject) {
+    @IBAction func AddButtonTouchUp(_ sender: AnyObject) {
         var addToFavorites: Bool = true
         var message = String()
         
@@ -126,10 +126,10 @@ class WindViewController:   UIViewController,
 
             // Set up the dictionary to create the runway
             let dictionary: [String : AnyObject] = [
-                Runway.Keys.IATACode: iataCode,
-                Runway.Keys.Name    : name,
-                Runway.Keys.Lat     : lat,
-                Runway.Keys.Long    : long
+                Runway.Keys.IATACode: iataCode as AnyObject,
+                Runway.Keys.Name    : name as AnyObject,
+                Runway.Keys.Lat     : lat as AnyObject,
+                Runway.Keys.Long    : long as AnyObject
             ]
             
             // Initialize the runway using core data constructor
@@ -162,7 +162,7 @@ class WindViewController:   UIViewController,
         }
     }
     
-    func setHeaderLabels(windSpeed: Double, windDirection: Double) {
+    func setHeaderLabels(_ windSpeed: Double, windDirection: Double) {
         self.airportName.text = runway!.iataCode + ": " + runway!.name
         self.weatherStationName.text = weather!.station + " weather station:"
         
@@ -176,7 +176,7 @@ class WindViewController:   UIViewController,
     /**
         Convert the runway heading (3 digits) to the runway number (2 digits)
     */
-    func rwyFromHeading(runwayHeading: Double) -> String {
+    func rwyFromHeading(_ runwayHeading: Double) -> String {
         let rwy = Int(round(runwayHeading/10))
         return String(format: "%02d", rwy)
     }
@@ -189,7 +189,7 @@ class WindViewController:   UIViewController,
         headwind  + : wind head on
         headWind  - : wind tail on
     */
-    func calculateXwind(windSpeed: Double, windDirection: Double, runwayHeading: Double) -> (crossWind: Double, headWind: Double) {
+    func calculateXwind(_ windSpeed: Double, windDirection: Double, runwayHeading: Double) -> (crossWind: Double, headWind: Double) {
         
         // Get the relative angle between the runway heading and the actual wind
         // in radiants (π radiants = 180 degrees)
@@ -214,27 +214,27 @@ class WindViewController:   UIViewController,
         
         // LH Crosswind
         self.lhCrosswind.text = ""
-        self.lhCrosswind.hidden = true
-        self.lhCrosswindArrow.hidden = true
-        self.lhCrosswindArrowAlert.hidden = true
+        self.lhCrosswind.isHidden = true
+        self.lhCrosswindArrow.isHidden = true
+        self.lhCrosswindArrowAlert.isHidden = true
         
         // RH Crosswind
         self.rhCrosswind.text = ""
-        self.rhCrosswind.hidden = true
-        self.rhCrosswindArrow.hidden = true
-        self.rhCrosswindArrowAlert.hidden = true
+        self.rhCrosswind.isHidden = true
+        self.rhCrosswindArrow.isHidden = true
+        self.rhCrosswindArrowAlert.isHidden = true
         
         // Tailwind
         self.tailwind.text = ""
-        self.tailwind.hidden = true
-        self.tailwindArrow.hidden = true
-        self.tailwindArrowAlert.hidden = true
+        self.tailwind.isHidden = true
+        self.tailwindArrow.isHidden = true
+        self.tailwindArrowAlert.isHidden = true
         
         // Headwind
         self.headwind.text = ""
-        self.headwind.hidden = true
-        self.headwindArrow.hidden = true
-        self.headwindArrowAlert.hidden = true
+        self.headwind.isHidden = true
+        self.headwindArrow.isHidden = true
+        self.headwindArrowAlert.isHidden = true
     }
     
     func runwayDigitsResize() {
@@ -264,7 +264,8 @@ class WindViewController:   UIViewController,
         Configure the UI with the wind speeds and
         wind direction arrows
     */
-    func displayWind(var headWind: Double, var crossWind: Double) {
+    func displayWind(_ headWind: Double, crossWind: Double) {
+        var headWind = headWind, crossWind = crossWind
         
         // Round the wind components to one decimal digit
         headWind = round(10 * headWind) / 10
@@ -285,43 +286,43 @@ class WindViewController:   UIViewController,
         }
     }
     
-    func displayLhCrosswind(crossWind: Double) {
+    func displayLhCrosswind(_ crossWind: Double) {
         self.lhCrosswind.text = String(abs(crossWind))
-        self.lhCrosswind.hidden = false
-        if abs(crossWind) <= Double(NSUserDefaults.standardUserDefaults().integerForKey("crosswind_limit")) {
-            self.lhCrosswindArrow.hidden = false
+        self.lhCrosswind.isHidden = false
+        if abs(crossWind) <= Double(UserDefaults.standard.integer(forKey: "crosswind_limit")) {
+            self.lhCrosswindArrow.isHidden = false
         } else {
-            self.lhCrosswindArrowAlert.hidden = false
+            self.lhCrosswindArrowAlert.isHidden = false
         }
     }
     
-    func displayRhCrosswind(crossWind: Double) {
+    func displayRhCrosswind(_ crossWind: Double) {
         self.rhCrosswind.text = String(abs(crossWind))
-        self.rhCrosswind.hidden = false
-        if abs(crossWind) <= Double(NSUserDefaults.standardUserDefaults().integerForKey("crosswind_limit")) {
-            self.rhCrosswindArrow.hidden = false
+        self.rhCrosswind.isHidden = false
+        if abs(crossWind) <= Double(UserDefaults.standard.integer(forKey: "crosswind_limit")) {
+            self.rhCrosswindArrow.isHidden = false
         } else {
-            self.rhCrosswindArrowAlert.hidden = false
+            self.rhCrosswindArrowAlert.isHidden = false
         }
     }
     
-    func displayTailwind(headWind: Double) {
+    func displayTailwind(_ headWind: Double) {
         self.tailwind.text = String(abs(headWind))
-        self.tailwind.hidden = false
-        if abs(headWind) <= Double(NSUserDefaults.standardUserDefaults().integerForKey("tailwind_limit")) {
-            self.tailwindArrow.hidden = false
+        self.tailwind.isHidden = false
+        if abs(headWind) <= Double(UserDefaults.standard.integer(forKey: "tailwind_limit")) {
+            self.tailwindArrow.isHidden = false
         } else {
-            self.tailwindArrowAlert.hidden = false
+            self.tailwindArrowAlert.isHidden = false
         }
     }
     
-    func displayHeadwind(headWind: Double) {
+    func displayHeadwind(_ headWind: Double) {
         self.headwind.text = String(abs(headWind))
-        self.headwind.hidden = false
-        if abs(headWind) <= Double(NSUserDefaults.standardUserDefaults().integerForKey("headwind_limit")) {
-            self.headwindArrow.hidden = false
+        self.headwind.isHidden = false
+        if abs(headWind) <= Double(UserDefaults.standard.integer(forKey: "headwind_limit")) {
+            self.headwindArrow.isHidden = false
         } else {
-            self.headwindArrowAlert.hidden = false
+            self.headwindArrowAlert.isHidden = false
         }
     }
     
@@ -331,18 +332,18 @@ class WindViewController:   UIViewController,
         Modal segue to the Tab Bar Controller which automatically points
         to the Find View Controller
     */
-    func segueToTabBarController(tabItemIndex: Int) {
-        let tabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
+    func segueToTabBarController(_ tabItemIndex: Int) {
+        let tabBarController = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
         tabBarController.selectedIndex = tabItemIndex
-        self.presentViewController(tabBarController, animated: false, completion: nil)
+        self.present(tabBarController, animated: false, completion: nil)
     }
     
-    func alertView(title: String, message: String) {
-        NSOperationQueue.mainQueue().addOperationWithBlock {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            let dismiss = UIAlertAction(title: "OK", style: .Default, handler: nil)
+    func alertView(_ title: String, message: String) {
+        OperationQueue.main.addOperation {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
             alertController.addAction(dismiss)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
 }

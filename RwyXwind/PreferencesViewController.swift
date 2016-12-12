@@ -31,7 +31,7 @@ class PreferencesViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.configureUI()
@@ -41,17 +41,17 @@ class PreferencesViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func changedHeadwindLimit(sender: UISlider) {
+    @IBAction func changedHeadwindLimit(_ sender: UISlider) {
         self.headwindLimit.text = "\(Int(sender.value))"
         self.saveLimits()
     }
     
-    @IBAction func changedTailwindLimit(sender: UISlider) {
+    @IBAction func changedTailwindLimit(_ sender: UISlider) {
         self.tailwindLimit.text = "\(Int(sender.value))"
         self.saveLimits()
     }
     
-    @IBAction func changedCrosswindLimit(sender: UISlider) {
+    @IBAction func changedCrosswindLimit(_ sender: UISlider) {
         self.crosswindLimit.text = "\(Int(sender.value))"
         self.saveLimits()
     }
@@ -87,13 +87,13 @@ class PreferencesViewController: UIViewController {
     }
     
     func setSliderThumbImages() {
-        self.headwindSlider.setThumbImage(UIImage(named: "SliderThumb"), forState: .Normal)
-        self.tailwindSlider.setThumbImage(UIImage(named: "SliderThumb"), forState: .Normal)
-        self.crosswindSlider.setThumbImage(UIImage(named: "SliderThumb"), forState: .Normal)
+        self.headwindSlider.setThumbImage(UIImage(named: "SliderThumb"), for: UIControlState())
+        self.tailwindSlider.setThumbImage(UIImage(named: "SliderThumb"), for: UIControlState())
+        self.crosswindSlider.setThumbImage(UIImage(named: "SliderThumb"), for: UIControlState())
     }
     
     func setViewBorder() {
-        self.placeholderView.layer.borderColor = UIColor.grayColor().CGColor
+        self.placeholderView.layer.borderColor = UIColor.gray.cgColor
         self.placeholderView.layer.borderWidth = 0.5
         self.placeholderView.layer.cornerRadius = 15
     }

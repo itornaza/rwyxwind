@@ -30,18 +30,18 @@ class AirportClient {
     var temporaryContext: NSManagedObjectContext!
     
     func setUpTemporaryContext() {
-        temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+        temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
         temporaryContext.persistentStoreCoordinator = sharedContext.persistentStoreCoordinator
     }
     
     // MARK: - Methods
     
-    func getAirportByCode(LetterCode LetterCode: String, completionHandler: (runway: Runway?, errorString: String?) -> Void) {
+    func getAirportByCode(LetterCode: String, completionHandler: @escaping (_ runway: Runway?, _ errorString: String?) -> Void) {
         
         self.setUpTemporaryContext()
         
         // Create the session
-        let session = NSURLSession.sharedSession()
+        let session = URLSession.shared
         var parsedResult: NSDictionary!
         
         // Create and configure the request
@@ -49,26 +49,26 @@ class AirportClient {
                         LetterCode +
                         AirportClient.Constants.UserKeyPrefix +
                         AirportClient.Constants.UserKey
-        let url = NSURL(string: urlString)!
+        let url = URL(string: urlString)!
         
         // Configure the request to return json
-        let request = NSMutableURLRequest(URL: url)
+        let request = NSMutableURLRequest(url: url)
         request.addValue(Constants.ApplicationType, forHTTPHeaderField: Constants.HttpHeader)
         
-        let task = session.dataTaskWithRequest(request) { data, response, downloadError in
+        let task = session.dataTask(with: request, completionHandler: { data, response, downloadError in
             
             if downloadError == nil {
                 do {
                     // Download succeded, parse the data
-                    parsedResult = try NSJSONSerialization.JSONObjectWithData(data!,
-                        options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    parsedResult = try JSONSerialization.jsonObject(with: data!,
+                        options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
                 } catch {
                     completionHandler(runway: nil, errorString: "Could not parse downloaded data")
                     return
                 }
                 
                 // Check API key for validity
-                if let authorization = parsedResult.valueForKey(JSONKeys.AuthorizedAPI) {
+                if let authorization = parsedResult.value(forKey: JSONKeys.AuthorizedAPI) {
                     if authorization as! Int == 0 {
                         completionHandler(runway: nil, errorString: "Access to Airports is not allowed")
                         return
@@ -76,14 +76,14 @@ class AirportClient {
                 }
                 
                 // Check IATA code for validity
-                if let result = parsedResult.valueForKey(JSONKeys.Success) {
+                if let result = parsedResult.value(forKey: JSONKeys.Success) {
                     if result as! Int == 0 {
                         completionHandler(runway: nil, errorString: "Invalid airport code")
                         return
                     }
                 }
                 
-                if let dictionary = parsedResult.valueForKey(JSONKeys.Airports) as? [[String:AnyObject]] {
+                if let dictionary = parsedResult.value(forKey: JSONKeys.Airports) as? [[String:AnyObject]] {
                     
                     for airport in dictionary {
                         
@@ -131,7 +131,7 @@ class AirportClient {
                 completionHandler(runway: nil, errorString: "Could not complete the download request")
                 return
             }
-        }
+        }) 
         task.resume()
     }
     
