@@ -55,7 +55,7 @@ class AirportClient {
         let request = NSMutableURLRequest(url: url)
         request.addValue(Constants.ApplicationType, forHTTPHeaderField: Constants.HttpHeader)
         
-        let task = session.dataTask(with: request, completionHandler: { data, response, downloadError in
+        let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, downloadError in
             
             if downloadError == nil {
                 do {
@@ -63,14 +63,14 @@ class AirportClient {
                     parsedResult = try JSONSerialization.jsonObject(with: data!,
                         options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
                 } catch {
-                    completionHandler(runway: nil, errorString: "Could not parse downloaded data")
+                    completionHandler(nil, "Could not parse downloaded data")
                     return
                 }
                 
                 // Check API key for validity
                 if let authorization = parsedResult.value(forKey: JSONKeys.AuthorizedAPI) {
                     if authorization as! Int == 0 {
-                        completionHandler(runway: nil, errorString: "Access to Airports is not allowed")
+                        completionHandler(nil, "Access to Airports is not allowed")
                         return
                     }
                 }
@@ -78,7 +78,7 @@ class AirportClient {
                 // Check IATA code for validity
                 if let result = parsedResult.value(forKey: JSONKeys.Success) {
                     if result as! Int == 0 {
-                        completionHandler(runway: nil, errorString: "Invalid airport code")
+                        completionHandler(nil, "Invalid airport code")
                         return
                     }
                 }
@@ -88,22 +88,22 @@ class AirportClient {
                     for airport in dictionary {
                         
                         if airport[JSONKeys.AirportName] == nil {
-                            completionHandler(runway: nil, errorString: "Airport name is not available")
+                            completionHandler(nil, "Airport name is not available")
                             return
                         }
                         
                         if airport[JSONKeys.AirportCode] == nil {
-                            completionHandler(runway: nil, errorString: "Airport code is not available")
+                            completionHandler(nil, "Airport code is not available")
                             return
                         }
                         
                         if airport[JSONKeys.AirportLat] == nil {
-                            completionHandler(runway: nil, errorString: "Latitude is not available")
+                            completionHandler(nil, "Latitude is not available")
                             return
                         }
                         
                         if airport[JSONKeys.AirportLong] == nil {
-                            completionHandler(runway: nil, errorString: "Longitude is not available")
+                            completionHandler(nil, "Longitude is not available")
                             return
                         }
                         
@@ -120,15 +120,15 @@ class AirportClient {
                         let runway = Runway(dictionary: runwayDictionary, context: self.temporaryContext)
 
                         // All succedded
-                        completionHandler(runway: runway, errorString: nil)
+                        completionHandler(runway, nil)
                         return
                     }
                 } else {
-                    completionHandler(runway: nil, errorString: "Could not parse airports")
+                    completionHandler(nil, "Could not parse airports")
                     return
                 }
             } else {
-                completionHandler(runway: nil, errorString: "Could not complete the download request")
+                completionHandler(nil, "Could not complete the download request")
                 return
             }
         }) 

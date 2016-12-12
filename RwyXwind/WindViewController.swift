@@ -109,7 +109,7 @@ class WindViewController:   UIViewController,
         var message = String()
         
         // Check if runway already exists before adding to bookmarks
-        let runways = self.fetchedResultsController.fetchedObjects as! [Runway]
+        let runways = self.fetchedResultsController.fetchedObjects!
         for storedRunway in runways {
             if  self.runway?.iataCode == storedRunway.iataCode && self.runway?.hdg == storedRunway.hdg {
                     addToFavorites = false
@@ -165,11 +165,9 @@ class WindViewController:   UIViewController,
     func setHeaderLabels(_ windSpeed: Double, windDirection: Double) {
         self.airportName.text = runway!.iataCode + ": " + runway!.name
         self.weatherStationName.text = weather!.station + " weather station:"
-        
-        self.actualWind.text = "\"wind from " +
-            String(Int(windDirection)) + " degrees " +
-            String(round(10 * windSpeed) / 10) + " knots\""
-        
+        let direction = String(Int(windDirection))
+        let speed = String(round(10 * windSpeed) / 10)
+        self.actualWind.text = "\"wind from " + direction + " degrees " + speed + " knots\""
         self.runwayDigits.text = self.rwyFromHeading(runway!.hdg)
     }
     
