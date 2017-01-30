@@ -15,7 +15,9 @@ import UIKit
 */
 struct Theme {
     
+    //--------------------------
     // MARK: - Shared Instance
+    //--------------------------
     
     static func sharedInstance() -> Theme {
         struct Singleton {
@@ -24,7 +26,9 @@ struct Theme {
         return Singleton.sharedInstance
     }
     
+    //--------------------------
     // MARK: - Color Scheme
+    //--------------------------
     
     let darkGray = UIColor(red: 54.0/255.0, green: 54.0/255.0, blue: 54.0/255.0, alpha: 1.0)
     let lightGray = UIColor(red: 126.0/255.0, green: 126.0/255.0, blue: 126.0/255.0, alpha: 1.0)

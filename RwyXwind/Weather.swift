@@ -19,7 +19,9 @@ import CoreData
 */
 class Weather: NSManagedObject {
     
+    //-------------------------
     // MARK: - Properties
+    //-------------------------
     
     struct Keys {
         static let Speed = "speed"
@@ -27,14 +29,18 @@ class Weather: NSManagedObject {
         static let Station = "station"
     }
     
+    //-----------------------------------------------------------
     // MARK: - Properties converted to Core Data Attributes
+    //-----------------------------------------------------------
     
     @NSManaged var speed: Double
     @NSManaged var direction: Double
     @NSManaged var station: String
     @NSManaged var runway: Runway
     
+    //-------------------------
     // MARK: - Constructors
+    //-------------------------
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)

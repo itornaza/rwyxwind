@@ -12,7 +12,9 @@ import CoreData
 
 class AirportClient {
     
+    //---------------------------
     // MARK: - Shared Instance
+    //---------------------------
     
     class func sharedInstance() -> AirportClient {
         struct Singleton {
@@ -21,7 +23,9 @@ class AirportClient {
         return Singleton.sharedInstance
     }
     
+    //-------------------------------
     // MARK: - Core Data properties
+    //-------------------------------
     
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -34,7 +38,9 @@ class AirportClient {
         temporaryContext.persistentStoreCoordinator = sharedContext.persistentStoreCoordinator
     }
     
+    //---------------------
     // MARK: - Methods
+    //---------------------
     
     func getAirportByCode(LetterCode: String, completionHandler: @escaping (_ runway: Runway?, _ errorString: String?) -> Void) {
         
@@ -68,19 +74,21 @@ class AirportClient {
                 }
                 
                 // Check API key for validity
-                if let authorization = parsedResult.value(forKey: JSONKeys.AuthorizedAPI) {
-                    if authorization as! Int == 0 {
-                        completionHandler(nil, "Access to Airports is not allowed")
-                        return
-                    }
+                if parsedResult[JSONKeys.AuthorizedAPI]! as? Int == 0 {
+                    completionHandler(nil, "Access to Airports is not allowed")
+                    return
                 }
                 
                 // Check IATA code for validity
-                if let result = parsedResult.value(forKey: JSONKeys.Success) {
-                    if result as! Int == 0 {
+                if parsedResult[JSONKeys.ErrorMessage] != nil {
+                    let testString = parsedResult[JSONKeys.ErrorMessage]! as? String
+                    if testString?.range(of: Constants.InvalidAirport) != nil {
                         completionHandler(nil, "Invalid airport code")
                         return
                     }
+                } else {
+                    completionHandler(nil, "Invalid airport code")
+                    return
                 }
                 
                 if let dictionary = parsedResult.value(forKey: JSONKeys.Airports) as? [[String:AnyObject]] {

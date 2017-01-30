@@ -10,7 +10,9 @@ import UIKit
 
 class PreferencesViewController: UIViewController {
     
+    //----------------------
     // MARK: - Outlets
+    //----------------------
     
     @IBOutlet weak var headwindLimit: UILabel!
     @IBOutlet weak var tailwindLimit: UILabel!
@@ -25,7 +27,9 @@ class PreferencesViewController: UIViewController {
     @IBOutlet weak var tailwindSlider: UISlider!
     @IBOutlet weak var crosswindSlider: UISlider!
 
+    //----------------------
     // MARK: - Lifecycle
+    //----------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +43,9 @@ class PreferencesViewController: UIViewController {
         self.initializeLabelsValues()
     }
     
+    //----------------------
     // MARK: - Actions
+    //----------------------
     
     @IBAction func changedHeadwindLimit(_ sender: UISlider) {
         self.headwindLimit.text = "\(Int(sender.value))"
@@ -56,7 +62,9 @@ class PreferencesViewController: UIViewController {
         self.saveLimits()
     }
     
+    //----------------------
     // MARK: - Methods
+    //----------------------
     
     func saveLimits() {
         WindLimits.saveWindLimits(
@@ -78,7 +86,9 @@ class PreferencesViewController: UIViewController {
         self.crosswindSlider.value = Float(WindLimits.getCrosswindLimit())
     }
     
+    //----------------------
     // MARK: - Helpers
+    //----------------------
     
     func configureUI() {
         self.setViewBorder()

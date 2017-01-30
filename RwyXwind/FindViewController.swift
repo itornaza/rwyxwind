@@ -17,7 +17,9 @@ class FindViewController:   UIViewController,
                             UITextFieldDelegate
 {
 
+    //----------------------
     // MARK: - Properties
+    //----------------------
     
     var runway: Runway?
     var weather: Weather?
@@ -32,7 +34,9 @@ class FindViewController:   UIViewController,
         case invalidRunwayHeading
     }
     
+    //----------------------
     // MARK: - Outlets
+    //----------------------
     
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var iataCode: UITextField!
@@ -43,7 +47,9 @@ class FindViewController:   UIViewController,
     @IBOutlet weak var runwayHeadingLabel: UILabel!
     @IBOutlet weak var calculateButtonTouch: UIButton!
     
+    //----------------------
     // MARK: - Lifecycle
+    //----------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +75,9 @@ class FindViewController:   UIViewController,
         self.configureUI()
     }
     
+    //----------------------
     // MARK: - Actions
+    //----------------------
     
     @IBAction func calculateXwind(_ sender: AnyObject) {
         
@@ -104,11 +112,11 @@ class FindViewController:   UIViewController,
         }
     }
     
+    //---------------------------------
     // MARK: - UIPickerView delegate
+    //---------------------------------
     
-    /**
-        Font color
-    */
+    /// Font color
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let titleData = pickerData[component][row]
         let myTitle = NSAttributedString(
@@ -120,30 +128,23 @@ class FindViewController:   UIViewController,
         return myTitle
     }
     
-    /**
-        The number of columns of data
-    */
+    /// The number of columns of data
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return self.numberOfRotors
     }
     
-    /**
-        The number of rows of data
-    */
+    
+    /// The number of rows of data
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerData[component].count
     }
     
-    /**
-        The data to return for the row and component (column) that's being passed in
-    */
+    /// The data to return for the row and component (column) that's being passed in
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[component][row]
     }
     
-    /**
-        didSelectRow
-    */
+    /// didSelectRow
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let rotor1 = Int(pickerData[0][picker.selectedRow(inComponent: 0)])
         let rotor2 = Int(pickerData[1][picker.selectedRow(inComponent: 1)])
@@ -166,11 +167,11 @@ class FindViewController:   UIViewController,
         }
     }
     
+    //-------------------------------
     // MARK: - UITextField delegate
+    //-------------------------------
     
-    /**
-        Validate the iataCode text field to allow only up to letters
-    */
+    /// Validate the iataCode text field to allow only up to letters
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         var lettersOnly: Bool = false
         var properLength: Bool = false
@@ -203,21 +204,23 @@ class FindViewController:   UIViewController,
         return lettersOnly && properLength
     }
     
-    /**
-        Hide the keyboard after editing
-    */
+    /// Hide the keyboard after editing
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
+    //----------------------------------
     // MARK: - Tap recognizer callback
+    //----------------------------------
     
     func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
+    //----------------------
     // MARK: - Helpers
+    //----------------------
     
     func setPickerData() {
         self.pickerData = [
@@ -238,9 +241,8 @@ class FindViewController:   UIViewController,
         self.view.addGestureRecognizer(tapRecognizer!)
     }
     
-    /**
-        Valid numbers are: 000 - 360
-    */
+    
+    /// Valid numbers are: 000 - 360
     func validateRunwayHeading(_ runwayHeading: Int) throws {
         if !(runwayHeading <= 360 && runwayHeading >= 0) {
             throw ValidationError.invalidRunwayHeading
@@ -312,11 +314,11 @@ class FindViewController:   UIViewController,
         self.calculate.layer.shadowOpacity = 1.0
     }
     
+    //-----------------------------
     // MARK: - Alerts and segues
+    //-----------------------------
     
-    /**
-        Throws an alert view to display error messages
-    */
+    /// Throws an alert view to display error messages
     func alertView(_ title: String, message: String) {
         OperationQueue.main.addOperation {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -326,9 +328,7 @@ class FindViewController:   UIViewController,
         }
     }
     
-    /**
-        Modal segue to the wind view controller using the main thread
-    */
+    /// Modal segue to the wind view controller using the main thread
     func segueToWindViewController() {
         OperationQueue.main.addOperation {
             let windVC = self.storyboard!.instantiateViewController(withIdentifier: "WindViewController") as!

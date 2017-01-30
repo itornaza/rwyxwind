@@ -15,7 +15,9 @@ class FavoritesViewController:  UIViewController,
                                 UITableViewDataSource,
                                 NSFetchedResultsControllerDelegate {
     
+    //-------------------------------
     // MARK: - Core data properties
+    //-------------------------------
     
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -31,11 +33,15 @@ class FavoritesViewController:  UIViewController,
         return fetchedResultsController
         }()
     
+    //----------------------
     // MARK: - Outlets
+    //----------------------
     
     @IBOutlet weak var tableView: UITableView!
     
+    //----------------------
     // MARK: - Lifecycle
+    //----------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +68,9 @@ class FavoritesViewController:  UIViewController,
         self.fetchedResultsController.delegate = nil
     }
     
-    // Mark: UITableView delegate
+    //-------------------------------
+    // MARK: - UITableView delegate
+    //-------------------------------
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section]
@@ -70,7 +78,6 @@ class FavoritesViewController:  UIViewController,
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         // Dequeue a reusable cell from the table, using the reuse identifier
         let cell = tableView.dequeueReusableCell(withIdentifier: "RunwayCell")
         
@@ -88,7 +95,6 @@ class FavoritesViewController:  UIViewController,
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         // Get the wind view controller from storyboard
         let windVC = self.storyboard!.instantiateViewController(withIdentifier: "WindViewController") as! WindViewController
         
@@ -169,19 +175,17 @@ class FavoritesViewController:  UIViewController,
         self.tableView.endUpdates()
     }
     
-    /**
-        Cell color theme
-    */
+    /// Cell color theme
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = Theme.sharedInstance().darkGray
         cell.textLabel?.textColor = Theme.sharedInstance().green
     }
     
+    //----------------------
     // MARK: - Helpers
+    //----------------------
     
-    /**
-        The active runway is in the form of 2 digits
-    */
+    /// The active runway is in the form of 2 digits
     func rwyFromHeading(_ runwayHeading: Double) -> String {
         let rwy = Int(round(runwayHeading/10))
         return String(format: "%02d", rwy)
@@ -191,7 +195,9 @@ class FavoritesViewController:  UIViewController,
         self.tableView.backgroundColor = Theme.sharedInstance().darkGray
     }
     
+    //----------------------
     // MARK: - Alerts
+    //----------------------
     
     func alertView(_ title: String, message: String) {
         OperationQueue.main.addOperation {

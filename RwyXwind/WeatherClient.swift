@@ -12,7 +12,9 @@ import CoreData
 
 class WeatherClient {
     
+    //---------------------------
     // MARK: - Shared Instance
+    //---------------------------
     
     class func sharedInstance() -> WeatherClient {
         struct Singleton {
@@ -21,7 +23,9 @@ class WeatherClient {
         return Singleton.sharedInstance
     }
     
+    //------------------------------
     // MARK: - Core Data properties
+    //------------------------------
     
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -34,7 +38,9 @@ class WeatherClient {
         temporaryContext.persistentStoreCoordinator = sharedContext.persistentStoreCoordinator
     }
     
+    //--------------------
     // MARK: - Methods
+    //--------------------
     
     func getWeatherByCoordinates(_ lat: Double, long: Double, completionHandler: @escaping (_ weather: Weather?, _ errorString: String?) -> Void) {
         
