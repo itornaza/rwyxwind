@@ -14,7 +14,9 @@ import Foundation
 */
 struct WindLimits {
     
+    //-----------------------
     // MARK: - Properties
+    //-----------------------
     
     struct Keys {
         static let HeadwindLimit = "headwind_limit"
@@ -28,7 +30,9 @@ struct WindLimits {
         static let CrosswindDefaultLimit: Int = 20
     }
     
-    // Type methods
+    //-----------------------
+    // MARK: - Type methods
+    //-----------------------
     
     static func setUserDefaultLimits() {
         UserDefaults.standard.set(

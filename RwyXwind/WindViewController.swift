@@ -14,13 +14,17 @@ class WindViewController:   UIViewController,
                             UITabBarControllerDelegate,
                             NSFetchedResultsControllerDelegate {
     
+    //----------------------
     // MARK: - Properties
+    //----------------------
     
     // Transfered from FindViewController
     var runway: Runway?
     var weather: Weather?
     
+    //----------------------
     // Constants
+    //----------------------
     
     enum TabItemIndex: Int {
         case find = 0
@@ -42,7 +46,9 @@ class WindViewController:   UIViewController,
         return fetchedResultsController
         }()
     
+    //----------------------
     // MARK: - Outlets
+    //----------------------
     
     @IBOutlet weak var headwind: UILabel!
     @IBOutlet weak var tailwind: UILabel!
@@ -61,7 +67,9 @@ class WindViewController:   UIViewController,
     @IBOutlet weak var actualWind: UILabel!
     @IBOutlet weak var runwayDigits: UILabel!
     
+    //----------------------
     // MARK: - Lifecycle
+    //----------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +102,9 @@ class WindViewController:   UIViewController,
         self.fetchRunways()
     }
     
+    //----------------------
     // MARK: - Actions
+    //----------------------
     
     @IBAction func FindButtonTouchUp(_ sender: AnyObject) {
         segueToTabBarController(TabItemIndex.find.rawValue)
@@ -149,11 +159,11 @@ class WindViewController:   UIViewController,
         self.alertView((self.runway?.name)! + ", RWY: " + self.rwyFromHeading((self.runway?.hdg)!), message: message)
     }
     
+    //----------------------
     // MARK: - Helpers
+    //----------------------
     
-    /**
-        Fetch all runway objects from core data and report on error
-    */
+    /// Fetch all runway objects from core data and report on error
     func fetchRunways() {
         do {
             try fetchedResultsController.performFetch()
@@ -171,9 +181,7 @@ class WindViewController:   UIViewController,
         self.runwayDigits.text = self.rwyFromHeading(runway!.hdg)
     }
     
-    /**
-        Convert the runway heading (3 digits) to the runway number (2 digits)
-    */
+    /// Convert the runway heading (3 digits) to the runway number (2 digits)
     func rwyFromHeading(_ runwayHeading: Double) -> String {
         let rwy = Int(round(runwayHeading/10))
         return String(format: "%02d", rwy)
@@ -201,9 +209,7 @@ class WindViewController:   UIViewController,
         return (crossWind, headWind)
     }
     
-    /**
-        Configure the UI upon load to hide and zeroise wind elements
-    */
+    /// Configure the UI upon load to hide and zeroise wind elements
     func configureUI() {
         
         self.setLabelColors()
@@ -258,10 +264,7 @@ class WindViewController:   UIViewController,
         self.runwayDigits.textColor = Theme.sharedInstance().lightGray
     }
     
-    /**
-        Configure the UI with the wind speeds and
-        wind direction arrows
-    */
+    /// Configure the UI with the wind speeds and wind direction arrows
     func displayWind(_ headWind: Double, crossWind: Double) {
         var headWind = headWind, crossWind = crossWind
         
@@ -324,12 +327,11 @@ class WindViewController:   UIViewController,
         }
     }
     
+    //-----------------------------
     // MARK: - Alerts and segues
+    //-----------------------------
     
-    /**
-        Modal segue to the Tab Bar Controller which automatically points
-        to the Find View Controller
-    */
+    /// Modal segue to the Tab Bar Controller which automatically points to the Find View Controller
     func segueToTabBarController(_ tabItemIndex: Int) {
         let tabBarController = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
         tabBarController.selectedIndex = tabItemIndex

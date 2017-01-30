@@ -17,9 +17,11 @@ extension AirportClient {
         static let AirportString = "match"
         static let ApplicationType = "application/json"
         static let HttpHeader = "Accept"
+        static let InvalidAirport = "Invalid airport"
     }
     
     struct JSONKeys {
+        static let ErrorMessage = "errorMessage"
         static let Success = "success"
         static let AuthorizedAPI = "authorisedAPI"
         static let Airports = "airports"

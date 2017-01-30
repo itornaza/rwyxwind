@@ -15,7 +15,9 @@ import CoreData
 
 class Runway: NSManagedObject {
     
+    //----------------------
     // MARK: - Properties
+    //----------------------
     
     struct Keys {
         static let IATACode = "iata_code"
@@ -26,7 +28,9 @@ class Runway: NSManagedObject {
         static let Wx   = "wx"
     }
     
+    //-------------------------------------------------------
     // MARK: - Properties converted to Core Data Attributes
+    //-------------------------------------------------------
     
     @NSManaged var iataCode: String
     @NSManaged var name: String
@@ -35,7 +39,9 @@ class Runway: NSManagedObject {
     @NSManaged var hdg: Double
     @NSManaged var wx: Weather
     
+    //-------------------------
     // MARK: - Constructors
+    //-------------------------
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
