@@ -8,6 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		722779AB1BCE844700F9C8C8 /* WindLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722779AA1BCE844700F9C8C8 /* WindLimits.swift */; };
+		722EB4E81E4507480084B383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE1B1BB06C4900A48DCF /* AppDelegate.swift */; };
+		722EB4E91E4507490084B383 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE1B1BB06C4900A48DCF /* AppDelegate.swift */; };
+		722EB4EA1E4507540084B383 /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE1D1BB06C4900A48DCF /* FindViewController.swift */; };
+		722EB4EB1E4507550084B383 /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE1D1BB06C4900A48DCF /* FindViewController.swift */; };
+		722EB4EC1E45075D0084B383 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B63ABA1BCAB94900DF9DF8 /* PreferencesViewController.swift */; };
+		722EB4ED1E45075D0084B383 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B63ABA1BCAB94900DF9DF8 /* PreferencesViewController.swift */; };
+		722EB4EE1E4507650084B383 /* WindLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722779AA1BCE844700F9C8C8 /* WindLimits.swift */; };
+		722EB4EF1E4507660084B383 /* WindLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722779AA1BCE844700F9C8C8 /* WindLimits.swift */; };
+		722EB4F01E4507750084B383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7258AE1F1BB06C4900A48DCF /* Main.storyboard */; };
+		722EB4F11E4507760084B383 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7258AE1F1BB06C4900A48DCF /* Main.storyboard */; };
+		722EB4F41E4507910084B383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7258AE251BB06C4900A48DCF /* Assets.xcassets */; };
+		722EB4F51E4507910084B383 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7258AE251BB06C4900A48DCF /* Assets.xcassets */; };
 		723CB03A1BCA68360099255D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723CB0391BCA68360099255D /* Theme.swift */; };
 		723CB03B1BCA68360099255D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723CB0391BCA68360099255D /* Theme.swift */; };
 		723CB03C1BCA68360099255D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723CB0391BCA68360099255D /* Theme.swift */; };
@@ -341,6 +353,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				722EB4F41E4507910084B383 /* Assets.xcassets in Resources */,
+				722EB4F01E4507750084B383 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +362,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				722EB4F51E4507910084B383 /* Assets.xcassets in Resources */,
+				722EB4F11E4507760084B383 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,10 +396,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				722EB4E81E4507480084B383 /* AppDelegate.swift in Sources */,
 				7258AE571BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */,
 				7258AE631BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */,
 				7258AE5B1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */,
 				7258AE4F1BB06CCC00A48DCF /* AirportClient.swift in Sources */,
+				722EB4EE1E4507650084B383 /* WindLimits.swift in Sources */,
+				722EB4EC1E45075D0084B383 /* PreferencesViewController.swift in Sources */,
+				722EB4EA1E4507540084B383 /* FindViewController.swift in Sources */,
 				723CB03B1BCA68360099255D /* Theme.swift in Sources */,
 				723F33441BB2AFA800C6FC5E /* Runway.swift in Sources */,
 				72D0F5B91BB590F900C21207 /* WindViewController.swift in Sources */,
@@ -398,10 +418,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				722EB4E91E4507490084B383 /* AppDelegate.swift in Sources */,
 				7258AE581BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */,
 				7258AE641BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */,
 				7258AE5C1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */,
 				7258AE501BB06CCC00A48DCF /* AirportClient.swift in Sources */,
+				722EB4EF1E4507660084B383 /* WindLimits.swift in Sources */,
+				722EB4ED1E45075D0084B383 /* PreferencesViewController.swift in Sources */,
+				722EB4EB1E4507550084B383 /* FindViewController.swift in Sources */,
 				723CB03C1BCA68360099255D /* Theme.swift in Sources */,
 				723F33451BB2AFA800C6FC5E /* Runway.swift in Sources */,
 				72D0F5BA1BB590F900C21207 /* WindViewController.swift in Sources */,
