@@ -13,10 +13,7 @@ import CoreData
 // @objc(Weather) is not needed as the "Current Product Module" is selected
 // in the class inspector on the xcdatamodeld file
 
-/**
-    Integrated with core data to support weather forecast
-    functionality scheduled for later versions
-*/
+/// Integrated with core data to support weather forecast functionality scheduled for later versions
 class Weather: NSManagedObject {
     
     //-------------------------
@@ -47,7 +44,6 @@ class Weather: NSManagedObject {
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
-        
         // Get the entity from the core data model
         let entity = NSEntityDescription.entity(forEntityName: "Weather", in: context)!
         

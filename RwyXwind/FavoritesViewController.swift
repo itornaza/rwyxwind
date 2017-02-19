@@ -7,13 +7,9 @@
 //
 
 import UIKit
-import Foundation
 import CoreData
 
-class FavoritesViewController:  UIViewController,
-                                UITableViewDelegate,
-                                UITableViewDataSource,
-                                NSFetchedResultsControllerDelegate {
+class FavoritesViewController:  UIViewController {
     
     //-------------------------------
     // MARK: - Core data properties
@@ -25,8 +21,12 @@ class FavoritesViewController:  UIViewController,
     
     lazy var fetchedResultsController: NSFetchedResultsController<Runway> = {
         let fetchRequest = NSFetchRequest<Runway>(entityName: "Runway")
-        fetchRequest.sortDescriptors = []
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor(key: Runway.Keys.ShortDescriptor.IATACode, ascending: true),
+            NSSortDescriptor(key: Runway.Keys.ShortDescriptor.Hdg, ascending: true)
+        ]
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
@@ -38,6 +38,8 @@ class FavoritesViewController:  UIViewController,
     //----------------------
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var navigationBar: UINavigationBar!
+    @IBOutlet weak var editButton: UIBarButtonItem!
     
     //----------------------
     // MARK: - Lifecycle
@@ -45,8 +47,48 @@ class FavoritesViewController:  UIViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set up fetched results controller
+        self.configureFetch()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configureUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.deconfigureFetch()
+    }
+    
+    //-------------------------------
+    // MARK: - Actions
+    //-------------------------------
+    
+    @IBAction func edit(_ sender: UIBarButtonItem) {
+        if self.tableView.isEditing {
+            // If in Edit mode, switch to normal mode
+            self.tableView.setEditing(false, animated: true)
+            self.tableView.isEditing = false
+            self.editButton.title = "Edit"
+        } else {
+            // If in Normal mode, switch to editing mode
+            self.tableView.setEditing(true, animated: true)
+            self.tableView.isEditing = true
+            self.editButton.title = "Done"
+        }
+    }
+    
+    //----------------------
+    // MARK: - Helpers
+    //----------------------
+    
+    /// The active runway is in the form of 2 digits
+    func rwyFromHeading(_ runwayHeading: Double) -> String {
+        let rwy = Int(round(runwayHeading/10))
+        return String(format: "%02d", rwy)
+    }
+    
+    func configureFetch() {
         fetchedResultsController.delegate = self
         do {
             try fetchedResultsController.performFetch()
@@ -55,23 +97,32 @@ class FavoritesViewController:  UIViewController,
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.configureUI()
+    func configureUI() {
+        self.tableView.backgroundColor = Theme.sharedInstance().darkGray
+        self.navigationBar.backgroundColor = Theme.sharedInstance().darkGray
         self.tableView.reloadData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Clear leftovers
+    func deconfigureFetch() {
         self.fetchedResultsController.delegate = nil
     }
     
-    //-------------------------------
-    // MARK: - UITableView delegate
-    //-------------------------------
+    //----------------------
+    // MARK: - Alerts
+    //----------------------
     
+    func alertView(_ title: String, message: String) {
+        OperationQueue.main.addOperation {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(dismiss)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+}
+    
+extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
@@ -80,9 +131,10 @@ class FavoritesViewController:  UIViewController,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Dequeue a reusable cell from the table, using the reuse identifier
         let cell = tableView.dequeueReusableCell(withIdentifier: "RunwayCell")
-        
-        // Show the little arrow on the right hand side of the row
+
+        // Configure row appearance
         cell!.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        cell!.selectionStyle = UITableViewCellSelectionStyle.none
         
         // Find the model object that corresponds to that row
         let runway = fetchedResultsController.object(at: indexPath) 
@@ -90,7 +142,7 @@ class FavoritesViewController:  UIViewController,
         // Set the label in the cell with the data from the model object
         cell!.textLabel?.text = runway.iataCode + " rwy " + self.rwyFromHeading(runway.hdg) + ": " + runway.name
         
-        // return the cell.
+        // return the cell
         return cell!
     }
     
@@ -128,84 +180,52 @@ class FavoritesViewController:  UIViewController,
             }
     }
     
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.tableView.beginUpdates()
-    }
-    
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-        didChange sectionInfo: NSFetchedResultsSectionInfo,
-        atSectionIndex sectionIndex: Int,
-        for type: NSFetchedResultsChangeType) {
-            
-            switch type {
-            case .insert:
-                self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-                
-            case .delete:
-                self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-                
-            default:
-                return
-            }
-    }
-
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-        didChange anObject: Any,
-        at indexPath: IndexPath?,
-        for type: NSFetchedResultsChangeType,
-        newIndexPath: IndexPath?) {
-            
-            switch type {
-            case .insert:
-                tableView.insertRows(at: [newIndexPath!], with: .fade)
-                
-            case .delete:
-                tableView.deleteRows(at: [indexPath!], with: .fade)
-                
-            case .move:
-                tableView.deleteRows(at: [indexPath!], with: .fade)
-                tableView.insertRows(at: [newIndexPath!], with: .fade)
-                
-            default:
-                return
-            }
-    }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.tableView.endUpdates()
-    }
-    
     /// Cell color theme
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.backgroundColor = Theme.sharedInstance().darkGray
         cell.textLabel?.textColor = Theme.sharedInstance().green
     }
+}
+
+extension FavoritesViewController: NSFetchedResultsControllerDelegate {
     
-    //----------------------
-    // MARK: - Helpers
-    //----------------------
-    
-    /// The active runway is in the form of 2 digits
-    func rwyFromHeading(_ runwayHeading: Double) -> String {
-        let rwy = Int(round(runwayHeading/10))
-        return String(format: "%02d", rwy)
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
     }
     
-    func configureUI() {
-        self.tableView.backgroundColor = Theme.sharedInstance().darkGray
-    }
-    
-    //----------------------
-    // MARK: - Alerts
-    //----------------------
-    
-    func alertView(_ title: String, message: String) {
-        OperationQueue.main.addOperation {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertController.addAction(dismiss)
-            self.present(alertController, animated: true, completion: nil)
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int,
+                    for type: NSFetchedResultsChangeType) {
+        switch type {
+        case .insert:
+            self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+        case .delete:
+            self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+        default:
+            break
         }
     }
-
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+        case .move:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            tableView.insertRows(at: [newIndexPath!], with: .fade)
+        default:
+            break
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
+    }
 }

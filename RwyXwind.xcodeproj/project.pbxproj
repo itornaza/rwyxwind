@@ -52,6 +52,9 @@
 		7258AE621BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE611BB2F3C300A48DCF /* CoreDataStackManager.swift */; };
 		7258AE631BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE611BB2F3C300A48DCF /* CoreDataStackManager.swift */; };
 		7258AE641BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE611BB2F3C300A48DCF /* CoreDataStackManager.swift */; };
+		7284A4F01E5A17E400A9B5EF /* WindViewConrollerAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7284A4EF1E5A17E400A9B5EF /* WindViewConrollerAnimations.swift */; };
+		7284A4F11E5A17E400A9B5EF /* WindViewConrollerAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7284A4EF1E5A17E400A9B5EF /* WindViewConrollerAnimations.swift */; };
+		7284A4F21E5A17E400A9B5EF /* WindViewConrollerAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7284A4EF1E5A17E400A9B5EF /* WindViewConrollerAnimations.swift */; };
 		72B63ABB1BCAB94900DF9DF8 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B63ABA1BCAB94900DF9DF8 /* PreferencesViewController.swift */; };
 		72D0F5B81BB590F900C21207 /* WindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D0F5B71BB590F900C21207 /* WindViewController.swift */; };
 		72D0F5B91BB590F900C21207 /* WindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D0F5B71BB590F900C21207 /* WindViewController.swift */; };
@@ -102,6 +105,7 @@
 		7258AE551BB06CFF00A48DCF /* AirportClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportClientConstants.swift; sourceTree = "<group>"; };
 		7258AE591BB06D1400A48DCF /* WeatherClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherClientConstants.swift; sourceTree = "<group>"; };
 		7258AE611BB2F3C300A48DCF /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		7284A4EF1E5A17E400A9B5EF /* WindViewConrollerAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindViewConrollerAnimations.swift; sourceTree = "<group>"; };
 		72B63ABA1BCAB94900DF9DF8 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		72D0F5B71BB590F900C21207 /* WindViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindViewController.swift; sourceTree = "<group>"; };
 		72D0F5BB1BB6FE4000C21207 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -231,6 +235,7 @@
 				7258AE1D1BB06C4900A48DCF /* FindViewController.swift */,
 				72D0F5BB1BB6FE4000C21207 /* FavoritesViewController.swift */,
 				72D0F5B71BB590F900C21207 /* WindViewController.swift */,
+				7284A4EF1E5A17E400A9B5EF /* WindViewConrollerAnimations.swift */,
 				72B63ABA1BCAB94900DF9DF8 /* PreferencesViewController.swift */,
 			);
 			name = Controllers;
@@ -378,6 +383,7 @@
 				72D0F5B81BB590F900C21207 /* WindViewController.swift in Sources */,
 				723F33431BB2AFA800C6FC5E /* Runway.swift in Sources */,
 				7258AE1E1BB06C4900A48DCF /* FindViewController.swift in Sources */,
+				7284A4F01E5A17E400A9B5EF /* WindViewConrollerAnimations.swift in Sources */,
 				723CB03A1BCA68360099255D /* Theme.swift in Sources */,
 				722779AB1BCE844700F9C8C8 /* WindLimits.swift in Sources */,
 				72B63ABB1BCAB94900DF9DF8 /* PreferencesViewController.swift in Sources */,
@@ -400,6 +406,7 @@
 				7258AE571BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */,
 				7258AE631BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */,
 				7258AE5B1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */,
+				7284A4F11E5A17E400A9B5EF /* WindViewConrollerAnimations.swift in Sources */,
 				7258AE4F1BB06CCC00A48DCF /* AirportClient.swift in Sources */,
 				722EB4EE1E4507650084B383 /* WindLimits.swift in Sources */,
 				722EB4EC1E45075D0084B383 /* PreferencesViewController.swift in Sources */,
@@ -422,6 +429,7 @@
 				7258AE581BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */,
 				7258AE641BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */,
 				7258AE5C1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */,
+				7284A4F21E5A17E400A9B5EF /* WindViewConrollerAnimations.swift in Sources */,
 				7258AE501BB06CCC00A48DCF /* AirportClient.swift in Sources */,
 				722EB4EF1E4507660084B383 /* WindLimits.swift in Sources */,
 				722EB4ED1E45075D0084B383 /* PreferencesViewController.swift in Sources */,
