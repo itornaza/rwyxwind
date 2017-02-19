@@ -26,6 +26,12 @@ class Runway: NSManagedObject {
         static let Long = "long"
         static let Hdg  = "hdg"
         static let Wx   = "wx"
+        
+        // Keys to be used for the ShortDescriptor attribute within the fetchedResultsController
+        struct ShortDescriptor {
+            static let IATACode = "iataCode"
+            static let Hdg = "hdg"
+        }
     }
     
     //-------------------------------------------------------
@@ -48,7 +54,6 @@ class Runway: NSManagedObject {
     }
     
     init(dictionary: [String: AnyObject], context: NSManagedObjectContext) {
-        
         // Get the entity from the Virtual_Tourist.xcdatamodeld
         let entity = NSEntityDescription.entity(forEntityName: "Runway", in: context)!
         

@@ -10,9 +10,7 @@ import UIKit
 import Foundation
 import CoreData
 
-class WindViewController:   UIViewController,
-                            UITabBarControllerDelegate,
-                            NSFetchedResultsControllerDelegate {
+class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetchedResultsControllerDelegate {
     
     //----------------------
     // MARK: - Properties
@@ -100,6 +98,14 @@ class WindViewController:   UIViewController,
         
         // Get the bokmarked runways from core data
         self.fetchRunways()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.animateHeadwind()
+        self.animateTailWind()
+        self.animateLhCrosswind()
+        self.animateRhCrosswind()
     }
     
     //----------------------
@@ -275,15 +281,19 @@ class WindViewController:   UIViewController,
         // Display X-axis wind component
         if crossWind < 0 {
             self.displayLhCrosswind(crossWind)
-        } else {
+        } else if crossWind > 0 {
             self.displayRhCrosswind(crossWind)
+        } else if crossWind == 0 {
+            // Display nothing
         }
         
         // Display Y-axis wind component
         if headWind < 0 {
             self.displayTailwind(headWind)
-        } else {
+        } else if headWind > 0 {
             self.displayHeadwind(headWind)
+        } else if headWind == 0 {
+            // Display nothing
         }
     }
     

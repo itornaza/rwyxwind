@@ -8,10 +8,7 @@
 
 import Foundation
 
-/**
-    Packs functionality for the wind limits and integrates
-    with the NSUserDefaults
-*/
+/// Packs functionality for the wind limits and integrates with the NSUserDefaults
 struct WindLimits {
     
     //-----------------------
