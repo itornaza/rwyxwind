@@ -24,6 +24,8 @@ extension WeatherClient {
         static let Wind = "wind"
         static let WindDirection = "deg"
         static let WindSpeed = "speed"
+        static let Weather = "weather"
+        static let Description = "description"
     }
     
 }

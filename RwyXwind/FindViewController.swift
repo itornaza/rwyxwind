@@ -10,12 +10,7 @@ import UIKit
 import Darwin
 import CoreData
 
-class FindViewController:   UIViewController,
-                            UITabBarControllerDelegate,
-                            UIPickerViewDelegate,
-                            UIPickerViewDataSource,
-                            UITextFieldDelegate
-{
+class FindViewController:   UIViewController, UITabBarControllerDelegate {
 
     //----------------------
     // MARK: - Properties
@@ -80,134 +75,74 @@ class FindViewController:   UIViewController,
     //----------------------
     
     @IBAction func calculateXwind(_ sender: AnyObject) {
-        
-        // IATA code is required
+        // Check for non empty required field
         if (self.iataCode.text! == "") {
-            alertView("Invalid input", message: "Input IATA code")
+            alertView("Invalid input", message: "Please, input IATA or ICAO code to continue")
         } else {
-            
-            // Start the spinner
-            self.startSpinner()
-            
-            // Get the runway and weather from the APIs
-            AirportClient.sharedInstance().getAirportByCode(LetterCode: self.iataCode.text!) { runway, error in
-                if error != nil {
-                    self.alertView("Airport service error", message: error!)
-                } else {
-                    self.runway = runway!
-                    self.runway?.hdg = self.heading
-                    WeatherClient.sharedInstance().getWeatherByCoordinates(runway!.lat, long: runway!.long) { weather, error in
-                        if error != nil {
-                            self.alertView("Weather service error", message: error!)
-                        } else {
-                            self.weather = weather!
-                            self.segueToWindViewController()
+            // Distinguish between IATA, ICAO or invalid format codes
+            var letterCode: String?
+            let codeCategory = self.getCodeCategory(code: self.iataCode.text!)
+            if codeCategory == nil {
+                self.alertView("Airport service error", message: "Input 3 letters for IATA or \n4 letters for ICAO")
+            } else if codeCategory == AirportDataClient.Constants.IsIcao {
+                // Start the spinner
+                self.startSpinner()
+                
+                AirportDataClient.getIata(icao: self.iataCode.text!) { iata, errorString in
+                    if errorString == nil {
+                        letterCode = iata!
+                        // Get the runway and weather from the APIs
+                        AirportClient.sharedInstance().getAirportByCode(LetterCode: letterCode!) { runway, error in
+                            if error != nil {
+                                self.alertView("Airport service error", message: error!)
+                            } else {
+                                self.runway = runway!
+                                self.runway?.hdg = self.heading
+                                WeatherClient.sharedInstance().getWeatherByCoordinates(runway!.lat, long: runway!.long) { weather, error in
+                                    if error != nil {
+                                        self.alertView("Weather service error", message: error!)
+                                    } else {
+                                        self.weather = weather!
+                                        self.segueToWindViewController()
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        self.alertView("Airport service error", message: errorString!)
+                    }
+                    
+                    // Stop the spinner when networking is over
+                    self.stopSpinner()
+                }
+            } else if codeCategory == AirportDataClient.Constants.IsIata {
+                letterCode = self.iataCode.text!
+                
+                // Start the spinner
+                self.startSpinner()
+                
+                // Get the runway and weather from the APIs
+                AirportClient.sharedInstance().getAirportByCode(LetterCode: letterCode!) { runway, error in
+                    if error != nil {
+                        self.alertView("Airport service error", message: error!)
+                    } else {
+                        self.runway = runway!
+                        self.runway?.hdg = self.heading
+                        WeatherClient.sharedInstance().getWeatherByCoordinates(runway!.lat, long: runway!.long) { weather, error in
+                            if error != nil {
+                                self.alertView("Weather service error", message: error!)
+                            } else {
+                                self.weather = weather!
+                                self.segueToWindViewController()
+                            }
                         }
                     }
+                    
+                    // Stop the spinner when networking is over
+                    self.stopSpinner()
                 }
-                
-                // Stop the spinner when networking is over
-                self.stopSpinner()
             }
         }
-    }
-    
-    //---------------------------------
-    // MARK: - UIPickerView delegate
-    //---------------------------------
-    
-    /// Font color
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let titleData = pickerData[component][row]
-        let myTitle = NSAttributedString(
-            string: titleData,
-            attributes: [
-                NSForegroundColorAttributeName: Theme.sharedInstance().green
-            ]
-        )
-        return myTitle
-    }
-    
-    /// The number of columns of data
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return self.numberOfRotors
-    }
-    
-    
-    /// The number of rows of data
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData[component].count
-    }
-    
-    /// The data to return for the row and component (column) that's being passed in
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[component][row]
-    }
-    
-    /// didSelectRow
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let rotor1 = Int(pickerData[0][picker.selectedRow(inComponent: 0)])
-        let rotor2 = Int(pickerData[1][picker.selectedRow(inComponent: 1)])
-        let rotor3 = Int(pickerData[2][picker.selectedRow(inComponent: 2)])
-        var runwayHeading = (rotor1! * 100) + (rotor2! * 10) + rotor3!
-        do {
-            try self.validateRunwayHeading(runwayHeading)
-            
-            // Both runway headings 0 and 360 are the same and correspond to runway36!
-            if runwayHeading == 0 {
-                runwayHeading = 360
-            }
-            self.heading = Double(runwayHeading)
-        } catch {
-            self.alertView("Invalid input", message: "Runway heading shall be from 000 to 360 degrees")
-
-            // Reset the picker to a valid heading keeping the first digit
-            self.picker.selectRow(0, inComponent: 1, animated: true)
-            self.picker.selectRow(0, inComponent: 2, animated: true)
-        }
-    }
-    
-    //-------------------------------
-    // MARK: - UITextField delegate
-    //-------------------------------
-    
-    /// Validate the iataCode text field to allow only up to letters
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        var lettersOnly: Bool = false
-        var properLength: Bool = false
-
-        // Create an `NSCharacterSet` set which includes everything *but* the letters
-        let set = CharacterSet(charactersIn:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").inverted
-        
-        // At every character in this "inverseSet" contained in the string,
-        // split the string up into components which exclude the characters
-        // in this inverse set
-        let components = string.components(separatedBy: set)
-        
-        // Rejoin these components
-        let filtered = components.joined(separator: "")
-        
-        // If the original string is equal to the filtered string, i.e. if no
-        // inverse characters were present to be eliminated, the input is valid
-        // and the statement returns true; else it returns false
-        lettersOnly = string == filtered ? true : false
-
-        // Limit input to 3 characters
-        if range.length + range.location > (self.iataCode.text?.characters.count)! {
-            return false
-        }
-        
-        let newLength = (self.iataCode.text?.characters.count)! + string.characters.count - range.length
-        properLength = newLength <= 3 ? true : false
-
-        // If only both conditions are met return true
-        return lettersOnly && properLength
-    }
-    
-    /// Hide the keyboard after editing
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
     
     //----------------------------------
@@ -269,10 +204,6 @@ class FindViewController:   UIViewController,
         self.configureLabels()
         self.configurePicker()
         self.configureTabBar()
-        
-        // To revert the configuration of the calculate crosswind button
-        // remove the background image from the storyboard and call:
-        // self.configureCalculate()
     }
     
     func configureTabBar() {
@@ -314,6 +245,16 @@ class FindViewController:   UIViewController,
         self.calculate.layer.shadowOpacity = 1.0
     }
     
+    func getCodeCategory(code: String) -> Int? {
+        if code.characters.count == 3 {
+            return AirportDataClient.Constants.IsIata
+        } else if code.characters.count == 4 {
+            return AirportDataClient.Constants.IsIcao
+        } else {
+            return nil
+        }
+    }
+    
     //-----------------------------
     // MARK: - Alerts and segues
     //-----------------------------
@@ -338,5 +279,102 @@ class FindViewController:   UIViewController,
             self.startSpinner()
             self.present(windVC, animated: false, completion: nil)
         }
+    }
+}
+
+extension FindViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    /// Font color
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let titleData = pickerData[component][row]
+        let myTitle = NSAttributedString(
+            string: titleData,
+            attributes: [
+                NSForegroundColorAttributeName: Theme.sharedInstance().green
+            ]
+        )
+        return myTitle
+    }
+    
+    /// The number of columns of data
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return self.numberOfRotors
+    }
+    
+    
+    /// The number of rows of data
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData[component].count
+    }
+    
+    /// The data to return for the row and component (column) that's being passed in
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerData[component][row]
+    }
+    
+    /// didSelectRow
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let rotor1 = Int(pickerData[0][picker.selectedRow(inComponent: 0)])
+        let rotor2 = Int(pickerData[1][picker.selectedRow(inComponent: 1)])
+        let rotor3 = Int(pickerData[2][picker.selectedRow(inComponent: 2)])
+        var runwayHeading = (rotor1! * 100) + (rotor2! * 10) + rotor3!
+        do {
+            try self.validateRunwayHeading(runwayHeading)
+            
+            // Both runway headings 0 and 360 are the same and correspond to runway36!
+            if runwayHeading == 0 {
+                runwayHeading = 360
+            }
+            self.heading = Double(runwayHeading)
+        } catch {
+            self.alertView("Invalid input", message: "Runway heading shall be from 000 to 360 degrees")
+            
+            // Reset the picker to a valid heading keeping the first digit
+            self.picker.selectRow(0, inComponent: 1, animated: true)
+            self.picker.selectRow(0, inComponent: 2, animated: true)
+        }
+    }
+}
+
+extension FindViewController: UITextFieldDelegate {
+    
+    /// Validate the iataCode text field to allow only up to letters
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        var lettersOnly: Bool = false
+        var properLength: Bool = false
+        let maxLength: Int = 4  // To handle both IATA and ICAO codes
+        
+        // Create an `NSCharacterSet` set which includes everything *but* the letters
+        let set = CharacterSet(charactersIn:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").inverted
+        
+        // At every character in this "inverseSet" contained in the string,
+        // split the string up into components which exclude the characters
+        // in this inverse set
+        let components = string.components(separatedBy: set)
+        
+        // Rejoin these components
+        let filtered = components.joined(separator: "")
+        
+        // If the original string is equal to the filtered string, i.e. if no
+        // inverse characters were present to be eliminated, the input is valid
+        // and the statement returns true; else it returns false
+        lettersOnly = string == filtered ? true : false
+        
+        // Limit input to 3 characters
+        if range.length + range.location > (self.iataCode.text?.characters.count)! {
+            return false
+        }
+        
+        let newLength = (self.iataCode.text?.characters.count)! + string.characters.count - range.length
+        properLength = newLength <= maxLength ? true : false
+        
+        // If only both conditions are met return true
+        return lettersOnly && properLength
+    }
+    
+    /// Hide the keyboard after editing
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
