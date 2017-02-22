@@ -92,7 +92,6 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         // Set up fetched results controller
         fetchedResultsController.delegate = self
         
@@ -183,8 +182,15 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
         self.weatherStationName.text = weather!.station + " weather station:"
         let direction = String(Int(windDirection))
         let speed = String(round(10 * windSpeed) / 10)
-        self.actualWind.text = "\"wind from " + direction + " degrees " + speed + " knots\""
         self.runwayDigits.text = self.rwyFromHeading(runway!.hdg)
+        
+        var descriptionWrapper = weather!.weatherDescription
+        if descriptionWrapper != "" {
+            descriptionWrapper = "with " + descriptionWrapper
+        }
+        
+        self.actualWind.text = "\"wind from " + direction + " degrees " + speed + " knots " +
+            descriptionWrapper + "\""
     }
     
     /// Convert the runway heading (3 digits) to the runway number (2 digits)

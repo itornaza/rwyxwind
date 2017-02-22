@@ -89,7 +89,7 @@ class WeatherClient {
                     return
                 }
                 
-                // The response is valid, extract the weather data
+                // The response is valid,extract the weather data
                 if let dictionary = parsedResult.value(forKey: JSONKeys.Wind) as? [String:AnyObject] {
                     
                     if dictionary[JSONKeys.WindDirection] == nil {
@@ -102,10 +102,16 @@ class WeatherClient {
                         return
                     }
                     
+                    var description = ""
+                    if let phenomena = parsedResult.value(forKey: JSONKeys.Weather) as? [AnyObject] {
+                        description = phenomena[0].value(forKey: JSONKeys.Description)! as! String
+                    }
+                    
                     // Set up the dictionary to create the runway
                     let weatherDictionary: [String : AnyObject] = [
                         Weather.Keys.Speed      : dictionary[JSONKeys.WindSpeed]!,
                         Weather.Keys.Direction  : dictionary[JSONKeys.WindDirection]!,
+                        Weather.Keys.weatherDescription: description as AnyObject,
                         Weather.Keys.Station    : parsedResult.value(forKey: JSONKeys.StationName) as! String as AnyObject
                     ]
                     

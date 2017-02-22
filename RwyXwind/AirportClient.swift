@@ -123,8 +123,7 @@ class AirportClient {
                             Runway.Keys.Long    : airport[JSONKeys.AirportLong]!
                         ]
                         
-                        // Add runway to temporary context so the runway is not included
-                        // to favorites by default
+                        // Add runway to temporary context so the runway is not included to favorites by default
                         let runway = Runway(dictionary: runwayDictionary, context: self.temporaryContext)
 
                         // All succedded
@@ -142,5 +141,4 @@ class AirportClient {
         }) 
         task.resume()
     }
-    
 }

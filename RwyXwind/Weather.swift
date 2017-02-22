@@ -23,6 +23,7 @@ class Weather: NSManagedObject {
     struct Keys {
         static let Speed = "speed"
         static let Direction = "direction"
+        static let weatherDescription = "description"
         static let Station = "station"
     }
     
@@ -32,6 +33,7 @@ class Weather: NSManagedObject {
     
     @NSManaged var speed: Double
     @NSManaged var direction: Double
+    @NSManaged var weatherDescription: String
     @NSManaged var station: String
     @NSManaged var runway: Runway
     
@@ -53,6 +55,7 @@ class Weather: NSManagedObject {
         // Initialize the Photo's properties from a dictionary
         speed = dictionary[Keys.Speed] as! Double
         direction = dictionary[Keys.Direction] as! Double
+        weatherDescription = dictionary[Keys.weatherDescription] as! String
         station = dictionary[Keys.Station] as! String
     }
 }

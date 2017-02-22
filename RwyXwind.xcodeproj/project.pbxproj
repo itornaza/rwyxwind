@@ -29,6 +29,12 @@
 		723F33471BB2AFB900C6FC5E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723F33461BB2AFB900C6FC5E /* Weather.swift */; };
 		723F33481BB2AFB900C6FC5E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723F33461BB2AFB900C6FC5E /* Weather.swift */; };
 		723F33491BB2AFB900C6FC5E /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723F33461BB2AFB900C6FC5E /* Weather.swift */; };
+		7253087D1E5CD51700C93AC4 /* AirportDataClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7253087C1E5CD51700C93AC4 /* AirportDataClientConstants.swift */; };
+		7253087E1E5CD51700C93AC4 /* AirportDataClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7253087C1E5CD51700C93AC4 /* AirportDataClientConstants.swift */; };
+		7253087F1E5CD51700C93AC4 /* AirportDataClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7253087C1E5CD51700C93AC4 /* AirportDataClientConstants.swift */; };
+		725308811E5CD5B900C93AC4 /* AirportDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725308801E5CD5B900C93AC4 /* AirportDataClient.swift */; };
+		725308821E5CD5B900C93AC4 /* AirportDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725308801E5CD5B900C93AC4 /* AirportDataClient.swift */; };
+		725308831E5CD5B900C93AC4 /* AirportDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725308801E5CD5B900C93AC4 /* AirportDataClient.swift */; };
 		7258AE1C1BB06C4900A48DCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE1B1BB06C4900A48DCF /* AppDelegate.swift */; };
 		7258AE1E1BB06C4900A48DCF /* FindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE1D1BB06C4900A48DCF /* FindViewController.swift */; };
 		7258AE211BB06C4900A48DCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7258AE1F1BB06C4900A48DCF /* Main.storyboard */; };
@@ -86,6 +92,8 @@
 		723CB0391BCA68360099255D /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		723F33421BB2AFA800C6FC5E /* Runway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runway.swift; sourceTree = "<group>"; };
 		723F33461BB2AFB900C6FC5E /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		7253087C1E5CD51700C93AC4 /* AirportDataClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportDataClientConstants.swift; sourceTree = "<group>"; };
+		725308801E5CD5B900C93AC4 /* AirportDataClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportDataClient.swift; sourceTree = "<group>"; };
 		7258AE181BB06C4900A48DCF /* RwyXwind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RwyXwind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7258AE1B1BB06C4900A48DCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7258AE1D1BB06C4900A48DCF /* FindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +144,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7253087B1E5CD4E000C93AC4 /* AirportDataClient */ = {
+			isa = PBXGroup;
+			children = (
+				7253087C1E5CD51700C93AC4 /* AirportDataClientConstants.swift */,
+				725308801E5CD5B900C93AC4 /* AirportDataClient.swift */,
+			);
+			name = AirportDataClient;
+			sourceTree = "<group>";
+		};
 		7258AE0F1BB06C4900A48DCF = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +210,7 @@
 				723F33461BB2AFB900C6FC5E /* Weather.swift */,
 				722779AA1BCE844700F9C8C8 /* WindLimits.swift */,
 				723CB0391BCA68360099255D /* Theme.swift */,
+				7253087B1E5CD4E000C93AC4 /* AirportDataClient */,
 				7258AE5D1BB06D2500A48DCF /* AirportClient */,
 				7258AE5E1BB06D2900A48DCF /* WeatherClient */,
 			);
@@ -387,7 +405,9 @@
 				723CB03A1BCA68360099255D /* Theme.swift in Sources */,
 				722779AB1BCE844700F9C8C8 /* WindLimits.swift in Sources */,
 				72B63ABB1BCAB94900DF9DF8 /* PreferencesViewController.swift in Sources */,
+				7253087D1E5CD51700C93AC4 /* AirportDataClientConstants.swift in Sources */,
 				7258AE621BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */,
+				725308811E5CD5B900C93AC4 /* AirportDataClient.swift in Sources */,
 				7258AE5A1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */,
 				723F33471BB2AFB900C6FC5E /* Weather.swift in Sources */,
 				7258AE241BB06C4900A48DCF /* RwyXwind.xcdatamodeld in Sources */,
@@ -410,7 +430,9 @@
 				7258AE4F1BB06CCC00A48DCF /* AirportClient.swift in Sources */,
 				722EB4EE1E4507650084B383 /* WindLimits.swift in Sources */,
 				722EB4EC1E45075D0084B383 /* PreferencesViewController.swift in Sources */,
+				7253087E1E5CD51700C93AC4 /* AirportDataClientConstants.swift in Sources */,
 				722EB4EA1E4507540084B383 /* FindViewController.swift in Sources */,
+				725308821E5CD5B900C93AC4 /* AirportDataClient.swift in Sources */,
 				723CB03B1BCA68360099255D /* Theme.swift in Sources */,
 				723F33441BB2AFA800C6FC5E /* Runway.swift in Sources */,
 				72D0F5B91BB590F900C21207 /* WindViewController.swift in Sources */,
@@ -433,7 +455,9 @@
 				7258AE501BB06CCC00A48DCF /* AirportClient.swift in Sources */,
 				722EB4EF1E4507660084B383 /* WindLimits.swift in Sources */,
 				722EB4ED1E45075D0084B383 /* PreferencesViewController.swift in Sources */,
+				7253087F1E5CD51700C93AC4 /* AirportDataClientConstants.swift in Sources */,
 				722EB4EB1E4507550084B383 /* FindViewController.swift in Sources */,
+				725308831E5CD5B900C93AC4 /* AirportDataClient.swift in Sources */,
 				723CB03C1BCA68360099255D /* Theme.swift in Sources */,
 				723F33451BB2AFA800C6FC5E /* Runway.swift in Sources */,
 				72D0F5BA1BB590F900C21207 /* WindViewController.swift in Sources */,
