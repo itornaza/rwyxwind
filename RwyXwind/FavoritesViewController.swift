@@ -23,6 +23,7 @@ class FavoritesViewController:  UIViewController {
         let fetchRequest = NSFetchRequest<Runway>(entityName: "Runway")
         fetchRequest.sortDescriptors = [
             NSSortDescriptor(key: Runway.Keys.ShortDescriptor.IATACode, ascending: true),
+            NSSortDescriptor(key: Runway.Keys.ShortDescriptor.ICAOCode, ascending: true),
             NSSortDescriptor(key: Runway.Keys.ShortDescriptor.Hdg, ascending: true)
         ]
         let fetchedResultsController = NSFetchedResultsController(

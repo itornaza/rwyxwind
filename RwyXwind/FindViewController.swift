@@ -34,7 +34,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     //----------------------
     
     @IBOutlet weak var picker: UIPickerView!
-    @IBOutlet weak var iataCode: UITextField!
+    @IBOutlet weak var letterCode: UITextField!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var calculate: UIButton!
     @IBOutlet weak var iataCodeLabel: UILabel!
@@ -51,7 +51,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
         
         // Delegates and datasources
         self.tabBarController?.delegate = self
-        self.iataCode.delegate = self
+        self.letterCode.delegate = self
         self.picker.delegate = self
         self.picker.dataSource = self
         
@@ -75,29 +75,37 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     //----------------------
     
     @IBAction func calculateXwind(_ sender: AnyObject) {
-        // Check for non empty required field
-        if (self.iataCode.text! == "") {
+        if (self.letterCode.text! == "") {
+            // The user has not entered any digit and hit calculate
             alertView("Invalid input", message: "Please, input IATA or ICAO code to continue")
         } else {
-            // Distinguish between IATA, ICAO or invalid format codes
             var letterCode: String?
-            let codeCategory = self.getCodeCategory(code: self.iataCode.text!)
+            let codeCategory = self.getCodeCategory(code: self.letterCode.text!)
             if codeCategory == nil {
+                
+                // The user entered only 1 or 2 digits
                 self.alertView("Airport service error", message: "Input 3 letters for IATA or \n4 letters for ICAO")
+                
             } else if codeCategory == AirportDataClient.Constants.IsIcao {
-                // Start the spinner
+                // The user inputed an ICAO code (4 letters). We convert it to IATA code (3 letters) and then
+                // call the API to get the runway and the weather
+                
                 self.startSpinner()
                 
-                AirportDataClient.getIata(icao: self.iataCode.text!) { iata, errorString in
+                // Get the equivalent IATA code from the given ICAO code
+                AirportDataClient.getIata(icao: self.letterCode.text!) { iata, errorString in
                     if errorString == nil {
-                        letterCode = iata!
-                        // Get the runway and weather from the APIs
-                        AirportClient.sharedInstance().getAirportByCode(LetterCode: letterCode!) { runway, error in
+                        
+                        // Get the runway and weather from the IATA code
+                        AirportClient.sharedInstance().getAirportByCode(LetterCode: iata!) { runway, error in
                             if error != nil {
                                 self.alertView("Airport service error", message: error!)
                             } else {
                                 self.runway = runway!
                                 self.runway?.hdg = self.heading
+                                self.runway?.iataCode = self.letterCode.text!
+                        
+                                // Get the weather for the runway
                                 WeatherClient.sharedInstance().getWeatherByCoordinates(runway!.lat, long: runway!.long) { weather, error in
                                     if error != nil {
                                         self.alertView("Weather service error", message: error!)
@@ -111,23 +119,22 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
                     } else {
                         self.alertView("Airport service error", message: errorString!)
                     }
-                    
-                    // Stop the spinner when networking is over
                     self.stopSpinner()
                 }
             } else if codeCategory == AirportDataClient.Constants.IsIata {
-                letterCode = self.iataCode.text!
+                // The user inputed an IATA code (3 letters)
                 
-                // Start the spinner
+                letterCode = self.letterCode.text!
                 self.startSpinner()
                 
-                // Get the runway and weather from the APIs
+                // Get the runway and weather directly from the IATA code
                 AirportClient.sharedInstance().getAirportByCode(LetterCode: letterCode!) { runway, error in
                     if error != nil {
                         self.alertView("Airport service error", message: error!)
                     } else {
                         self.runway = runway!
                         self.runway?.hdg = self.heading
+                        self.runway?.icaoCode = ""
                         WeatherClient.sharedInstance().getWeatherByCoordinates(runway!.lat, long: runway!.long) { weather, error in
                             if error != nil {
                                 self.alertView("Weather service error", message: error!)
@@ -137,8 +144,6 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
                             }
                         }
                     }
-                    
-                    // Stop the spinner when networking is over
                     self.stopSpinner()
                 }
             }
@@ -217,8 +222,8 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     }
     
     func configureIataCode() {
-        self.iataCode.textColor = Theme.sharedInstance().green
-        self.iataCode.backgroundColor = Theme.sharedInstance().darkGray
+        self.letterCode.textColor = Theme.sharedInstance().green
+        self.letterCode.backgroundColor = Theme.sharedInstance().darkGray
     }
     
     func configurePicker() {
@@ -361,11 +366,11 @@ extension FindViewController: UITextFieldDelegate {
         lettersOnly = string == filtered ? true : false
         
         // Limit input to 3 characters
-        if range.length + range.location > (self.iataCode.text?.characters.count)! {
+        if range.length + range.location > (self.letterCode.text?.characters.count)! {
             return false
         }
         
-        let newLength = (self.iataCode.text?.characters.count)! + string.characters.count - range.length
+        let newLength = (self.letterCode.text?.characters.count)! + string.characters.count - range.length
         properLength = newLength <= maxLength ? true : false
         
         // If only both conditions are met return true
