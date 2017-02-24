@@ -178,7 +178,14 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
     }
     
     func setHeaderLabels(_ windSpeed: Double, windDirection: Double) {
-        self.airportName.text = runway!.iataCode + ": " + runway!.name
+        
+        //
+        if runway?.icaoCode == "" {
+            self.airportName.text = runway!.iataCode + ": " + runway!.name
+        } else {
+            self.airportName.text = runway!.icaoCode + ": " + runway!.name
+        }
+        
         self.weatherStationName.text = weather!.station + " weather station:"
         let direction = String(Int(windDirection))
         let speed = String(round(10 * windSpeed) / 10)

@@ -25,30 +25,30 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoiseBackground" translatesAutoresizingMaskIntoConstraints="NO" id="uH9-jA-vhD">
                                 <rect key="frame" x="-4" y="20" width="383" height="598"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IATA Code: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hjE-Kw-cCe">
-                                <rect key="frame" x="39" y="60" width="92" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IATA or ICAO:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hjE-Kw-cCe">
+                                <rect key="frame" x="29.5" y="60" width="107" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.3424393503" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eDV-VE-yXG">
-                                <rect key="frame" x="139" y="56" width="97" height="30"/>
+                                <rect key="frame" x="145" y="56" width="84" height="30"/>
                                 <color key="backgroundColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="uhD-fC-urR"/>
+                                    <constraint firstAttribute="width" constant="84" id="uhD-fC-urR"/>
                                 </constraints>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(3 letters)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKo-Mr-pio">
-                                <rect key="frame" x="45" y="80.5" width="73" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(3 or 4 letters)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKo-Mr-pio">
+                                <rect key="frame" x="29.5" y="81" width="108" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                 <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZyW-Kt-Upy">
-                                <rect key="frame" x="120.5" y="110" width="140" height="216"/>
+                                <rect key="frame" x="121" y="110" width="140" height="216"/>
                                 <color key="backgroundColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="gtE-Sw-E8s"/>
@@ -85,7 +85,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Runway:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3S-VC-Shs">
-                                <rect key="frame" x="39.5" y="207.5" width="68" height="20.5"/>
+                                <rect key="frame" x="40" y="207" width="68" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -99,7 +99,7 @@
                             <constraint firstItem="eDV-VE-yXG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="36" id="7WH-rM-tv8"/>
                             <constraint firstItem="uH9-jA-vhD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="9c1-g5-hmW"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dJk-c1-fUl" secondAttribute="bottom" constant="101" id="FeS-PE-d5M"/>
-                            <constraint firstItem="eDV-VE-yXG" firstAttribute="leading" secondItem="UKo-Mr-pio" secondAttribute="trailing" constant="21" id="Fpa-Ob-L7h"/>
+                            <constraint firstItem="eDV-VE-yXG" firstAttribute="leading" secondItem="UKo-Mr-pio" secondAttribute="trailing" constant="7.5" id="Fpa-Ob-L7h"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="uH9-jA-vhD" secondAttribute="bottom" id="IlZ-fQ-MwM"/>
                             <constraint firstItem="dJk-c1-fUl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Krc-aw-6XD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="S70-C1-La1" secondAttribute="trailing" constant="-20" id="Vca-Bc-QfR"/>
@@ -111,7 +111,7 @@
                             <constraint firstItem="ZyW-Kt-Upy" firstAttribute="leading" secondItem="y3S-VC-Shs" secondAttribute="trailing" constant="13" id="vOh-PS-uLx"/>
                             <constraint firstItem="ZyW-Kt-Upy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="3" id="xav-gj-DbR"/>
                             <constraint firstItem="uH9-jA-vhD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="yRv-t1-4kY"/>
-                            <constraint firstItem="eDV-VE-yXG" firstAttribute="leading" secondItem="hjE-Kw-cCe" secondAttribute="trailing" constant="8" id="ytd-6Q-TYr"/>
+                            <constraint firstItem="eDV-VE-yXG" firstAttribute="leading" secondItem="hjE-Kw-cCe" secondAttribute="trailing" constant="8.5" id="ytd-6Q-TYr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uH9-jA-vhD" secondAttribute="trailing" constant="-20" id="yxr-Xq-ohS"/>
                             <constraint firstItem="hjE-Kw-cCe" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="zCG-4d-Ozi"/>
                         </constraints>
@@ -120,8 +120,8 @@
                     <connections>
                         <outlet property="calculate" destination="ECE-OM-ZHK" id="WAJ-mO-ixo"/>
                         <outlet property="calculateButtonTouch" destination="ECE-OM-ZHK" id="tYm-sg-yxt"/>
-                        <outlet property="iataCode" destination="eDV-VE-yXG" id="dAa-XG-Ihr"/>
                         <outlet property="iataCodeLabel" destination="hjE-Kw-cCe" id="qdN-Ez-fm4"/>
+                        <outlet property="letterCode" destination="eDV-VE-yXG" id="HU9-0F-K0N"/>
                         <outlet property="picker" destination="ZyW-Kt-Upy" id="Ho1-LE-f85"/>
                         <outlet property="runwayHeadingLabel" destination="y3S-VC-Shs" id="4cy-NI-yXU"/>
                         <outlet property="searchDisplayController" destination="oLC-e9-As1" id="bqu-hv-Znq"/>
@@ -139,7 +139,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-352" y="1316"/>
+            <point key="canvasLocation" x="-352.80000000000001" y="1315.5922038980511"/>
         </scene>
         <!--Wind View Controller-->
         <scene sceneID="iEp-Nb-HQe">
@@ -412,7 +412,7 @@
                                         <rect key="frame" x="0.0" y="28" width="383" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qO8-bm-x1n" id="OTL-Tj-icb">
-                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>

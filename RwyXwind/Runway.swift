@@ -21,6 +21,7 @@ class Runway: NSManagedObject {
     
     struct Keys {
         static let IATACode = "iata_code"
+        static let ICAOCode = "icao_code"
         static let Name = "name"
         static let Lat  = "lat"
         static let Long = "long"
@@ -30,6 +31,7 @@ class Runway: NSManagedObject {
         // Keys to be used for the ShortDescriptor attribute within the fetchedResultsController
         struct ShortDescriptor {
             static let IATACode = "iataCode"
+            static let ICAOCode = "icaoCode"
             static let Hdg = "hdg"
         }
     }
@@ -39,6 +41,7 @@ class Runway: NSManagedObject {
     //-------------------------------------------------------
     
     @NSManaged var iataCode: String
+    @NSManaged var icaoCode: String
     @NSManaged var name: String
     @NSManaged var lat: Double
     @NSManaged var long: Double

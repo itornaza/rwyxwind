@@ -3,6 +3,7 @@
     <entity name="Runway" representedClassName=".Runway" syncable="YES">
         <attribute name="hdg" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="iataCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="icaoCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="long" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -16,7 +17,7 @@
         <relationship name="runway" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Runway" inverseName="weather" inverseEntity="Runway" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Runway" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Runway" positionX="-63" positionY="-18" width="128" height="150"/>
         <element name="Weather" positionX="-54" positionY="-9" width="128" height="120"/>
     </elements>
 </model>

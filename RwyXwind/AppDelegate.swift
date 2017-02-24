@@ -10,9 +10,10 @@
     Version 1.4 Log
     -----------------
  
-    1. Bookmarks sorting on IATA code and then runway heading
+    1. Bookmarks sorting on IATA code, ICAO code and then runway heading
     2. If a wind component is zero, it is not shown on the chart
     3. Wind direction arrows are animated
+    4. Input either IATA or ICAO codes for airports
  
 */
 
