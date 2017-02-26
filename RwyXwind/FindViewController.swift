@@ -93,7 +93,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
                 self.startSpinner()
                 
                 // Get the equivalent IATA code from the given ICAO code
-                AirportDataClient.getIata(icao: self.letterCode.text!) { iata, errorString in
+                AirportDataClient.getIata(fromIcao: self.letterCode.text!) { iata, errorString in
                     if errorString == nil {
                         
                         // Get the runway and weather from the IATA code
@@ -222,6 +222,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     }
     
     func configureIataCode() {
+        self.letterCode.isAccessibilityElement = true
         self.letterCode.textColor = Theme.sharedInstance().green
         self.letterCode.backgroundColor = Theme.sharedInstance().darkGray
     }

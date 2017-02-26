@@ -5,7 +5,7 @@
 //  Created by Ioannis Tornazakis on 21/2/17.
 //  Copyright © 2017 polarbear.gr. All rights reserved.
 //
-// API: http://www.airport-data.com/api/doc.php#airport
+//  API: http://www.airport-data.com/api/doc.php#airport
 
 /*
      1. IATA to ICAO use
@@ -47,7 +47,7 @@ extension AirportDataClient {
         static let ICAO = "icao"
         static let IATA = "iata"
         static let status = "status"
-        static let statusSuccess = "200"
-        static let statusFail = "404"
+        static let statusSuccess: Int = 200
+        static let statusFail: Int = 404
     }
 }
