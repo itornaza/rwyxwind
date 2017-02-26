@@ -5,7 +5,7 @@
 //  Created by Ioannis Tornazakis on 21/9/15.
 //  Copyright © 2015 polarbear.gr. All rights reserved.
 //
-// API: https://www.developer.aero/Airport-API/API-Overview
+//  API: https://www.developer.aero/Airport-API/API-Overview
 
 import Foundation
 

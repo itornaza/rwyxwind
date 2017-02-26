@@ -5,6 +5,7 @@
 //  Created by Ioannis Tornazakis on 21/9/15.
 //  Copyright © 2015 polarbear.gr. All rights reserved.
 //
+//  API: http://openweathermap.org/api
 
 import Foundation
 
