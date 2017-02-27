@@ -77,7 +77,7 @@ class WeatherClient {
                 
                 // Check for erroneous response from the API
                 if let code = parsedResult.value(forKey: JSONKeys.StatusCode) {
-                    if code as! Int != 200 {
+                    if code as? Int != 200 {
                         completionHandler(nil, "Weather service is not available")
                         return
                     }
