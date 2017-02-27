@@ -11,6 +11,8 @@ import XCTest
 
 class AirportDataTests: XCTestCase {
     
+    let delay: TimeInterval = 4
+    
     override func setUp() {
         super.setUp()
     }
@@ -19,10 +21,45 @@ class AirportDataTests: XCTestCase {
         super.tearDown()
     }
     
-    func testGetIata() {
+    func test_GetIataValid() {
+        let exp = expectation(description: "completionHandler")
         RwyXwind.AirportDataClient.getIata(fromIcao: "LGKV") { iata, errorString in
             XCTAssertEqual(errorString, nil)
-            XCTFail()
+            XCTAssertEqual(iata, "KVA")
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: self.delay) { error in
+            if error != nil {
+                XCTFail("Waited more than \(self.delay)sec for getIata to execute")
+            }
+        }
+    }
+    
+    func test_getIataInvalid() {
+        let exp = expectation(description: "completionHandler")
+        RwyXwind.AirportDataClient.getIata(fromIcao: "ZZZZ") { iata, errorString in
+            XCTAssertNotNil(errorString)
+            XCTAssertNil(iata)
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: self.delay) { error in
+            if error != nil {
+                XCTFail("Waited more than \(self.delay)sec for getIata to execute")
+            }
+        }
+    }
+    
+    func test_getIataIncomplete() {
+        let exp = expectation(description: "completionHandler")
+        RwyXwind.AirportDataClient.getIata(fromIcao: "ZZ") { iata, errorString in
+            XCTAssertNotNil(errorString)
+            XCTAssertNil(iata)
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: self.delay) { error in
+            if error != nil {
+                XCTFail("Waited more than \(self.delay)sec for getIata to execute")
+            }
         }
     }
     
