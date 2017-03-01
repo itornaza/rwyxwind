@@ -39,6 +39,7 @@ class AirportDataClient {
                 // Check successfull response
                 if parsedResult.value(forKey: JSONKeys.status) as? Int !=  JSONKeys.statusSuccess {
                     completionHandler(nil, "ICAO service is unavailable right now. Please, try again later")
+                    return
                 }
                 
                 // Check ICAO code exist
@@ -50,12 +51,12 @@ class AirportDataClient {
                 let iata = parsedResult.value(forKey: JSONKeys.IATA) as? String
                 if iata == nil {
                     completionHandler(nil, "Sorry, could not map IATA code to ICAO in order to continue 🙁")
+                    return
                 } else {
                     // All succeded
                     completionHandler(iata, nil)
                     return
                 }
-                
             } else {
                 completionHandler(nil, "Could not parse IATA codes")
                 return

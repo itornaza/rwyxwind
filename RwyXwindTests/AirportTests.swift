@@ -50,6 +50,20 @@ class AirportTests: XCTestCase {
         }
     }
     
+    func test_getAirportByCodeInvalid_2() {
+        let exp = expectation(description: "completionHandler")
+        RwyXwind.AirportClient.sharedInstance().getAirportByCode(LetterCode: "364") { runway, error in
+            XCTAssertNotNil(error)
+            XCTAssertNil(runway)
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: self.delay) { error in
+            if error != nil {
+                XCTFail("Waited more than \(self.delay)sec for getAirprtByCode to execute")
+            }
+        }
+    }
+    
     func test_getAirportByCodeIncomplete() {
         let exp = expectation(description: "completionHandler")
         RwyXwind.AirportClient.sharedInstance().getAirportByCode(LetterCode: "ZZ") { runway, error in

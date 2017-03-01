@@ -49,6 +49,20 @@ class AirportDataTests: XCTestCase {
         }
     }
     
+    func test_getIataInvalid_2() {
+        let exp = expectation(description: "completionHandler")
+        RwyXwind.AirportDataClient.getIata(fromIcao: "1234") { iata, errorString in
+            XCTAssertNotNil(errorString)
+            XCTAssertNil(iata)
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: self.delay) { error in
+            if error != nil {
+                XCTFail("Waited more than \(self.delay)sec for getIata to execute")
+            }
+        }
+    }
+    
     func test_getIataIncomplete() {
         let exp = expectation(description: "completionHandler")
         RwyXwind.AirportDataClient.getIata(fromIcao: "ZZ") { iata, errorString in
