@@ -71,6 +71,17 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchedResultsController.delegate = self
+        self.fetchRunways()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         // Local variables
         let crossWind: Double
@@ -79,28 +90,12 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
         let windSpeed = weather!.speed
         let windDirection = weather!.direction
         
-        // Set up
-        self.configureUI()
+        // Get and display the wind components
         self.setHeaderLabels(windSpeed, windDirection: windDirection)
-        
-        // Get the wind components
         (crossWind, headWind) = self.calculateXwind(windSpeed, windDirection: windDirection, runwayHeading: runwayHeading)
-        
-        // Display the wind components
         self.displayWind(headWind, crossWind: crossWind)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Set up fetched results controller
-        fetchedResultsController.delegate = self
         
-        // Get the bokmarked runways from core data
-        self.fetchRunways()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        // With animations
         self.animateHeadwind()
         self.animateTailWind()
         self.animateLhCrosswind()

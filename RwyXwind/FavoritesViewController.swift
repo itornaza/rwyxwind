@@ -42,6 +42,7 @@ class FavoritesViewController:  UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var editButton: UIBarButtonItem!
     
+    
     //----------------------
     // MARK: - Lifecycle
     //----------------------
@@ -99,8 +100,10 @@ class FavoritesViewController:  UIViewController {
     }
     
     func configureUI() {
+        self.navigationBar.barTintColor = Theme.sharedInstance().darkGray
+        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.sharedInstance().yellow]
+        self.editButton.tintColor = Theme.sharedInstance().yellow
         self.tableView.backgroundColor = Theme.sharedInstance().darkGray
-        self.navigationBar.backgroundColor = Theme.sharedInstance().darkGray
         self.tableView.reloadData()
     }
     
