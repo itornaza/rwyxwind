@@ -109,7 +109,10 @@ class PreferencesViewController: UIViewController {
     }
     
     func setFontColors() {
-        self.aircraftLabel.textColor = Theme.sharedInstance().white
+        self.aircraftLabel.textColor = Theme.sharedInstance().yellow
+        self.headwindLabel.textColor = Theme.sharedInstance().white
+        self.tailwindLabel.textColor = Theme.sharedInstance().white
+        self.crosswindLabel.textColor = Theme.sharedInstance().white
         self.headwindLimit.textColor = Theme.sharedInstance().green
         self.tailwindLimit.textColor = Theme.sharedInstance().green
         self.crosswindLimit.textColor = Theme.sharedInstance().green
