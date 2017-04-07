@@ -213,7 +213,7 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
         
         // Get the relative angle between the runway heading and the actual wind
         // in radiants (π radiants = 180 degrees)
-        let relativeAngle = (M_PI * (windDirection - runwayHeading)) / 180
+        let relativeAngle = (Double.pi * (windDirection - runwayHeading)) / 180
         
         // Get the wind components
         let crossWind = windSpeed * sin(relativeAngle)

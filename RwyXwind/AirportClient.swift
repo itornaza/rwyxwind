@@ -43,7 +43,6 @@ class AirportClient {
     //---------------------
     
     func getAirportByCode(LetterCode: String, completionHandler: @escaping (_ runway: Runway?, _ errorString: String?) -> Void) {
-        
         self.setUpTemporaryContext()
         
         // Create the session
