@@ -82,59 +82,19 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
             var letterCode: String?
             let codeCategory = self.getCodeCategory(code: self.letterCode.text!)
             if codeCategory == nil {
-                
                 // The user entered only 1 or 2 digits
                 self.alertView("Airport service error", message: "Input 3 letters for IATA or \n4 letters for ICAO")
-                
-            } else if codeCategory == AirportDataClient.Constants.IsIcao {
-                // The user inputed an ICAO code (4 letters). We convert it to IATA code (3 letters) and then
-                // call the API to get the runway and the weather
-                
-                self.startSpinner()
-                
-                // Get the equivalent IATA code from the given ICAO code
-                AirportDataClient.getIata(fromIcao: self.letterCode.text!) { iata, errorString in
-                    if errorString == nil {
-                        
-                        // Get the runway and weather from the IATA code
-                        AirportClient.sharedInstance().getAirportByCode(LetterCode: iata!) { runway, error in
-                            if error != nil {
-                                self.alertView("Airport service error", message: error!)
-                            } else {
-                                self.runway = runway!
-                                self.runway?.hdg = self.heading
-                                self.runway?.iataCode = self.letterCode.text!
-                        
-                                // Get the weather for the runway
-                                WeatherClient.sharedInstance().getWeatherByCoordinates(runway!.lat, long: runway!.long) { weather, error in
-                                    if error != nil {
-                                        self.alertView("Weather service error", message: error!)
-                                    } else {
-                                        self.weather = weather!
-                                        self.segueToWindViewController()
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        self.alertView("Airport service error", message: errorString!)
-                    }
-                    self.stopSpinner()
-                }
-            } else if codeCategory == AirportDataClient.Constants.IsIata {
-                // The user inputed an IATA code (3 letters)
-                
+            } else {
                 letterCode = self.letterCode.text!
                 self.startSpinner()
                 
-                // Get the runway and weather directly from the IATA code
-                AirportClient.sharedInstance().getAirportByCode(LetterCode: letterCode!) { runway, error in
+                // Get the runway and weather from the letter code (either iata or icao)
+                AirportDataClient.sharedInstance().getAirportByCode(letterCode: letterCode!) { runway, error in
                     if error != nil {
                         self.alertView("Airport service error", message: error!)
                     } else {
                         self.runway = runway!
                         self.runway?.hdg = self.heading
-                        self.runway?.icaoCode = ""
                         WeatherClient.sharedInstance().getWeatherByCoordinates(runway!.lat, long: runway!.long) { weather, error in
                             if error != nil {
                                 self.alertView("Weather service error", message: error!)

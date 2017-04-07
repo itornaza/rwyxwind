@@ -6,6 +6,10 @@
 //  Copyright © 2015 polarbear.gr. All rights reserved.
 //
 //  API: https://www.developer.aero/Airport-API/API-Overview
+//  
+//  Caution:
+//  Converted to paid service with a monthly subscription price of $100.
+//  This change will occur on June 15 2017 and all existing API keys will be terminated.
 
 import Foundation
 
