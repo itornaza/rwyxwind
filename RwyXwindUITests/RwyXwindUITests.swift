@@ -16,6 +16,24 @@ class RwyXwindUITests: XCTestCase {
     
     let delay: UInt32 = 4
     
+    // String literals
+    let testAirport: String = "LGKV/KVA: Kavala International Airport, \"Megas Alexandros\""
+    let testAirportBookmark = "KVA rwy 36: Kavala International Airport, \"Megas Alexandros\""
+    let testAirportAlert = "Kavala International Airport, \"Megas Alexandros\", RWY: 36"
+    let airportServiceError = "Airport service error"
+    let calculate = "Calculate crosswind"
+    let rtn = "Return"
+    let invalid = "Invalid input"
+    let ok = "OK"
+    let add = "Add"
+    let bookmarks = "Bookmarks"
+    let alreadyBookmark = "Already in bookmarks"
+    let delete = "Delete"
+    let search = "Search"
+    let noInputAlert = "Please, input IATA or ICAO code to continue"
+    let invalidInputAlert = "Input 3 letters for IATA or 4 letters for ICAO"
+    let rwyHeadingAlert = "Runway heading shall be from 000 to 360 degrees"
+    
     //------------------------
     // MARK: - Configuration
     //------------------------
@@ -41,69 +59,69 @@ class RwyXwindUITests: XCTestCase {
         let app = XCUIApplication()
         
         // No input
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["Please, input IATA or ICAO code to continue"].exists)
-        app.alerts["Invalid input"].buttons["OK"].tap()
+        XCTAssertTrue(app.staticTexts[self.noInputAlert].exists)
+        app.alerts[self.invalid].buttons[self.ok].tap()
         
         // One letter input
         app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .textField).element.tap()
         app.keys["K"].tap()
-        app.buttons["Return"].tap()
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.rtn].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["Input 3 letters for IATA or  4 letters for ICAO"].exists)
-        app.alerts["Airport service error"].buttons["OK"].tap()
+        XCTAssertTrue(app.staticTexts[self.airportServiceError].exists)
+        app.alerts[self.airportServiceError].buttons[self.ok].tap()
         
         // Two letter input
         app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .textField).element.tap()
         app.keys["V"].tap()
-        app.buttons["Return"].tap()
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.rtn].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["Input 3 letters for IATA or  4 letters for ICAO"].exists)
-        app.alerts["Airport service error"].buttons["OK"].tap()
+        XCTAssertTrue(app.staticTexts[self.airportServiceError].exists)
+        app.alerts[self.airportServiceError].buttons[self.ok].tap()
     }
     
     func test_validIATA() {
         let app = XCUIApplication()
         self.inputValidIATA()
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["KVA: Megas Alexandros Intl"].exists)
+        XCTAssertTrue(app.staticTexts[self.testAirport].exists)
     }
     
     func test_invalidIATA() {
         let app = XCUIApplication()
         self.inputInvaldIATA()
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["Invalid airport code"].exists)
-        app.alerts["Airport service error"].buttons["OK"].tap()
+        XCTAssertTrue(app.staticTexts[self.airportServiceError].exists)
+        app.alerts[self.airportServiceError].buttons[self.ok].tap()
     }
     
     func test_validICAO() {
         let app = XCUIApplication()
         self.inputValidICAO()
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["LGKV: Megas Alexandros Intl"].exists)
+        XCTAssertTrue(app.staticTexts[self.testAirport].exists)
     }
     
     func test_invalidICAO() {
         let app = XCUIApplication()
         self.inputInvalidICAO()
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["Sorry, could not map IATA code to ICAO in order to continue 🙁"].exists)
-        app.alerts["Airport service error"].buttons["OK"].tap()
+        XCTAssertTrue(app.staticTexts[self.airportServiceError].exists)
+        app.alerts[self.airportServiceError].buttons[self.ok].tap()
     }
     
     func test_validPicker() {
         let app = XCUIApplication()
         self.inputValidIATA()
         self.pickerSetUp(first: "2", second: "1", third: "3")
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
         XCTAssertTrue(app.staticTexts["21"].exists)
     }
@@ -112,7 +130,7 @@ class RwyXwindUITests: XCTestCase {
         let app = XCUIApplication()
         self.inputValidIATA()
         self.pickerSetUp(first: "0", second: "0", third: "0")
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
         XCTAssertTrue(app.staticTexts["36"].exists)
     }
@@ -122,8 +140,8 @@ class RwyXwindUITests: XCTestCase {
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "3")
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "8")
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["Runway heading shall be from 000 to 360 degrees"].exists)
-        app.alerts["Invalid input"].buttons["OK"].tap()
+        XCTAssertTrue(app.staticTexts[self.rwyHeadingAlert].exists)
+        app.alerts[self.invalid].buttons[self.ok].tap()
     }
     
     func test_overflowPickerThirdDigit() {
@@ -132,33 +150,34 @@ class RwyXwindUITests: XCTestCase {
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "6")
         app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "1")
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["Runway heading shall be from 000 to 360 degrees"].exists)
-        app.alerts["Invalid input"].buttons["OK"].tap()
+        XCTAssertTrue(app.staticTexts[self.rwyHeadingAlert].exists)
+        app.alerts[self.invalid].buttons[self.ok].tap()
     }
     
     func test_addBookmark() {
         let app = XCUIApplication()
         self.addBookmark()
-        XCTAssertTrue(app.tables.staticTexts["KVA rwy 36: Megas Alexandros Intl"].exists)
+        sleep(self.delay) // Allow time for the transition to complete
+        XCTAssertTrue(app.tables.staticTexts[self.testAirportBookmark].exists)
     }
     
     func test_alreadyBookmark() {
         let app = XCUIApplication()
         self.addBookmark()
-        app.tables.staticTexts["KVA rwy 36: Megas Alexandros Intl"].tap()
+        app.tables.staticTexts[self.testAirportBookmark].tap()
         let toolbarsQuery = app.toolbars
-        toolbarsQuery.buttons["Add"].tap()
+        toolbarsQuery.buttons[self.add].tap()
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["Already in bookmarks"].exists)
-        app.alerts["Megas Alexandros Intl, RWY: 36"].buttons["OK"].tap()
+        XCTAssertTrue(app.staticTexts[self.alreadyBookmark].exists)
+        app.alerts[self.testAirportAlert].buttons[self.ok].tap()
     }
     
     func test_windFromBookmark() {
         let app = XCUIApplication()
         self.addBookmark()
-        app.tables.staticTexts["KVA rwy 36: Megas Alexandros Intl"].tap()
+        app.tables.staticTexts[self.testAirportBookmark].tap()
         sleep(self.delay) // Allow time for the transition to complete
-        XCTAssertTrue(app.staticTexts["KVA: Megas Alexandros Intl"].exists)
+        XCTAssertTrue(app.staticTexts[self.testAirport].exists)
     }
     
     func test_removeBookmark() {
@@ -166,7 +185,7 @@ class RwyXwindUITests: XCTestCase {
         self.addBookmark()
         let tablesQuery = app.tables.cells
         tablesQuery.element(boundBy: 0).swipeLeft()
-        tablesQuery.element(boundBy: 0).buttons["Delete"].tap()
+        tablesQuery.element(boundBy: 0).buttons[self.delete].tap()
         XCTAssertEqual(tablesQuery.count, 0)
     }
     
@@ -180,7 +199,7 @@ class RwyXwindUITests: XCTestCase {
         app.keys[first].tap()
         app.keys[second].tap()
         app.keys[third].tap()
-        app.buttons["Return"].tap()
+        app.buttons[self.rtn].tap()
     }
     
     func inputValidIATA() {
@@ -198,7 +217,7 @@ class RwyXwindUITests: XCTestCase {
         app.keys[second].tap()
         app.keys[third].tap()
         app.keys[forth].tap()
-        app.buttons["Return"].tap()
+        app.buttons[self.rtn].tap()
     }
     
     func inputValidICAO() {
@@ -219,24 +238,24 @@ class RwyXwindUITests: XCTestCase {
     func addBookmark() {
         let app = XCUIApplication()
         self.inputValidIATA()
-        app.buttons["Calculate crosswind"].tap()
+        app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
         let toolbarsQuery = app.toolbars
-        toolbarsQuery.buttons["Add"].tap()
-        app.alerts["Megas Alexandros Intl, RWY: 36"].buttons["OK"].tap()
-        toolbarsQuery.buttons["Bookmarks"].tap()
+        toolbarsQuery.buttons[self.add].tap()
+        app.alerts[self.testAirportAlert].buttons[self.ok].tap()
+        toolbarsQuery.buttons[self.bookmarks].tap()
     }
     
     func clearBookmarks() {
         let app = XCUIApplication()
         let tabBarsQuery = XCUIApplication().tabBars
-        tabBarsQuery.buttons["Bookmarks"].tap()
+        tabBarsQuery.buttons[self.bookmarks].tap()
         let tablesQuery = app.tables.cells
         for _ in 0..<tablesQuery.count {
             tablesQuery.element(boundBy: 0).swipeLeft()
-            tablesQuery.element(boundBy: 0).buttons["Delete"].tap()
+            tablesQuery.element(boundBy: 0).buttons[self.delete].tap()
         }
-        tabBarsQuery.buttons["Search"].tap()
+        tabBarsQuery.buttons[self.search].tap()
     }
     
 }
