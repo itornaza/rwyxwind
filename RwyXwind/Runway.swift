@@ -20,6 +20,7 @@ class Runway: NSManagedObject {
     //----------------------
     
     struct Keys {
+        // Look to the AircraftDataClient for reference
         static let IATACode = "iata_code"
         static let ICAOCode = "icao_code"
         static let Name = "name"
@@ -64,12 +65,11 @@ class Runway: NSManagedObject {
         super.init(entity: entity, insertInto: context)
         
         // Initialize the properties from a dictionary
-        // Note that we are using the API JSON keys to extract the data
-        iataCode = dictionary[AirportDataClient.JSONKeys.IATA_API] as! String
-        icaoCode = dictionary[AirportDataClient.JSONKeys.ICAO_API] as! String
-        name = dictionary[AirportDataClient.JSONKeys.name] as! String
-        lat = Double(dictionary[AirportDataClient.JSONKeys.lat] as! String)!
-        long = Double(dictionary[AirportDataClient.JSONKeys.long] as! String)!
+        self.iataCode = dictionary[Runway.Keys.IATACode] as! String
+        self.icaoCode = dictionary[Runway.Keys.ICAOCode] as! String
+        self.name = dictionary[Runway.Keys.Name] as! String
+        self.lat = Double(dictionary[Runway.Keys.Lat] as! String)!
+        self.long = Double(dictionary[Runway.Keys.Long] as! String)!
     }
 
 }

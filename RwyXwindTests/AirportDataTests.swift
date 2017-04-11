@@ -23,9 +23,9 @@ class AirportDataTests: XCTestCase {
     
     func test_GetIataValid() {
         let exp = expectation(description: "completionHandler")
-        RwyXwind.AirportDataClient.getIata(fromIcao: "LGKV") { iata, errorString in
-            XCTAssertEqual(errorString, nil)
-            XCTAssertEqual(iata, "KVA")
+        RwyXwind.AirportDataClient.sharedInstance().getAirportByCode(letterCode: "LGKV") { runway, error in
+            XCTAssertEqual(error, nil)
+            XCTAssertEqual(runway?.iataCode, "KVA")
             exp.fulfill()
         }
         waitForExpectations(timeout: self.delay) { error in
@@ -37,9 +37,9 @@ class AirportDataTests: XCTestCase {
     
     func test_getIataInvalid() {
         let exp = expectation(description: "completionHandler")
-        RwyXwind.AirportDataClient.getIata(fromIcao: "ZZZZ") { iata, errorString in
-            XCTAssertNotNil(errorString)
-            XCTAssertNil(iata)
+        RwyXwind.AirportDataClient.sharedInstance().getAirportByCode(letterCode: "ZZZZ") { runway, error in
+            XCTAssertNotNil(error)
+            XCTAssertNil(runway?.iataCode)
             exp.fulfill()
         }
         waitForExpectations(timeout: self.delay) { error in
@@ -51,9 +51,9 @@ class AirportDataTests: XCTestCase {
     
     func test_getIataInvalid_2() {
         let exp = expectation(description: "completionHandler")
-        RwyXwind.AirportDataClient.getIata(fromIcao: "1234") { iata, errorString in
-            XCTAssertNotNil(errorString)
-            XCTAssertNil(iata)
+        RwyXwind.AirportDataClient.sharedInstance().getAirportByCode(letterCode: "1234") { runway, error in
+            XCTAssertNotNil(error)
+            XCTAssertNil(runway?.iataCode)
             exp.fulfill()
         }
         waitForExpectations(timeout: self.delay) { error in
@@ -65,9 +65,9 @@ class AirportDataTests: XCTestCase {
     
     func test_getIataIncomplete() {
         let exp = expectation(description: "completionHandler")
-        RwyXwind.AirportDataClient.getIata(fromIcao: "ZZ") { iata, errorString in
-            XCTAssertNotNil(errorString)
-            XCTAssertNil(iata)
+        RwyXwind.AirportDataClient.sharedInstance().getAirportByCode(letterCode: "ZZ") { runway, error in
+            XCTAssertNotNil(error)
+            XCTAssertNil(runway?.iataCode)
             exp.fulfill()
         }
         waitForExpectations(timeout: self.delay) { error in

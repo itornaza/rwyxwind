@@ -127,16 +127,20 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
             }
         }
         
+        // TODO: Debug the call to Runway with Double
+
         // If the runway is not yet in the bookmarks, go ahead and add it!
         if addToFavorites == true {
             let iataCode: String = (self.runway?.iataCode)!
+            let icaoCode: String = (self.runway?.icaoCode)!
             let name: String = (self.runway?.name)!
-            let lat: Double = (self.runway?.lat)!
-            let long: Double = (self.runway?.long)!
+            let lat: String = "\((self.runway?.lat)!)"
+            let long: String = "\((self.runway?.long)!)"
 
             // Set up the dictionary to create the runway
             let dictionary: [String : AnyObject] = [
                 Runway.Keys.IATACode: iataCode as AnyObject,
+                Runway.Keys.ICAOCode: icaoCode as AnyObject,
                 Runway.Keys.Name    : name as AnyObject,
                 Runway.Keys.Lat     : lat as AnyObject,
                 Runway.Keys.Long    : long as AnyObject
@@ -174,25 +178,29 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
     
     func setHeaderLabels(_ windSpeed: Double, windDirection: Double) {
         
-        //
-        if runway?.icaoCode == "" {
-            self.airportName.text = runway!.iataCode + ": " + runway!.name
-        } else {
-            self.airportName.text = runway!.icaoCode + ": " + runway!.name
-        }
+        // Airport name
+        self.airportName.text = runway!.icaoCode + "/" + runway!.iataCode + ": " + runway!.name
+        self.airportName.adjustsFontSizeToFitWidth = true
+        self.airportName.minimumScaleFactor = 0.5
         
+        // Weather station
         self.weatherStationName.text = weather!.station + " weather station:"
-        let direction = String(Int(windDirection))
-        let speed = String(round(10 * windSpeed) / 10)
-        self.runwayDigits.text = self.rwyFromHeading(runway!.hdg)
+        self.weatherStationName.adjustsFontSizeToFitWidth = true
+        self.airportName.minimumScaleFactor = 0.5
         
+        // Weather report
         var descriptionWrapper = weather!.weatherDescription
         if descriptionWrapper != "" {
             descriptionWrapper = "with " + descriptionWrapper
         }
+        let direction = String(Int(windDirection))
+        let speed = String(round(10 * windSpeed) / 10)
+        self.actualWind.text = "\"wind from " + direction + " degrees " + speed + " knots " + descriptionWrapper + "\""
+        self.actualWind.adjustsFontSizeToFitWidth = true
+        self.actualWind.minimumScaleFactor = 0.5
         
-        self.actualWind.text = "\"wind from " + direction + " degrees " + speed + " knots " +
-            descriptionWrapper + "\""
+        // Runway
+        self.runwayDigits.text = self.rwyFromHeading(runway!.hdg)
     }
     
     /// Convert the runway heading (3 digits) to the runway number (2 digits)
