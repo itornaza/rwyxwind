@@ -43,15 +43,9 @@
 		7258AE291BB06C4900A48DCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7258AE271BB06C4900A48DCF /* LaunchScreen.storyboard */; };
 		7258AE341BB06C4900A48DCF /* CalculateXwindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE331BB06C4900A48DCF /* CalculateXwindTests.swift */; };
 		7258AE3F1BB06C4900A48DCF /* RwyXwindUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE3E1BB06C4900A48DCF /* RwyXwindUITests.swift */; };
-		7258AE4E1BB06CCC00A48DCF /* AirportClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE4D1BB06CCC00A48DCF /* AirportClient.swift */; };
-		7258AE4F1BB06CCC00A48DCF /* AirportClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE4D1BB06CCC00A48DCF /* AirportClient.swift */; };
-		7258AE501BB06CCC00A48DCF /* AirportClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE4D1BB06CCC00A48DCF /* AirportClient.swift */; };
 		7258AE521BB06CE600A48DCF /* WeatherClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE511BB06CE600A48DCF /* WeatherClient.swift */; };
 		7258AE531BB06CE600A48DCF /* WeatherClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE511BB06CE600A48DCF /* WeatherClient.swift */; };
 		7258AE541BB06CE600A48DCF /* WeatherClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE511BB06CE600A48DCF /* WeatherClient.swift */; };
-		7258AE561BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE551BB06CFF00A48DCF /* AirportClientConstants.swift */; };
-		7258AE571BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE551BB06CFF00A48DCF /* AirportClientConstants.swift */; };
-		7258AE581BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE551BB06CFF00A48DCF /* AirportClientConstants.swift */; };
 		7258AE5A1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE591BB06D1400A48DCF /* WeatherClientConstants.swift */; };
 		7258AE5B1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE591BB06D1400A48DCF /* WeatherClientConstants.swift */; };
 		7258AE5C1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258AE591BB06D1400A48DCF /* WeatherClientConstants.swift */; };
@@ -63,7 +57,6 @@
 		7284A4F21E5A17E400A9B5EF /* WindViewConrollerAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7284A4EF1E5A17E400A9B5EF /* WindViewConrollerAnimations.swift */; };
 		72B63ABB1BCAB94900DF9DF8 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B63ABA1BCAB94900DF9DF8 /* PreferencesViewController.swift */; };
 		72BFF9F91E64A2F00073FDE9 /* AirportDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BFF9F81E64A2F00073FDE9 /* AirportDataTests.swift */; };
-		72BFF9FB1E64AB000073FDE9 /* AirportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BFF9FA1E64AB000073FDE9 /* AirportTests.swift */; };
 		72BFF9FD1E64AE190073FDE9 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BFF9FC1E64AE190073FDE9 /* WeatherTests.swift */; };
 		72D0F5B81BB590F900C21207 /* WindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D0F5B71BB590F900C21207 /* WindViewController.swift */; };
 		72D0F5B91BB590F900C21207 /* WindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D0F5B71BB590F900C21207 /* WindViewController.swift */; };
@@ -111,15 +104,12 @@
 		7258AE3A1BB06C4900A48DCF /* RwyXwindUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RwyXwindUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7258AE3E1BB06C4900A48DCF /* RwyXwindUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RwyXwindUITests.swift; sourceTree = "<group>"; };
 		7258AE401BB06C4900A48DCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7258AE4D1BB06CCC00A48DCF /* AirportClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportClient.swift; sourceTree = "<group>"; };
 		7258AE511BB06CE600A48DCF /* WeatherClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherClient.swift; sourceTree = "<group>"; };
-		7258AE551BB06CFF00A48DCF /* AirportClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportClientConstants.swift; sourceTree = "<group>"; };
 		7258AE591BB06D1400A48DCF /* WeatherClientConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherClientConstants.swift; sourceTree = "<group>"; };
 		7258AE611BB2F3C300A48DCF /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		7284A4EF1E5A17E400A9B5EF /* WindViewConrollerAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindViewConrollerAnimations.swift; sourceTree = "<group>"; };
 		72B63ABA1BCAB94900DF9DF8 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		72BFF9F81E64A2F00073FDE9 /* AirportDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportDataTests.swift; sourceTree = "<group>"; };
-		72BFF9FA1E64AB000073FDE9 /* AirportTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirportTests.swift; sourceTree = "<group>"; };
 		72BFF9FC1E64AE190073FDE9 /* WeatherTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
 		72D0F5B71BB590F900C21207 /* WindViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindViewController.swift; sourceTree = "<group>"; };
 		72D0F5BB1BB6FE4000C21207 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -196,7 +186,6 @@
 			children = (
 				7258AE331BB06C4900A48DCF /* CalculateXwindTests.swift */,
 				72BFF9F81E64A2F00073FDE9 /* AirportDataTests.swift */,
-				72BFF9FA1E64AB000073FDE9 /* AirportTests.swift */,
 				72BFF9FC1E64AE190073FDE9 /* WeatherTests.swift */,
 				7258AE351BB06C4900A48DCF /* Info.plist */,
 			);
@@ -220,19 +209,9 @@
 				722779AA1BCE844700F9C8C8 /* WindLimits.swift */,
 				723CB0391BCA68360099255D /* Theme.swift */,
 				7253087B1E5CD4E000C93AC4 /* AirportDataClient */,
-				7258AE5D1BB06D2500A48DCF /* AirportClient */,
 				7258AE5E1BB06D2900A48DCF /* WeatherClient */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		7258AE5D1BB06D2500A48DCF /* AirportClient */ = {
-			isa = PBXGroup;
-			children = (
-				7258AE551BB06CFF00A48DCF /* AirportClientConstants.swift */,
-				7258AE4D1BB06CCC00A48DCF /* AirportClient.swift */,
-			);
-			name = AirportClient;
 			sourceTree = "<group>";
 		};
 		7258AE5E1BB06D2900A48DCF /* WeatherClient */ = {
@@ -420,8 +399,6 @@
 				7258AE5A1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */,
 				723F33471BB2AFB900C6FC5E /* Weather.swift in Sources */,
 				7258AE241BB06C4900A48DCF /* RwyXwind.xcdatamodeld in Sources */,
-				7258AE4E1BB06CCC00A48DCF /* AirportClient.swift in Sources */,
-				7258AE561BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */,
 				72D0F5BC1BB6FE4000C21207 /* FavoritesViewController.swift in Sources */,
 				7258AE1C1BB06C4900A48DCF /* AppDelegate.swift in Sources */,
 			);
@@ -432,12 +409,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				722EB4E81E4507480084B383 /* AppDelegate.swift in Sources */,
-				72BFF9FB1E64AB000073FDE9 /* AirportTests.swift in Sources */,
-				7258AE571BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */,
 				7258AE631BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */,
 				7258AE5B1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */,
 				7284A4F11E5A17E400A9B5EF /* WindViewConrollerAnimations.swift in Sources */,
-				7258AE4F1BB06CCC00A48DCF /* AirportClient.swift in Sources */,
 				722EB4EE1E4507650084B383 /* WindLimits.swift in Sources */,
 				722EB4EC1E45075D0084B383 /* PreferencesViewController.swift in Sources */,
 				72BFF9F91E64A2F00073FDE9 /* AirportDataTests.swift in Sources */,
@@ -460,11 +434,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				722EB4E91E4507490084B383 /* AppDelegate.swift in Sources */,
-				7258AE581BB06CFF00A48DCF /* AirportClientConstants.swift in Sources */,
 				7258AE641BB2F3C300A48DCF /* CoreDataStackManager.swift in Sources */,
 				7258AE5C1BB06D1400A48DCF /* WeatherClientConstants.swift in Sources */,
 				7284A4F21E5A17E400A9B5EF /* WindViewConrollerAnimations.swift in Sources */,
-				7258AE501BB06CCC00A48DCF /* AirportClient.swift in Sources */,
 				722EB4EF1E4507660084B383 /* WindLimits.swift in Sources */,
 				722EB4ED1E45075D0084B383 /* PreferencesViewController.swift in Sources */,
 				7253087F1E5CD51700C93AC4 /* AirportDataClientConstants.swift in Sources */,

@@ -18,9 +18,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     
     var runway: Runway?
     var weather: Weather?
-
     var tapRecognizer: UITapGestureRecognizer? = nil
-    
     var pickerData: [[String]] = [[String]]()
     let numberOfRotors: Int = 3
     var heading = Double(360.0)
@@ -141,7 +139,6 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
         self.view.addGestureRecognizer(tapRecognizer!)
     }
     
-    
     /// Valid numbers are: 000 - 360
     func validateRunwayHeading(_ runwayHeading: Int) throws {
         if !(runwayHeading <= 360 && runwayHeading >= 0) {
@@ -251,7 +248,8 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
 extension FindViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     
     /// Font color
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) ->
+        NSAttributedString? {
         let titleData = pickerData[component][row]
         let myTitle = NSAttributedString(
             string: titleData,
@@ -305,7 +303,8 @@ extension FindViewController: UIPickerViewDelegate, UIPickerViewDataSource{
 extension FindViewController: UITextFieldDelegate {
     
     /// Validate the iataCode text field to allow only up to letters
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String)
+        -> Bool {
         var lettersOnly: Bool = false
         var properLength: Bool = false
         let maxLength: Int = 4  // To handle both IATA and ICAO codes
