@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import CoreData
 
-class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetchedResultsControllerDelegate {
+class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetchedResultsControllerDelegate {
     
     //----------------------
     // MARK: - Properties
@@ -126,8 +126,6 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
                     message = "Already in bookmarks"
             }
         }
-        
-        // TODO: Debug the call to Runway with Double
 
         // If the runway is not yet in the bookmarks, go ahead and add it!
         if addToFavorites == true {
@@ -177,9 +175,8 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
     }
     
     func setHeaderLabels(_ windSpeed: Double, windDirection: Double) {
-        
         // Airport name
-        self.airportName.text = runway!.icaoCode + "/" + runway!.iataCode + ": " + runway!.name
+        self.airportName.text = runway!.icaoCode + " (" + runway!.iataCode + "): " + runway!.name
         self.airportName.adjustsFontSizeToFitWidth = true
         self.airportName.minimumScaleFactor = 0.5
         
@@ -233,7 +230,6 @@ class WindViewController:   UIViewController, UITabBarControllerDelegate, NSFetc
     
     /// Configure the UI upon load to hide and zeroise wind elements
     func configureUI() {
-        
         self.setLabelColors()
         self.runwayDigitsResize()
         self.windComponentsResize()

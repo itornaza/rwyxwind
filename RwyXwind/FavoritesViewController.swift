@@ -22,8 +22,8 @@ class FavoritesViewController:  UIViewController {
     lazy var fetchedResultsController: NSFetchedResultsController<Runway> = {
         let fetchRequest = NSFetchRequest<Runway>(entityName: "Runway")
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: Runway.Keys.ShortDescriptor.IATACode, ascending: true),
             NSSortDescriptor(key: Runway.Keys.ShortDescriptor.ICAOCode, ascending: true),
+            NSSortDescriptor(key: Runway.Keys.ShortDescriptor.IATACode, ascending: true),
             NSSortDescriptor(key: Runway.Keys.ShortDescriptor.Hdg, ascending: true)
         ]
         let fetchedResultsController = NSFetchedResultsController(
@@ -41,7 +41,6 @@ class FavoritesViewController:  UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var editButton: UIBarButtonItem!
-    
     
     //----------------------
     // MARK: - Lifecycle
@@ -111,6 +110,10 @@ class FavoritesViewController:  UIViewController {
         self.fetchedResultsController.delegate = nil
     }
     
+    func configureRwyTitle(runway: Runway) -> String {
+        return runway.icaoCode + " (" + runway.iataCode + ") " + self.rwyFromHeading(runway.hdg) + ": " + runway.name
+    }
+    
     //----------------------
     // MARK: - Alerts
     //----------------------
@@ -144,7 +147,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let runway = fetchedResultsController.object(at: indexPath) 
         
         // Set the label in the cell with the data from the model object
-        cell!.textLabel?.text = runway.iataCode + " rwy " + self.rwyFromHeading(runway.hdg) + ": " + runway.name
+        cell!.textLabel?.text = self.configureRwyTitle(runway: runway)
         
         // return the cell
         return cell!
