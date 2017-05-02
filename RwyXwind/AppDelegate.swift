@@ -7,12 +7,11 @@
 //
 /*  
     --------------------
-    Version 1.4.1 Log
+    Version 1.4.2 Log
     --------------------
     
-    1. Fixed animation glitch
-    2. Bookmarks title background color
- 
+    1. Changed Airport service from SITA to Airport Data
+    2. Sorting options for both ICAO and IATA
 */
 
 import UIKit

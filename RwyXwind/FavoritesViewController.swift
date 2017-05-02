@@ -11,6 +11,10 @@ import CoreData
 
 class FavoritesViewController:  UIViewController {
     
+    var sortIcao = true // on true sort icao, on false sort iata
+    var shortDescriptor = Runway.Keys.ShortDescriptor.ICAOCode
+    let sortingKey = "sorting_key"
+    
     //-------------------------------
     // MARK: - Core data properties
     //-------------------------------
@@ -22,8 +26,7 @@ class FavoritesViewController:  UIViewController {
     lazy var fetchedResultsController: NSFetchedResultsController<Runway> = {
         let fetchRequest = NSFetchRequest<Runway>(entityName: "Runway")
         fetchRequest.sortDescriptors = [
-            NSSortDescriptor(key: Runway.Keys.ShortDescriptor.ICAOCode, ascending: true),
-            NSSortDescriptor(key: Runway.Keys.ShortDescriptor.IATACode, ascending: true),
+            NSSortDescriptor(key: self.shortDescriptor, ascending: true),
             NSSortDescriptor(key: Runway.Keys.ShortDescriptor.Hdg, ascending: true)
         ]
         let fetchedResultsController = NSFetchedResultsController(
@@ -41,6 +44,7 @@ class FavoritesViewController:  UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var sortButton: UIBarButtonItem!
     
     //----------------------
     // MARK: - Lifecycle
@@ -48,6 +52,20 @@ class FavoritesViewController:  UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Make the sorting option persistent
+        if (UserDefaults.standard.string(forKey: self.sortingKey) == nil) {
+            UserDefaults.standard.set(Runway.Keys.ShortDescriptor.ICAOCode, forKey: self.sortingKey)
+        }
+        self.shortDescriptor = UserDefaults.standard.string(forKey: self.sortingKey)!
+        if self.shortDescriptor == Runway.Keys.ShortDescriptor.ICAOCode {
+            updateFetch(sortIcao: true)
+            self.sortButton.title = "Sort by ICAO"
+        } else {
+            updateFetch(sortIcao: false)
+            self.sortButton.title = "Sort by IATA"
+        }
+
         self.configureFetch()
     }
     
@@ -79,6 +97,22 @@ class FavoritesViewController:  UIViewController {
         }
     }
     
+    @IBAction func sort(_ sender: UIBarButtonItem) {
+        self.sortIcao = self.sortIcao ? false : true
+        self.sortButton.title = (self.sortButton.title == "Sort by IATA") ? "Sort by ICAO" : "Sort by IATA"
+        self.updateFetch(sortIcao: self.sortIcao)
+        
+        // 2. Perform fetch
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            self.alertView("Internal error", message: "Could not get bookmarks")
+        }
+        
+        // 3. Reorder table rows
+        tableView.reloadData()
+    }
+    
     //----------------------
     // MARK: - Helpers
     //----------------------
@@ -87,6 +121,30 @@ class FavoritesViewController:  UIViewController {
     func rwyFromHeading(_ runwayHeading: Double) -> String {
         let rwy = Int(round(runwayHeading/10))
         return String(format: "%02d", rwy)
+    }
+    
+    // Update depending on IATA or ICAO sorting option
+    func updateFetch(sortIcao: Bool) {
+        if sortIcao == true {
+            self.shortDescriptor = Runway.Keys.ShortDescriptor.ICAOCode
+            UserDefaults.standard.set(Runway.Keys.ShortDescriptor.ICAOCode, forKey: self.sortingKey)
+            
+            // 1.1 Change the fetch request
+            fetchedResultsController.fetchRequest.sortDescriptors = [
+                NSSortDescriptor(key: Runway.Keys.ShortDescriptor.ICAOCode, ascending: true),
+                NSSortDescriptor(key: Runway.Keys.ShortDescriptor.Hdg, ascending: true)
+            ]
+        } else {
+            self.shortDescriptor = Runway.Keys.ShortDescriptor.IATACode
+            UserDefaults.standard.set(Runway.Keys.ShortDescriptor.IATACode, forKey: self.sortingKey)
+            
+            // 1.2 Change the fetch request
+            fetchedResultsController.fetchRequest.sortDescriptors = [
+                NSSortDescriptor(key: Runway.Keys.ShortDescriptor.IATACode, ascending: true),
+                NSSortDescriptor(key: Runway.Keys.ShortDescriptor.Hdg, ascending: true)
+            ]
+            UserDefaults.standard.set(Runway.Keys.ShortDescriptor.IATACode, forKey: self.sortingKey)
+        }
     }
     
     func configureFetch() {
@@ -102,6 +160,7 @@ class FavoritesViewController:  UIViewController {
         self.navigationBar.barTintColor = Theme.sharedInstance().darkGray
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.sharedInstance().yellow]
         self.editButton.tintColor = Theme.sharedInstance().yellow
+        self.sortButton.tintColor = Theme.sharedInstance().yellow
         self.tableView.backgroundColor = Theme.sharedInstance().darkGray
         self.tableView.reloadData()
     }
@@ -144,7 +203,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         cell!.selectionStyle = UITableViewCellSelectionStyle.none
         
         // Find the model object that corresponds to that row
-        let runway = fetchedResultsController.object(at: indexPath) 
+        let runway = fetchedResultsController.object(at: indexPath)
         
         // Set the label in the cell with the data from the model object
         cell!.textLabel?.text = self.configureRwyTitle(runway: runway)
@@ -158,7 +217,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let windVC = self.storyboard!.instantiateViewController(withIdentifier: "WindViewController") as! WindViewController
         
         // Get the favorite runway from core data
-        let runway = self.fetchedResultsController.object(at: indexPath) 
+        let runway = self.fetchedResultsController.object(at: indexPath)
         windVC.runway = runway
         
         // Get the weather from the weather client
@@ -176,10 +235,12 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+    /// TODO: Cannot remove more than one entry at an edit session, bug when in IATA sort
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
             switch (editingStyle) {
             case .delete:
-                let runway = fetchedResultsController.object(at: indexPath) 
+                // TODO: Get the runway by name instead of index?
+                let runway = fetchedResultsController.object(at: indexPath)
                 sharedContext.delete(runway)
                 CoreDataStackManager.sharedInstance().saveContext()
             default:

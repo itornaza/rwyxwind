@@ -438,6 +438,12 @@
                                                 <action selector="edit:" destination="OqW-EQ-GJ8" id="f93-XB-srf"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Sort by IATA" id="1QU-4Y-gwv">
+                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <connections>
+                                                <action selector="sort:" destination="OqW-EQ-GJ8" id="GRh-Ck-kfa"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -458,6 +464,7 @@
                     <connections>
                         <outlet property="editButton" destination="ZLP-Uq-XMD" id="vxd-2x-aLn"/>
                         <outlet property="navigationBar" destination="f7b-ro-a6p" id="MGn-dI-qtK"/>
+                        <outlet property="sortButton" destination="1QU-4Y-gwv" id="8UY-Lo-2LG"/>
                         <outlet property="tableView" destination="ZNa-gE-IJi" id="13J-H4-aQL"/>
                     </connections>
                 </viewController>
