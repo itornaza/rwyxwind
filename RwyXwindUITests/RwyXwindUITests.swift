@@ -17,8 +17,8 @@ class RwyXwindUITests: XCTestCase {
     let delay: UInt32 = 4
     
     // String literals
-    let testAirport: String = "LGKV/KVA: Kavala International Airport, \"Megas Alexandros\""
-    let testAirportBookmark = "KVA rwy 36: Kavala International Airport, \"Megas Alexandros\""
+    let testAirport: String = "LGKV (KVA): Kavala International Airport, \"Megas Alexandros\""
+    let testAirportBookmark = "LGKV (KVA) 36: Kavala International Airport, \"Megas Alexandros\""
     let testAirportAlert = "Kavala International Airport, \"Megas Alexandros\", RWY: 36"
     let airportServiceError = "Airport service error"
     let calculate = "Calculate crosswind"
