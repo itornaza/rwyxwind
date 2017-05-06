@@ -11,11 +11,14 @@ import CoreData
 
 class FavoritesViewController:  UIViewController {
     
-    // User defaults key
+    //-------------------------------
+    // MARK: - Properties
+    //-------------------------------
+    
     let sortingKey = "sorting_key"
     
     //-------------------------------
-    // MARK: - Core data properties
+    // MARK: Core data properties
     //-------------------------------
     
     var sharedContext: NSManagedObjectContext {
@@ -250,11 +253,9 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    /// TODO: Cannot remove more than one entry at an edit session, bug when in IATA sort
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
             switch (editingStyle) {
             case .delete:
-                // TODO: Get the runway by name instead of index?
                 let runway = fetchedResultsController.object(at: indexPath)
                 sharedContext.delete(runway)
                 CoreDataStackManager.sharedInstance().saveContext()

@@ -5,28 +5,26 @@
 //  Created by Ioannis Tornazakis on 21/2/17.
 //  Copyright © 2017 polarbear.gr. All rights reserved.
 //
-//  API: http://www.airport-data.com/api/doc.php#airport
-
 /*
-     1. IATA to ICAO use
-     http://www.airport-data.com/api/ap_info.json?iata=FRA
-     
-     2. ICAO to IATA use
-     http://www.airport-data.com/api/ap_info.json?icao=EDDF
-     
-     Sample JSON response
-     {
-         "icao":"EDDF",
-         "iata":"FRA",
-         "name":"Frankfurt International Airport",
-         "location":"Frankfurt am Main",
-         "country":"Germany",
-         "country_code":"DE",
-         "longitude":"8.543125",
-         "latitude":"50.026421",
-         "link":"http:\/\/www.airport-data.com\/world-airports\/EDDF-FRA\/",
-         "status":200
-     }
+    API: http://www.airport-data.com/api/doc.php#airport
+ 
+    Example usage:
+    1. IATA to IATA use: http://www.airport-data.com/api/ap_info.json?iata=FRA
+    2. ICAO to ICAO use: http://www.airport-data.com/api/ap_info.json?icao=EDDF
+
+    Sample JSON response
+    {
+        "icao":"EDDF",
+        "iata":"FRA",
+        "name":"Frankfurt International Airport",
+        "location":"Frankfurt am Main",
+        "country":"Germany",
+        "country_code":"DE",
+        "longitude":"8.543125",
+        "latitude":"50.026421",
+        "link":"http:\/\/www.airport-data.com\/world-airports\/EDDF-FRA\/",
+        "status":200
+    }
 */
 
 import Foundation

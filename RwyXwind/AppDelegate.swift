@@ -5,14 +5,6 @@
 //  Created by Ioannis Tornazakis on 21/9/15.
 //  Copyright © 2015 polarbear.gr. All rights reserved.
 //
-/*  
-    --------------------
-    Version 1.4.2 Log
-    --------------------
-    
-    1. Changed Airport service from SITA to Airport Data
-    2. Sorting options for both ICAO and IATA
-*/
 
 import UIKit
 import CoreData
