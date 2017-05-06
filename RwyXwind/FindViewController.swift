@@ -46,20 +46,12 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Delegates and datasources
         self.tabBarController?.delegate = self
         self.letterCode.delegate = self
         self.picker.delegate = self
         self.picker.dataSource = self
-        
-        // Set up the picker data
         self.setPickerData()
-        
-        // Configure the tap recocnizer
         self.setTapRecognizer()
-        
-        // If the limits are not set, initialize with defaults
         self.initializeWindLimits()
     }
     
@@ -245,7 +237,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     }
 }
 
-extension FindViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+extension FindViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     /// Font color
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) ->

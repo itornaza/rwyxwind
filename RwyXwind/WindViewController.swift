@@ -21,15 +21,17 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
     var weather: Weather?
     
     //----------------------
-    // Constants
+    // MARK: Constants
     //----------------------
     
     enum TabItemIndex: Int {
         case find = 0
         case favorites = 1
     }
+    //-----------------------------
+    // MARK: Core data properties
+    //-----------------------------
     
-    // Core data properties
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }

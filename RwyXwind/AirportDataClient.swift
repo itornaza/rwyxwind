@@ -128,10 +128,10 @@ class AirportDataClient {
                     } else if nameCheck == nil {
                         completionHandler(nil, "Airport name is not available")
                         return
-                    } else if latCheck == nil || Double(latCheck as! String) == nil {
+                    } else if latCheck == nil || latCheck as! Int == 0 || Double(latCheck as! String) == nil {
                         completionHandler(nil, "Airport latitude is not available")
                         return
-                    } else if longCheck == nil || Double(longCheck as! String) == nil {
+                    } else if longCheck == nil || longCheck as! Int == 0 || Double(longCheck as! String) == nil {
                         completionHandler(nil, "Airport longitude is not available")
                         return
                     }

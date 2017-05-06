@@ -37,7 +37,6 @@ class PreferencesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.configureUI()
         self.initializeSlidersValues()
         self.initializeLabelsValues()
