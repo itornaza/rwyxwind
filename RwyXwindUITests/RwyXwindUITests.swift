@@ -21,6 +21,9 @@ class RwyXwindUITests: XCTestCase {
     let testAirportBookmark = "LGKV (KVA) 36: Kavala International Airport, \"Megas Alexandros\""
     let testAirportAlert = "Kavala International Airport, \"Megas Alexandros\", RWY: 36"
     let airportServiceError = "Airport service error"
+    let iataError = "IATA code is not available"
+    let icaoError = "ICAO code is not available"
+    let latError = "Airport latitude is not available"
     let calculate = "Calculate crosswind"
     let rtn = "Return"
     let invalid = "Invalid input"
@@ -97,6 +100,17 @@ class RwyXwindUITests: XCTestCase {
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
         XCTAssertTrue(app.staticTexts[self.airportServiceError].exists)
+        XCTAssertTrue(app.staticTexts[self.icaoError].exists)
+        app.alerts[self.airportServiceError].buttons[self.ok].tap()
+    }
+    
+    func test_validIATAButNoAirportData() {
+        let app = XCUIApplication()
+        self.inputValidIATAButNoAirportData()
+        app.buttons[self.calculate].tap()
+        sleep(self.delay) // Allow time for the transition to complete
+        XCTAssertTrue(app.staticTexts[self.airportServiceError].exists)
+        XCTAssertTrue(app.staticTexts[self.latError].exists)
         app.alerts[self.airportServiceError].buttons[self.ok].tap()
     }
     
@@ -114,6 +128,17 @@ class RwyXwindUITests: XCTestCase {
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
         XCTAssertTrue(app.staticTexts[self.airportServiceError].exists)
+        XCTAssertTrue(app.staticTexts[self.iataError].exists)
+        app.alerts[self.airportServiceError].buttons[self.ok].tap()
+    }
+    
+    func test_validICAOButNoAirportData() {
+        let app = XCUIApplication()
+        self.inputValidICAOButNoAirportData()
+        app.buttons[self.calculate].tap()
+        sleep(self.delay) // Allow time for the transition to complete
+        XCTAssertTrue(app.staticTexts[self.airportServiceError].exists)
+        XCTAssertTrue(app.staticTexts[self.latError].exists)
         app.alerts[self.airportServiceError].buttons[self.ok].tap()
     }
     
@@ -210,6 +235,10 @@ class RwyXwindUITests: XCTestCase {
         self.inputIATA(first: "Z", second: "Z", third: "Z")
     }
     
+    func inputValidIATAButNoAirportData() {
+        self.inputIATA(first: "S", second: "F", third: "I")
+    }
+    
     func inputICAO(first: String, second: String, third: String, forth: String) {
         let app = XCUIApplication()
         app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .textField).element.tap()
@@ -226,6 +255,10 @@ class RwyXwindUITests: XCTestCase {
     
     func inputInvalidICAO() {
         self.inputICAO(first: "Z", second: "Z", third: "Z", forth: "Z")
+    }
+    
+    func inputValidICAOButNoAirportData() {
+        self.inputICAO(first: "G", second: "M", third: "M", forth: "S")
     }
     
     func pickerSetUp(first: String, second: String, third: String) {

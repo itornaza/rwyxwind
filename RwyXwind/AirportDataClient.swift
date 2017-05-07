@@ -118,22 +118,53 @@ class AirportDataClient {
                     let latCheck = parsedResult.value(forKey: JSONKeys.lat)
                     let longCheck = parsedResult.value(forKey: JSONKeys.long)
                     
-                    // Checks
-                    if iataCheck == nil {
+                    //---------------------
+                    // API resonse checks
+                    //---------------------
+                    
+                    // IATA
+                    if iataCheck is NSNull {
                         completionHandler(nil, "IATA code is not available")
                         return
-                    } else if icaoCheck == nil {
+                    
+                    // ICAO
+                    } else if icaoCheck is NSNull {
                         completionHandler(nil, "ICAO code is not available")
                         return
+                    
+                    // Name
                     } else if nameCheck == nil {
+                        // Check for nil beacause if the airport does not exist the API does not include name into the JSON response
                         completionHandler(nil, "Airport name is not available")
                         return
-                    } else if latCheck == nil || latCheck as! Int == 0 || Double(latCheck as! String) == nil {
-                        completionHandler(nil, "Airport latitude is not available")
-                        return
-                    } else if longCheck == nil || longCheck as! Int == 0 || Double(longCheck as! String) == nil {
-                        completionHandler(nil, "Airport longitude is not available")
-                        return
+                    
+                    // LAT
+                    } else if latCheck is String {
+                        // Returns a string if valid, secure that it will be convertible to Double
+                        if Double(longCheck as! String) == nil {
+                            completionHandler(nil, "Airport latitude is not available")
+                            return
+                        }
+                    } else if latCheck is Int {
+                        // Returns 0 as an Int if invalid
+                        if latCheck as! Int == 0 {
+                            completionHandler(nil, "Airport latitude is not available")
+                            return
+                        }
+                    
+                    // LONG
+                    } else if longCheck is String {
+                        // Returns a string if valid, secure that it will be convertible to Double
+                        if Double(longCheck as! String) == nil {
+                            completionHandler(nil, "Airport longitude is not available")
+                            return
+                        }
+                    } else if longCheck is Int {
+                        // Returns 0 as an Int if invalid
+                        if longCheck as! Int == 0 {
+                            completionHandler(nil, "Airport longitude is not available")
+                            return
+                        }
                     }
                     
                     // Set up the dictionary to create the runway
@@ -148,9 +179,12 @@ class AirportDataClient {
                     // Add runway to temporary context so the runway is not included to favorites by default
                     let runway = Runway(dictionary: runwayDictionary, context: self.temporaryContext)
                     
+                    //---------------------
                     // Succesfull return
+                    //---------------------
                     completionHandler(runway, nil)
                     return
+                    
                 } else if parseStatus == Status.badGateway.id {
                     completionHandler(nil, Status.badGateway.message)
                     return
