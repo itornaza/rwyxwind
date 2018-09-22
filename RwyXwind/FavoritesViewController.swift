@@ -174,6 +174,8 @@ class FavoritesViewController:  UIViewController {
     }
     
     func configureUI() {
+        // TODO: Set the background color for the view controller
+        self.view.backgroundColor = Theme.sharedInstance().darkGray
         self.navigationBar.barTintColor = Theme.sharedInstance().darkGray
         self.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: Theme.sharedInstance().yellow])
         self.editButton.tintColor = Theme.sharedInstance().yellow
