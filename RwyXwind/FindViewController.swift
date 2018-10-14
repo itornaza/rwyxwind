@@ -104,7 +104,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     // MARK: - Tap recognizer callback
     //----------------------------------
     
-    func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
+    @objc func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
@@ -201,9 +201,9 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     }
     
     func getCodeCategory(code: String) -> Int? {
-        if code.characters.count == 3 {
+        if code.count == 3 {
             return AirportDataClient.Constants.IsIata
-        } else if code.characters.count == 4 {
+        } else if code.count == 4 {
             return AirportDataClient.Constants.IsIcao
         } else {
             return nil
@@ -245,9 +245,9 @@ extension FindViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let titleData = pickerData[component][row]
         let myTitle = NSAttributedString(
             string: titleData,
-            attributes: [
-                NSForegroundColorAttributeName: Theme.sharedInstance().green
-            ]
+            attributes: convertToOptionalNSAttributedStringKeyDictionary([
+                convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): Theme.sharedInstance().green
+            ])
         )
         return myTitle
     }
@@ -318,11 +318,11 @@ extension FindViewController: UITextFieldDelegate {
         lettersOnly = string == filtered ? true : false
         
         // Limit input to 3 characters
-        if range.length + range.location > (self.letterCode.text?.characters.count)! {
+        if range.length + range.location > (self.letterCode.text?.count)! {
             return false
         }
         
-        let newLength = (self.letterCode.text?.characters.count)! + string.characters.count - range.length
+        let newLength = (self.letterCode.text?.count)! + string.count - range.length
         properLength = newLength <= maxLength ? true : false
         
         // If only both conditions are met return true
@@ -334,4 +334,15 @@ extension FindViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

@@ -69,7 +69,7 @@ class WeatherClient {
                 do {
                     // Download succeded, parse the data
                     parsedResult = try JSONSerialization.jsonObject(with: data!,
-                        options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
+                        options: JSONSerialization.ReadingOptions.allowFragments) as? NSDictionary
                 } catch {
                     completionHandler(nil, "Could not parse downloaded data")
                     return

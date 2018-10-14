@@ -174,8 +174,10 @@ class FavoritesViewController:  UIViewController {
     }
     
     func configureUI() {
+        // TODO: Set the background color for the view controller
+        self.view.backgroundColor = Theme.sharedInstance().darkGray
         self.navigationBar.barTintColor = Theme.sharedInstance().darkGray
-        self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: Theme.sharedInstance().yellow]
+        self.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: Theme.sharedInstance().yellow])
         self.editButton.tintColor = Theme.sharedInstance().yellow
         self.sortButton.tintColor = Theme.sharedInstance().yellow
         self.configureSortButton()
@@ -217,8 +219,8 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RunwayCell")
 
         // Configure row appearance
-        cell!.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
-        cell!.selectionStyle = UITableViewCellSelectionStyle.none
+        cell!.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        cell!.selectionStyle = UITableViewCell.SelectionStyle.none
         
         // Find the model object that corresponds to that row
         let runway = fetchedResultsController.object(at: indexPath)
@@ -253,7 +255,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             switch (editingStyle) {
             case .delete:
                 let runway = fetchedResultsController.object(at: indexPath)
@@ -312,4 +314,10 @@ extension FavoritesViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.endUpdates()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

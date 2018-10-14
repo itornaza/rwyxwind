@@ -96,9 +96,9 @@ class PreferencesViewController: UIViewController {
     }
     
     func setSliderThumbImages() {
-        self.headwindSlider.setThumbImage(UIImage(named: "SliderThumb"), for: UIControlState())
-        self.tailwindSlider.setThumbImage(UIImage(named: "SliderThumb"), for: UIControlState())
-        self.crosswindSlider.setThumbImage(UIImage(named: "SliderThumb"), for: UIControlState())
+        self.headwindSlider.setThumbImage(UIImage(named: "SliderThumb"), for: UIControl.State())
+        self.tailwindSlider.setThumbImage(UIImage(named: "SliderThumb"), for: UIControl.State())
+        self.crosswindSlider.setThumbImage(UIImage(named: "SliderThumb"), for: UIControl.State())
     }
     
     func setViewBorder() {
