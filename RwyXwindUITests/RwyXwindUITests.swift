@@ -8,6 +8,7 @@
 
 import XCTest
 
+/// The tests are shall be run only against the iPhone 6 simulator to take into account the proper screen coordinates
 class RwyXwindUITests: XCTestCase {
     
     //----------------------
