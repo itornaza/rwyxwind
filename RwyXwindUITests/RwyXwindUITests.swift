@@ -211,6 +211,7 @@ class RwyXwindUITests: XCTestCase {
         let tablesQuery = app.tables.cells
         tablesQuery.element(boundBy: 0).swipeLeft()
         tablesQuery.element(boundBy: 0).buttons[self.delete].tap()
+        sleep(self.delay) // Allow time for action to complete
         XCTAssertEqual(tablesQuery.count, 0)
     }
     
