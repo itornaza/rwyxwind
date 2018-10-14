@@ -43,9 +43,9 @@ class AirportDataClient {
 
     /// Distinguish between iata, icao or invalid letter code
     func classifyCode(letterCode: String) -> Int {
-        if letterCode.characters.count == LetterCodeCount.iata {
+        if letterCode.count == LetterCodeCount.iata {
             return Constants.IsIata
-        } else if letterCode.characters.count == LetterCodeCount.icao {
+        } else if letterCode.count == LetterCodeCount.icao {
             return Constants.IsIcao
         } else {
             return LetterCodeCount.none
@@ -100,7 +100,7 @@ class AirportDataClient {
                     parsedResult = try JSONSerialization.jsonObject(
                         with: data!,
                         options: JSONSerialization.ReadingOptions.allowFragments
-                    ) as! NSDictionary
+                    ) as? NSDictionary
                 } catch {
                     completionHandler(nil, "Could not parse downloaded data")
                     return

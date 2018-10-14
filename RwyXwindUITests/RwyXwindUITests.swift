@@ -8,6 +8,7 @@
 
 import XCTest
 
+/// The tests are shall be run only against the iPhone 6 simulator to take into account the proper screen coordinates
 class RwyXwindUITests: XCTestCase {
     
     //----------------------
@@ -211,6 +212,7 @@ class RwyXwindUITests: XCTestCase {
         let tablesQuery = app.tables.cells
         tablesQuery.element(boundBy: 0).swipeLeft()
         tablesQuery.element(boundBy: 0).buttons[self.delete].tap()
+        sleep(self.delay) // Allow time for action to complete
         XCTAssertEqual(tablesQuery.count, 0)
     }
     
