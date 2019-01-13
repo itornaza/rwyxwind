@@ -6,10 +6,7 @@
 //  Copyright © 2017 polarbear.gr. All rights reserved.
 //
 
-#warning("Download and use the https://openflights.org/data.html `airports.dat` static file parsing")
-
 /*
-    TODO: airport-data api is forbiden as of end of December 2018
     API: http://www.airport-data.com/api/doc.php#airport
  
     Example usage:
@@ -19,7 +16,7 @@
     Sample JSON response
     {
         "icao":"EDDF",
-        "iata":"FRA",
+        "iata":"FRA",s
         "name":"Frankfurt International Airport",
         "location":"Frankfurt am Main",
         "country":"Germany",
