@@ -349,6 +349,7 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
             as! UITabBarController
         
         tabBarController.selectedIndex = tabItemIndex
+        tabBarController.modalPresentationStyle = .fullScreen // iOS 13 override default modal presentation
         self.present(tabBarController, animated: false, completion: nil)
     }
     
