@@ -222,6 +222,7 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
     
     /// Configure the UI upon load to hide and zeroise wind elements
     func configureUI() {
+        self.view.backgroundColor = Theme.sharedInstance().darkGray
         self.setLabelColors()
         self.runwayDigitsResize()
         self.windComponentsResize()

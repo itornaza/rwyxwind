@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4ar-0N-C4V">
-    <device id="retina6_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4ar-0N-C4V">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,7 +26,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eDV-VE-yXG">
-                                <rect key="frame" x="165" y="80" width="84" height="30"/>
+                                <rect key="frame" x="165" y="80" width="84" height="34"/>
                                 <color key="backgroundColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="uhD-fC-urR"/>
@@ -38,13 +36,13 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(3 or 4 letters)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKo-Mr-pio">
-                                <rect key="frame" x="49.666666666666657" y="105" width="108" height="21"/>
+                                <rect key="frame" x="52.666666666666657" y="105" width="105" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                 <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZyW-Kt-Upy">
-                                <rect key="frame" x="140" y="134" width="140" height="216"/>
+                                <rect key="frame" x="140" y="138" width="140" height="216"/>
                                 <color key="backgroundColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="YES"/>
@@ -84,13 +82,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Runway:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3S-VC-Shs">
-                                <rect key="frame" x="59" y="231" width="68" height="21"/>
+                                <rect key="frame" x="59" y="235" width="68" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(hdg)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Tx-k2-gDI">
-                                <rect key="frame" x="72" y="249" width="41" height="21"/>
+                                <rect key="frame" x="72" y="253" width="41" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -103,6 +101,7 @@
                             <constraint firstItem="ZyW-Kt-Upy" firstAttribute="top" secondItem="eDV-VE-yXG" secondAttribute="bottom" constant="24" id="5fp-Mm-eyj"/>
                             <constraint firstItem="eDV-VE-yXG" firstAttribute="top" secondItem="mzB-FO-MZN" secondAttribute="top" constant="36" id="7WH-rM-tv8"/>
                             <constraint firstItem="uH9-jA-vhD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="9c1-g5-hmW"/>
+                            <constraint firstItem="ZyW-Kt-Upy" firstAttribute="leading" secondItem="1Tx-k2-gDI" secondAttribute="trailing" constant="27" id="C7t-CK-tZb"/>
                             <constraint firstItem="mzB-FO-MZN" firstAttribute="bottom" secondItem="dJk-c1-fUl" secondAttribute="bottom" constant="101" id="FeS-PE-d5M"/>
                             <constraint firstItem="eDV-VE-yXG" firstAttribute="leading" secondItem="UKo-Mr-pio" secondAttribute="trailing" constant="7.5" id="Fpa-Ob-L7h"/>
                             <constraint firstItem="mzB-FO-MZN" firstAttribute="bottom" secondItem="uH9-jA-vhD" secondAttribute="bottom" id="IlZ-fQ-MwM"/>
@@ -217,14 +216,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RedArrowN" translatesAutoresizingMaskIntoConstraints="NO" id="dpV-Az-Jsx">
-                                <rect key="frame" x="183" y="659" width="44" height="72"/>
+                                <rect key="frame" x="183" y="659.33333333333337" width="44" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="C5g-1Z-WCw"/>
                                     <constraint firstAttribute="width" constant="44" id="LSk-jo-LlE"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GreenArrowN" translatesAutoresizingMaskIntoConstraints="NO" id="oqk-7t-YRg">
-                                <rect key="frame" x="183" y="659" width="44" height="72"/>
+                                <rect key="frame" x="183" y="659.33333333333337" width="44" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="31F-qN-lbp"/>
                                     <constraint firstAttribute="width" constant="44" id="cCd-cS-efk"/>
@@ -283,7 +282,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egh-Oj-0GV">
-                                <rect key="frame" x="192" y="698" width="27" height="21"/>
+                                <rect key="frame" x="192" y="698.33333333333337" width="27" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="27" id="gjf-Pc-yX5"/>
                                     <constraint firstAttribute="height" constant="21" id="lth-ak-VCo"/>
@@ -313,7 +312,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="36" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UPs-kZ-3br">
-                                <rect key="frame" x="168.66666666666666" y="742" width="77" height="72"/>
+                                <rect key="frame" x="168.66666666666666" y="742.33333333333337" width="77" height="71.666666666666629"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="60"/>
                                 <color key="textColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -413,7 +412,7 @@
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qO8-bm-x1n" id="OTL-Tj-icb">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration">
@@ -641,16 +640,16 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CalculateBackground" width="497" height="106"/>
-        <image name="GreenArrowE" width="217" height="132"/>
-        <image name="GreenArrowN" width="132" height="217"/>
-        <image name="GreenArrowS" width="132" height="217"/>
-        <image name="GreenArrowW" width="217" height="132"/>
-        <image name="NoiseBackground" width="750" height="1334"/>
-        <image name="RedArrowE" width="217" height="132"/>
-        <image name="RedArrowN" width="132" height="217"/>
-        <image name="RedArrowS" width="132" height="217"/>
-        <image name="RedArrowW" width="217" height="132"/>
-        <image name="Runway" width="750" height="1334"/>
+        <image name="CalculateBackground" width="165.66667175292969" height="35.333332061767578"/>
+        <image name="GreenArrowE" width="72.333335876464844" height="44"/>
+        <image name="GreenArrowN" width="44" height="72.333335876464844"/>
+        <image name="GreenArrowS" width="44" height="72.333335876464844"/>
+        <image name="GreenArrowW" width="72.333335876464844" height="44"/>
+        <image name="NoiseBackground" width="250" height="444.66665649414062"/>
+        <image name="RedArrowE" width="72.333335876464844" height="44"/>
+        <image name="RedArrowN" width="44" height="72.333335876464844"/>
+        <image name="RedArrowS" width="44" height="72.333335876464844"/>
+        <image name="RedArrowW" width="72.333335876464844" height="44"/>
+        <image name="Runway" width="250" height="444.66665649414062"/>
     </resources>
 </document>
