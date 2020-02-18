@@ -11,9 +11,7 @@ import CoreData
 
 class AirportDataClient {
     
-    //---------------------------
     // MARK: - Shared Instance
-    //---------------------------
     
     class func sharedInstance() -> AirportDataClient {
         struct Singleton {
@@ -22,9 +20,7 @@ class AirportDataClient {
         return Singleton.sharedInstance
     }
     
-    //-------------------------------
     // MARK: - Core Data properties
-    //-------------------------------
     
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -33,13 +29,13 @@ class AirportDataClient {
     var temporaryContext: NSManagedObjectContext!
     
     func setUpTemporaryContext() {
-        temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
+        temporaryContext = NSManagedObjectContext(
+            concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
+        
         temporaryContext.persistentStoreCoordinator = sharedContext.persistentStoreCoordinator
     }
     
-    //-------------------------------
     // MARK: - Class methods
-    //-------------------------------
 
     /// Distinguish between iata, icao or invalid letter code
     func classifyCode(letterCode: String) -> Int {
@@ -134,7 +130,8 @@ class AirportDataClient {
                     
                     // Name
                     } else if nameCheck == nil {
-                        // Check for nil beacause if the airport does not exist the API does not include name into the JSON response
+                        /* Check for nil beacause if the airport does not exist the API does not include name into
+                        the JSON response */
                         completionHandler(nil, "Airport name is not available")
                         return
                     

@@ -12,25 +12,20 @@ import CoreData
 
 class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetchedResultsControllerDelegate {
     
-    //----------------------
     // MARK: - Properties
-    //----------------------
     
     // Transfered from FindViewController
     var runway: Runway?
     var weather: Weather?
     
-    //----------------------
     // MARK: Constants
-    //----------------------
     
     enum TabItemIndex: Int {
         case find = 0
         case favorites = 1
     }
-    //-----------------------------
+    
     // MARK: Core data properties
-    //-----------------------------
     
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -46,9 +41,7 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
         return fetchedResultsController
         }()
     
-    //----------------------
     // MARK: - Outlets
-    //----------------------
     
     @IBOutlet weak var headwind: UILabel!
     @IBOutlet weak var tailwind: UILabel!
@@ -67,9 +60,7 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
     @IBOutlet weak var actualWind: UILabel!
     @IBOutlet weak var runwayDigits: UILabel!
     
-    //----------------------
     // MARK: - Lifecycle
-    //----------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +85,9 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
         
         // Get and display the wind components
         self.setHeaderLabels(windSpeed, windDirection: windDirection)
-        (crossWind, headWind) = self.calculateXwind(windSpeed, windDirection: windDirection, runwayHeading: runwayHeading)
+        (crossWind, headWind) = self.calculateXwind(windSpeed, windDirection: windDirection,
+                                                    runwayHeading: runwayHeading)
+        
         self.displayWind(headWind, crossWind: crossWind)
         
         // With animations
@@ -104,9 +97,7 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
         self.animateRhCrosswind()
     }
     
-    //----------------------
     // MARK: - Actions
-    //----------------------
     
     @IBAction func FindButtonTouchUp(_ sender: AnyObject) {
         segueToTabBarController(TabItemIndex.find.rawValue)
@@ -163,9 +154,7 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
         self.alertView((self.runway?.name)! + ", RWY: " + self.rwyFromHeading((self.runway?.hdg)!), message: message)
     }
     
-    //----------------------
     // MARK: - Helpers
-    //----------------------
     
     /// Fetch all runway objects from core data and report on error
     func fetchRunways() {
@@ -209,14 +198,15 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
     }
     
     /**
-        Crosswind calculations
-        
-        crossWind + : wind from the right hand side
-        crosswind - : wind from the left hand side
-        headwind  + : wind head on
-        headWind  - : wind tail on
-    */
-    func calculateXwind(_ windSpeed: Double, windDirection: Double, runwayHeading: Double) -> (crossWind: Double, headWind: Double) {
+     * Crosswind calculations
+     *
+     * crossWind + : wind from the right hand side
+     * crosswind - : wind from the left hand side
+     * headwind  + : wind head on
+     * headWind  - : wind tail on
+     */
+    func calculateXwind(_ windSpeed: Double, windDirection: Double, runwayHeading: Double) ->
+        (crossWind: Double, headWind: Double) {
         
         // Get the relative angle between the runway heading and the actual wind
         // in radiants (π radiants = 180 degrees)
@@ -351,13 +341,13 @@ class WindViewController: UIViewController, UITabBarControllerDelegate, NSFetche
         }
     }
     
-    //-----------------------------
     // MARK: - Alerts and segues
-    //-----------------------------
     
     /// Modal segue to the Tab Bar Controller which automatically points to the Find View Controller
     func segueToTabBarController(_ tabItemIndex: Int) {
-        let tabBarController = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController") as! UITabBarController
+        let tabBarController = self.storyboard!.instantiateViewController(withIdentifier: "TabBarController")
+            as! UITabBarController
+        
         tabBarController.selectedIndex = tabItemIndex
         self.present(tabBarController, animated: false, completion: nil)
     }

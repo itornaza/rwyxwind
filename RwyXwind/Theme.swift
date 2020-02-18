@@ -10,14 +10,12 @@ import Foundation
 import UIKit
 
 /**
-    Provides the baseline to support multiple themes in later versions. 
-    However, much of the appearance is still defined in storyboard
-*/
+ * Provides the baseline to support multiple themes in later versions.
+ * However, much of the appearance is still defined in storyboard
+ */
 struct Theme {
     
-    //--------------------------
     // MARK: - Shared Instance
-    //--------------------------
     
     static func sharedInstance() -> Theme {
         struct Singleton {
@@ -26,9 +24,7 @@ struct Theme {
         return Singleton.sharedInstance
     }
     
-    //--------------------------
     // MARK: - Color Scheme
-    //--------------------------
     
     let darkGray = UIColor(red: 54.0/255.0, green: 54.0/255.0, blue: 54.0/255.0, alpha: 1.0)
     let lightGray = UIColor(red: 126.0/255.0, green: 126.0/255.0, blue: 126.0/255.0, alpha: 1.0)

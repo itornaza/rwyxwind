@@ -69,7 +69,9 @@ class RwyXwindUITests: XCTestCase {
         app.alerts[self.invalid].buttons[self.ok].tap()
         
         // One letter input
-        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .textField).element.tap()
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(
+            matching: .textField).element.tap()
+        
         app.keys["K"].tap()
         app.buttons[self.rtn].tap()
         app.buttons[self.calculate].tap()
@@ -78,7 +80,9 @@ class RwyXwindUITests: XCTestCase {
         app.alerts[self.airportServiceError].buttons[self.ok].tap()
         
         // Two letter input
-        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .textField).element.tap()
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(
+            matching: .textField).element.tap()
+        
         app.keys["V"].tap()
         app.buttons[self.rtn].tap()
         app.buttons[self.calculate].tap()
@@ -222,7 +226,8 @@ class RwyXwindUITests: XCTestCase {
     
     func inputIATA(first: String, second: String, third: String) {
         let app = XCUIApplication()
-        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .textField).element.tap()
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(
+            matching: .textField).element.tap()
         app.keys[first].tap()
         app.keys[second].tap()
         app.keys[third].tap()
@@ -243,7 +248,8 @@ class RwyXwindUITests: XCTestCase {
     
     func inputICAO(first: String, second: String, third: String, forth: String) {
         let app = XCUIApplication()
-        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .textField).element.tap()
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(
+            matching: .textField).element.tap()
         app.keys[first].tap()
         app.keys[second].tap()
         app.keys[third].tap()

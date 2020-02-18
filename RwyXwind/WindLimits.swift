@@ -11,9 +11,7 @@ import Foundation
 /// Packs functionality for the wind limits and integrates with the NSUserDefaults
 struct WindLimits {
     
-    //-----------------------
     // MARK: - Properties
-    //-----------------------
     
     struct Keys {
         static let HeadwindLimit = "headwind_limit"
@@ -27,9 +25,7 @@ struct WindLimits {
         static let CrosswindDefaultLimit: Int = 20
     }
     
-    //-----------------------
     // MARK: - Type methods
-    //-----------------------
     
     static func setUserDefaultLimits() {
         UserDefaults.standard.set(

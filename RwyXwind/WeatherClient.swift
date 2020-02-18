@@ -12,9 +12,7 @@ import CoreData
 
 class WeatherClient {
     
-    //---------------------------
     // MARK: - Shared Instance
-    //---------------------------
     
     class func sharedInstance() -> WeatherClient {
         struct Singleton {
@@ -23,9 +21,7 @@ class WeatherClient {
         return Singleton.sharedInstance
     }
     
-    //------------------------------
     // MARK: - Core Data properties
-    //------------------------------
     
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -34,15 +30,16 @@ class WeatherClient {
     var temporaryContext: NSManagedObjectContext!
     
     func setUpTemporaryContext() {
-        temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
+        temporaryContext = NSManagedObjectContext(
+            concurrencyType: NSManagedObjectContextConcurrencyType.mainQueueConcurrencyType)
+        
         temporaryContext.persistentStoreCoordinator = sharedContext.persistentStoreCoordinator
     }
     
-    //--------------------
     // MARK: - Methods
-    //--------------------
     
-    func getWeatherByCoordinates(_ lat: Double, long: Double, completionHandler: @escaping (_ weather: Weather?, _ errorString: String?) -> Void) {
+    func getWeatherByCoordinates(_ lat: Double, long: Double, completionHandler: @escaping (
+        _ weather: Weather?, _ errorString: String?) -> Void) {
         
         self.setUpTemporaryContext()
         
@@ -112,7 +109,8 @@ class WeatherClient {
                         Weather.Keys.Speed      : dictionary[JSONKeys.WindSpeed]!,
                         Weather.Keys.Direction  : dictionary[JSONKeys.WindDirection]!,
                         Weather.Keys.weatherDescription: description as AnyObject,
-                        Weather.Keys.Station    : parsedResult.value(forKey: JSONKeys.StationName) as! String as AnyObject
+                        Weather.Keys.Station    : parsedResult.value(forKey: JSONKeys.StationName) as! String
+                                                    as AnyObject
                     ]
                     
                     // Store weather to temporary context as a provision for next versions
