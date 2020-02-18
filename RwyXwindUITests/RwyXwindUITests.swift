@@ -8,13 +8,15 @@
 
 import XCTest
 
-/// The tests are shall be run only against the iPhone 6 simulator to take into account the proper screen coordinates
+/**
+ * The tests are shall be run only against the iPhone 11 Pro Max simulator to take into account the proper screen
+ * coordinates, see the function prepareKeyboad at the end of this file
+ */
 class RwyXwindUITests: XCTestCase {
     
-    //----------------------
     // MARK: - Properties
-    //----------------------
     
+    let app = XCUIApplication()
     let delay: UInt32 = 4
     
     // String literals
@@ -38,9 +40,7 @@ class RwyXwindUITests: XCTestCase {
     let invalidInputAlert = "Input 3 letters for IATA or 4 letters for ICAO"
     let rwyHeadingAlert = "Runway heading shall be from 000 to 360 degrees"
     
-    //------------------------
     // MARK: - Configuration
-    //------------------------
     
     /// Run before each test
     override func setUp() {
@@ -55,13 +55,9 @@ class RwyXwindUITests: XCTestCase {
         super.tearDown()
     }
     
-    //---------------------
     // MARK: - Tests
-    //---------------------
     
     func test_invalidLetterCode() {
-        let app = XCUIApplication()
-        
         // No input
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
@@ -69,9 +65,7 @@ class RwyXwindUITests: XCTestCase {
         app.alerts[self.invalid].buttons[self.ok].tap()
         
         // One letter input
-        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(
-            matching: .textField).element.tap()
-        
+        self.prepareKeyboard()
         app.keys["K"].tap()
         app.buttons[self.rtn].tap()
         app.buttons[self.calculate].tap()
@@ -80,9 +74,7 @@ class RwyXwindUITests: XCTestCase {
         app.alerts[self.airportServiceError].buttons[self.ok].tap()
         
         // Two letter input
-        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(
-            matching: .textField).element.tap()
-        
+        self.prepareKeyboard()
         app.keys["V"].tap()
         app.buttons[self.rtn].tap()
         app.buttons[self.calculate].tap()
@@ -92,7 +84,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_validIATA() {
-        let app = XCUIApplication()
         self.inputValidIATA()
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
@@ -100,7 +91,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_invalidIATA() {
-        let app = XCUIApplication()
         self.inputInvaldIATA()
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
@@ -110,7 +100,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_validIATAButNoAirportData() {
-        let app = XCUIApplication()
         self.inputValidIATAButNoAirportData()
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
@@ -120,7 +109,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_validICAO() {
-        let app = XCUIApplication()
         self.inputValidICAO()
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
@@ -128,7 +116,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_invalidICAO() {
-        let app = XCUIApplication()
         self.inputInvalidICAO()
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
@@ -138,7 +125,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_validICAOButNoAirportData() {
-        let app = XCUIApplication()
         self.inputValidICAOButNoAirportData()
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
@@ -148,7 +134,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_validPicker() {
-        let app = XCUIApplication()
         self.inputValidIATA()
         self.pickerSetUp(first: "2", second: "1", third: "3")
         app.buttons[self.calculate].tap()
@@ -157,7 +142,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_validPcker360() {
-        let app = XCUIApplication()
         self.inputValidIATA()
         self.pickerSetUp(first: "0", second: "0", third: "0")
         app.buttons[self.calculate].tap()
@@ -166,7 +150,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_overflowPickerSecondDigit() {
-        let app = XCUIApplication()
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "3")
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "8")
         sleep(self.delay) // Allow time for the transition to complete
@@ -175,7 +158,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_overflowPickerThirdDigit() {
-        let app = XCUIApplication()
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: "3")
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: "6")
         app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: "1")
@@ -185,14 +167,12 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_addBookmark() {
-        let app = XCUIApplication()
         self.addBookmark()
         sleep(self.delay) // Allow time for the transition to complete
         XCTAssertTrue(app.tables.staticTexts[self.testAirportBookmark].exists)
     }
     
     func test_alreadyBookmark() {
-        let app = XCUIApplication()
         self.addBookmark()
         app.tables.staticTexts[self.testAirportBookmark].tap()
         let toolbarsQuery = app.toolbars
@@ -203,7 +183,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_windFromBookmark() {
-        let app = XCUIApplication()
         self.addBookmark()
         app.tables.staticTexts[self.testAirportBookmark].tap()
         sleep(self.delay) // Allow time for the transition to complete
@@ -211,7 +190,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func test_removeBookmark() {
-        let app = XCUIApplication()
         self.addBookmark()
         let tablesQuery = app.tables.cells
         tablesQuery.element(boundBy: 0).swipeLeft()
@@ -220,14 +198,10 @@ class RwyXwindUITests: XCTestCase {
         XCTAssertEqual(tablesQuery.count, 0)
     }
     
-    //---------------------
     // MARK: - Helpers
-    //---------------------
     
     func inputIATA(first: String, second: String, third: String) {
-        let app = XCUIApplication()
-        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(
-            matching: .textField).element.tap()
+        self.prepareKeyboard()
         app.keys[first].tap()
         app.keys[second].tap()
         app.keys[third].tap()
@@ -247,9 +221,7 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func inputICAO(first: String, second: String, third: String, forth: String) {
-        let app = XCUIApplication()
-        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(
-            matching: .textField).element.tap()
+        self.prepareKeyboard()
         app.keys[first].tap()
         app.keys[second].tap()
         app.keys[third].tap()
@@ -270,14 +242,12 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func pickerSetUp(first: String, second: String, third: String) {
-        let app = XCUIApplication()
         app.pickerWheels.element(boundBy: 0).adjust(toPickerWheelValue: first)
         app.pickerWheels.element(boundBy: 1).adjust(toPickerWheelValue: second)
         app.pickerWheels.element(boundBy: 2).adjust(toPickerWheelValue: third)
     }
     
     func addBookmark() {
-        let app = XCUIApplication()
         self.inputValidIATA()
         app.buttons[self.calculate].tap()
         sleep(self.delay) // Allow time for the transition to complete
@@ -288,7 +258,6 @@ class RwyXwindUITests: XCTestCase {
     }
     
     func clearBookmarks() {
-        let app = XCUIApplication()
         let tabBarsQuery = XCUIApplication().tabBars
         tabBarsQuery.buttons[self.bookmarks].tap()
         let tablesQuery = app.tables.cells
@@ -299,4 +268,8 @@ class RwyXwindUITests: XCTestCase {
         tabBarsQuery.buttons[self.search].tap()
     }
     
+    /// Specific for iPhone 11 pro max
+    func prepareKeyboard() {
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .textField).element.tap()
+    }
 }
