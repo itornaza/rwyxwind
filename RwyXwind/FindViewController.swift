@@ -12,9 +12,7 @@ import CoreData
 
 class FindViewController:   UIViewController, UITabBarControllerDelegate {
 
-    //----------------------
     // MARK: - Properties
-    //----------------------
     
     var runway: Runway?
     var weather: Weather?
@@ -27,9 +25,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
         case invalidRunwayHeading
     }
     
-    //----------------------
     // MARK: - Outlets
-    //----------------------
     
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var letterCode: UITextField!
@@ -40,9 +36,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var runwayHeadingLabel: UILabel!
     @IBOutlet weak var calculateButtonTouch: UIButton!
     
-    //----------------------
     // MARK: - Lifecycle
-    //----------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,9 +54,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
         self.configureUI()
     }
     
-    //----------------------
     // MARK: - Actions
-    //----------------------
     
     @IBAction func calculateXwind(_ sender: AnyObject) {
         if (self.letterCode.text! == "") {
@@ -85,13 +77,14 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
                     } else {
                         self.runway = runway!
                         self.runway?.hdg = self.heading
-                        WeatherClient.sharedInstance().getWeatherByCoordinates(runway!.lat, long: runway!.long) { weather, error in
-                            if error != nil {
-                                self.alertView("Weather service error", message: error!)
-                            } else {
-                                self.weather = weather!
-                                self.segueToWindViewController()
-                            }
+                        WeatherClient.sharedInstance().getWeatherByCoordinates(runway!.lat, long: runway!.long) {
+                            weather, error in
+                              if error != nil {
+                                  self.alertView("Weather service error", message: error!)
+                              } else {
+                                  self.weather = weather!
+                                  self.segueToWindViewController()
+                              }
                         }
                     }
                     self.stopSpinner()
@@ -100,17 +93,13 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
         }
     }
     
-    //----------------------------------
     // MARK: - Tap recognizer callback
-    //----------------------------------
     
     @objc func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
-    //----------------------
     // MARK: - Helpers
-    //----------------------
     
     func setPickerData() {
         self.pickerData = [
@@ -210,9 +199,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
         }
     }
     
-    //-----------------------------
     // MARK: - Alerts and segues
-    //-----------------------------
     
     /// Throws an alert view to display error messages
     func alertView(_ title: String, message: String) {
@@ -337,8 +324,10 @@ extension FindViewController: UITextFieldDelegate {
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) ->
+    [NSAttributedString.Key: Any]? {
+	
+    guard let input = input else { return nil }
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }
 

@@ -74,7 +74,8 @@ extension AirportDataClient {
             static let message = "Not modified"
         }
         
-        // Bad Request. The request was invalid or cannot be otherwise served. An accompanying error message will explain further.
+        /* Bad Request. The request was invalid or cannot be otherwise served. An accompanying error message will
+        explain further. */
         struct badRequest {
             static let id = 400
             static let message = "Bad request"
@@ -86,13 +87,15 @@ extension AirportDataClient {
             static let message = "Unauthorized"
         }
         
-        // Forbidden. The request is understood, but it has been refused or access is not allowed. An accompanying error message will explain why.
+        /* Forbidden. The request is understood, but it has been refused or access is not allowed. An accompanying
+        error message will explain why. */
         struct forbidden {
             static let id = 403
             static let message = "Forbidden"
         }
         
-        // Not Found. The URI requested is invalid or the resource requested, such as a user, does not exists. Also returned when the requested format is not supported by the requested method.
+        /* Not Found. The URI requested is invalid or the resource requested, such as a user, does not exists. Also
+        returned when the requested format is not supported by the requested method. */
         struct notFound {
             static let id = 404
             static let message = "Not found"
@@ -110,7 +113,8 @@ extension AirportDataClient {
             static let message = "This resource is gone"
         }
         
-        // Too Many Requests. Returned when a request cannot be served due to the application's rate limit having been exhausted for the resource.
+        /* Too Many Requests. Returned when a request cannot be served due to the application's rate limit having been
+        exhausted for the resource. */
         struct tooManyRequests {
             static let id = 429
             static let message = "Too many requests to the server"

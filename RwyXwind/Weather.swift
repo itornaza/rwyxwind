@@ -10,15 +10,13 @@ import Foundation
 import MapKit
 import CoreData
 
-// @objc(Weather) is not needed as the "Current Product Module" is selected
-// in the class inspector on the xcdatamodeld file
+/* @objc(Weather) is not needed as the "Current Product Module" is selected in the class inspector on the
+xcdatamodeld file */
 
 /// Integrated with core data to support weather forecast functionality scheduled for later versions
 class Weather: NSManagedObject {
     
-    //-------------------------
     // MARK: - Properties
-    //-------------------------
     
     struct Keys {
         static let Speed = "speed"
@@ -27,9 +25,7 @@ class Weather: NSManagedObject {
         static let Station = "station"
     }
     
-    //-----------------------------------------------------------
     // MARK: - Properties converted to Core Data Attributes
-    //-----------------------------------------------------------
     
     @NSManaged var speed: Double
     @NSManaged var direction: Double
@@ -37,9 +33,7 @@ class Weather: NSManagedObject {
     @NSManaged var station: String
     @NSManaged var runway: Runway
     
-    //-------------------------
     // MARK: - Constructors
-    //-------------------------
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)

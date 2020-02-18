@@ -11,15 +11,11 @@ import CoreData
 
 class FavoritesViewController:  UIViewController {
     
-    //-------------------------------
     // MARK: - Properties
-    //-------------------------------
     
     let sortingKey = "sorting_key"
     
-    //-------------------------------
     // MARK: Core data properties
-    //-------------------------------
     
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -39,18 +35,14 @@ class FavoritesViewController:  UIViewController {
         return fetchedResultsController
         }()
     
-    //----------------------
     // MARK: - Outlets
-    //----------------------
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var sortButton: UIBarButtonItem!
     
-    //----------------------
     // MARK: - Lifecycle
-    //----------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,9 +59,7 @@ class FavoritesViewController:  UIViewController {
         self.deconfigureFetch()
     }
     
-    //-------------------------------
     // MARK: - Actions
-    //-------------------------------
     
     @IBAction func edit(_ sender: UIBarButtonItem) {
         if self.tableView.isEditing {
@@ -106,9 +96,7 @@ class FavoritesViewController:  UIViewController {
         tableView.reloadData()
     }
     
-    //----------------------
     // MARK: - Helpers
-    //----------------------
     
     /// The active runway is in the form of 2 digits
     func rwyFromHeading(_ runwayHeading: Double) -> String {
@@ -174,10 +162,11 @@ class FavoritesViewController:  UIViewController {
     }
     
     func configureUI() {
-        // TODO: Set the background color for the view controller
         self.view.backgroundColor = Theme.sharedInstance().darkGray
         self.navigationBar.barTintColor = Theme.sharedInstance().darkGray
-        self.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary([NSAttributedString.Key.foregroundColor.rawValue: Theme.sharedInstance().yellow])
+        self.navigationBar.titleTextAttributes = convertToOptionalNSAttributedStringKeyDictionary(
+            [NSAttributedString.Key.foregroundColor.rawValue: Theme.sharedInstance().yellow])
+        
         self.editButton.tintColor = Theme.sharedInstance().yellow
         self.sortButton.tintColor = Theme.sharedInstance().yellow
         self.configureSortButton()
@@ -193,9 +182,7 @@ class FavoritesViewController:  UIViewController {
         return runway.icaoCode + " (" + runway.iataCode + ") " + self.rwyFromHeading(runway.hdg) + ": " + runway.name
     }
     
-    //----------------------
     // MARK: - Alerts
-    //----------------------
     
     func alertView(_ title: String, message: String) {
         OperationQueue.main.addOperation {
@@ -234,7 +221,8 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Get the wind view controller from storyboard
-        let windVC = self.storyboard!.instantiateViewController(withIdentifier: "WindViewController") as! WindViewController
+        let windVC = self.storyboard!.instantiateViewController(withIdentifier: "WindViewController")
+            as! WindViewController
         
         // Get the favorite runway from core data
         let runway = self.fetchedResultsController.object(at: indexPath)
@@ -255,7 +243,9 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        
             switch (editingStyle) {
             case .delete:
                 let runway = fetchedResultsController.object(at: indexPath)
@@ -317,7 +307,9 @@ extension FavoritesViewController: NSFetchedResultsControllerDelegate {
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) ->
+    [NSAttributedString.Key: Any]? {
+        
 	guard let input = input else { return nil }
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

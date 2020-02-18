@@ -10,14 +10,12 @@ import Foundation
 import MapKit
 import CoreData
 
-// @objc(Runway) is not needed as the "Current Product Module" is selected 
-// in the class inspector on the xcdatamodeld file
+/* @objc(Runway) is not needed as the "Current Product Module" is selected in the class inspector on the
+xcdatamodeld file */
 
 class Runway: NSManagedObject {
     
-    //----------------------
     // MARK: - Properties
-    //----------------------
     
     struct Keys {
         // Look to the AircraftDataClient for reference
@@ -37,9 +35,7 @@ class Runway: NSManagedObject {
         }
     }
     
-    //-------------------------------------------------------
     // MARK: - Properties converted to Core Data Attributes
-    //-------------------------------------------------------
     
     @NSManaged var iataCode: String
     @NSManaged var icaoCode: String
@@ -49,9 +45,7 @@ class Runway: NSManagedObject {
     @NSManaged var hdg: Double
     @NSManaged var wx: Weather
     
-    //-------------------------
     // MARK: - Constructors
-    //-------------------------
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
