@@ -219,6 +219,7 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
             windVC.runway = self.runway
             windVC.weather = self.weather
             self.startSpinner()
+            windVC.modalPresentationStyle = .fullScreen // iOS 13 override default modal presentation
             self.present(windVC, animated: false, completion: nil)
         }
     }

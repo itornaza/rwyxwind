@@ -237,6 +237,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 // Trigger the segue on the main queue
                 OperationQueue.main.addOperation {
+                    windVC.modalPresentationStyle = .fullScreen // iOS 13 override default modal presentation
                     self.present(windVC, animated: false, completion: nil)
                 }
             }
