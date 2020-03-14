@@ -9,8 +9,10 @@
 import XCTest
 
 /**
- * The tests are shall be run only against the iPhone 11 Pro Max simulator to take into account the proper screen
- * coordinates, see the function prepareKeyboad at the end of this file
+ * The tests are shall be:
+ * 1. Run only against the iPhone 11 Pro Max simulator to take into account the proper screen coordinates,
+ *    see the function prepareKeyboad at the end of this file
+ * 2. Make sure the "Hardware / Keyboard / Connect Hardware Keyboard" is not selected on the simulator menu
  */
 class RwyXwindUITests: XCTestCase {
     
