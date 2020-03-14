@@ -20,7 +20,6 @@ class PreferencesViewController: UIViewController {
     @IBOutlet weak var tailwindLabel: UILabel!
     @IBOutlet weak var crosswindLabel: UILabel!
     @IBOutlet weak var placeholderView: UIView!
-    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var headwindSlider: UISlider!
     @IBOutlet weak var tailwindSlider: UISlider!
     @IBOutlet weak var crosswindSlider: UISlider!
