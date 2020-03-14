@@ -34,7 +34,6 @@ class FindViewController:   UIViewController, UITabBarControllerDelegate {
     @IBOutlet weak var iataCodeLabel: UILabel!
     @IBOutlet weak var threeLetters: UILabel!
     @IBOutlet weak var runwayHeadingLabel: UILabel!
-    @IBOutlet weak var calculateButtonTouch: UIButton!
     
     // MARK: - Lifecycle
     
