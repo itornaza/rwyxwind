@@ -2,7 +2,7 @@
 //  WindViewConrollerAnimations.swift
 //  RwyXwind
 //
-//  Created by Ioannis Tornazakis on 19/2/17.
+//  Created by ion- on 19/2/17.
 //  Copyright © 2017 polarbear.gr. All rights reserved.
 //
 

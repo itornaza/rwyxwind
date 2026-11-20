@@ -22,6 +22,6 @@ No longer maintained. The code is kept here as a record of the app.
 
 ## Author
 
-Ioannis Tornazakis ([itornaza](https://github.com/itornaza))
+ion-
 
 

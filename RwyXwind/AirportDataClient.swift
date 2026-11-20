@@ -2,7 +2,7 @@
 //  AirportDataClient.swift
 //  RwyXwind
 //
-//  Created by Ioannis Tornazakis on 21/2/17.
+//  Created by ion- on 21/2/17.
 //  Copyright © 2017 polarbear.gr. All rights reserved.
 //
 

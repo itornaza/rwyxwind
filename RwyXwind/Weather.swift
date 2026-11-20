@@ -2,7 +2,7 @@
 //  Weather.swift
 //  RwyXwind
 //
-//  Created by Ioannis Tornazakis on 23/9/15.
+//  Created by ion- on 23/9/15.
 //  Copyright © 2015 polarbear.gr. All rights reserved.
 //
 

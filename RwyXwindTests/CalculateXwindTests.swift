@@ -2,7 +2,7 @@
 //  CalculateXwindTests.swift
 //  RwyXwindTests
 //
-//  Created by Ioannis Tornazakis on 21/9/15.
+//  Created by ion- on 21/9/15.
 //  Copyright © 2015 polarbear.gr. All rights reserved.
 //
 
